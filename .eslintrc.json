@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb"
+    //에어비앤비사가 스타일을 강하게 먹인다.
+  ],
+  "plugins": ["import", "react-hooks"],
+  "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-console": "off",
+    "no-underscore-dangle": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "object-curly-newline": "off",
+    "linebreak-style": "off", // 빨간 에러줄 끄게하는거
+    "import/no-unresolved": "off"
+  }
+}
