@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
+import { GlobalStyles } from 'styles/global-styles';
 
 function App() {
   const Auction = lazy(() => import('./pages/auction'));
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <Router>
+      {GlobalStyles}
       <Suspense fallback={<div>Loading...</div>}>
         <CacheSwitch>
           <CacheRoute exact path="/" component={Home} />

@@ -26,6 +26,9 @@
     "linebreak-style": "off",
     "no-param-reassign": "off",
     "eslint-disable max-len": "off",
-    "eslint-disable react/jsx-wrap-multilines": "off"
+    "eslint-disable react/jsx-wrap-multilines": "off",
+    "no-use-before-define": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }
