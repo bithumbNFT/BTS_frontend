@@ -18,7 +18,6 @@ export const GlobalStyles = (
         -webkit-font-smoothing: antialiased;
       }
       html {
-        font-family: sans-serif;
         font-size: 16px;
         -webkit-text-size-adjust: none;
         -moz-text-size-adjust: none;
