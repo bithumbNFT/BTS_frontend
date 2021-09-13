@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { VscHeart } from 'react-icons/vsc';
 
 const CardContainer = styled.div`
-  width: 200px;
+  width: 250px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 15px;
@@ -23,19 +24,41 @@ const Author = styled.div`
   padding-left: 15px;
 `;
 const Status = styled.div`
-  width: 60px;
-  height: 30px;
+  width: fit-content;
+  height: auto;
+  padding: 3px;
   border-radius: 10%;
-  background-color: #3d3d3d;
+  background-color: #f5e6ca;
+  font-size: 12px;
+  color: #343f56;
+`;
+const CardDetail = styled.section`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+`;
+const CardLeft = styled.div``;
+const CardRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
 `;
 function Card() {
   return (
     <CardContainer>
       <CardImage src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
-      <CardTitle>title1</CardTitle>
-      <CardDescription>description</CardDescription>
-      <Author>author</Author>
-      <Status>판매중</Status>
+      <CardDetail>
+        <CardLeft>
+          <CardTitle>title1</CardTitle>
+          <CardDescription>description</CardDescription>
+          <Author>author</Author>
+        </CardLeft>
+        <CardRight>
+          <VscHeart />
+          <Status>판매중</Status>
+        </CardRight>
+      </CardDetail>
     </CardContainer>
   );
 }

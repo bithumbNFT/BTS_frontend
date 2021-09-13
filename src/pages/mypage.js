@@ -11,17 +11,18 @@ import Header from 'components/Common/Header';
 const MypageTitle = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom : 2rem;
+  margin-bottom: 2rem;
 `;
 const MyPageContainer = styled.div`
   width: 80%;
   display: flex;
   flex-direction: column;
-  margin: 3rem;
+  margin: 4rem 0 0 5rem;
 `;
 
 const MypageContent = styled.div`
   display: flex;
+  justify-content: space-around;
   section {
     margin-right: 1rem;
   }
@@ -61,12 +62,8 @@ function mypage({ match }) {
           </section>
           <MyPageTab>
             <Route path={`${match.url}`} exact component={MyUpload} />
-            <Route
-              path={`${match.url}/purchase`}
-              exact
-              component={PurchaseImage}
-            />
-            <Route path={`${match.url}/wishList`} exact component={LikeImage} />
+            <Route path={`${match.url}/purchase`} component={PurchaseImage} />
+            <Route path={`${match.url}/wishList`} component={LikeImage} />
           </MyPageTab>
         </MypageContent>
       </MyPageContainer>
