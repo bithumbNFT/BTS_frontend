@@ -6,10 +6,12 @@ import List from 'components/Board/List';
 function board() {
   return (
     <>
+      {/* 헤더 */}
       <Header />
       <main>
+        {/* 인트로 view */}
         <Intro />
-
+        {/* 게시글 리스트 */}
         <List />
       </main>
     </>
