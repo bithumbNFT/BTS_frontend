@@ -1,34 +1,35 @@
 import styled from '@emotion/styled';
 
-export const SignUpBg = styled.main`
-  background-color: #fafafa;
-  height: 100vh;
+export const LoginBg = styled.div`
+  background: rgba(0, 0, 0, 0.65);
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100vw;
+  height: 100vh;
+  z-index: 100;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 `;
 
-export const SignUpForm = styled.section`
-  max-width: 350px;
+export const LoginPopUp = styled.div`
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
   margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid #f4f4f4;
+  max-width: 400px;
+  overflow: hidden;
+  width: 100%;
   text-align: center;
-  padding: 10px 0;
+  padding: 10px 0 38px;
+
   .logo {
     font-weight: 700;
-    font-size: 26px;
+    font-size: 32px;
     color: #fe5000;
-    margin: 22px auto 12px;
-  }
-
-  .desc {
-    color: rgba(var(--f52, 142, 142, 142), 1);
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 20px;
-    margin: 0 40px 10px;
+    text-align: center;
+    margin: 32px 0 18px;
   }
 
   .or {
@@ -64,24 +65,6 @@ export const SignUpForm = styled.section`
   }
 `;
 
-export const Button = styled.button`
-  font-size: 14px;
-  line-height: 18px;
-  background: #fe5000;
-  width: 80%;
-  border-radius: 4px;
-  padding: 8px 0;
-  color: #ffffff;
-  font-weight: 800;
-  margin-top: 8px;
-`;
-
-export const Wrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Form = styled.form`
   display: grid;
   place-items: center;
@@ -104,4 +87,24 @@ export const Form = styled.form`
     margin-top: 8px;
     margin-bottom: 20px;
   }
+`;
+
+export const Button = styled.button`
+  font-size: 14px;
+  line-height: 18px;
+  background: #fe5000;
+  width: 80%;
+  border-radius: 4px;
+  padding: 8px 0;
+  color: #ffffff;
+  font-weight: 800;
+  margin-top: 8px;
+`;
+
+export const Close = styled.button`
+  font-size: 24px;
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  color: #444;
 `;
