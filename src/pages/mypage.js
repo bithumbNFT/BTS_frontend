@@ -2,43 +2,73 @@ import React from 'react';
 import Profile from 'components/MyPage/Profile/Profile';
 // import Footer from 'components/Common/Footer';
 import styled from '@emotion/styled';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
+import LikeImage from 'components/MyPage/LikeImage/LikeImage';
+import PurchaseImage from 'components/MyPage/PurchaseImgae/PurchaseImage';
+import MyUpload from 'components/MyPage/MyUpload/MyUpload';
+import Header from 'components/Common/Header';
 
+const MypageTitle = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom : 2rem;
+`;
 const MyPageContainer = styled.div`
   width: 80%;
   display: flex;
-  align-items: center;
-  justify-content:center;
   flex-direction: column;
+  margin: 3rem;
 `;
 
-const About = () => <div> Youre on the Profile Tab</div>;
-const Comments = () => <div> Youre on the Comments Tab</div>;
-const Contact = () => <div> Youre on the Contact Tab</div>;
+const MypageContent = styled.div`
+  display: flex;
+  section {
+    margin-right: 1rem;
+  }
+`;
+
+const MyPageLink = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    margin-top: 1.5rem;
+  }
+`;
+
+const MyPageTab = styled.div`
+  padding: 20px;
+  border: 1px solid #f5f5f5;
+  margin-left: 2rem;
+`;
 
 function mypage({ match }) {
-  // const About = () => <div> Youre on the Profile Tab</div>;
-  // const Comments = () => <div> Youre on the Comments Tab</div>;
-  // const Contact = () => <div> Youre on the Contact Tab</div>;
-
   console.log(match);
+  console.log(`${match.url}/comments`);
   return (
     <>
+      <Header />
       <MyPageContainer>
-        <h1>마이페이지</h1>
-        <Profile />
-        <div className="links">
-          <Link to={`${match.url}`} className="link">내가 올린 작품</Link>
-          <Link to={`${match.url}/comments`} className="link">내가 구매한 작품</Link>
-          <Link to={`${match.url}/contact`} className="link">좋아요한 작품</Link>
-        </div>
-        <div className="tabs">
-          <Switch>
-            <Route path={`${match.url}`} exact component={About} />
-            <Route path={`${match.url}/comments`} component={Comments} />
-            <Route path={`${match.url}/contact`} component={Contact} />
-          </Switch>
-        </div>
+        <MypageTitle>마이페이지</MypageTitle>
+        <MypageContent>
+          <section className="menutab">
+            <Profile />
+            <MyPageLink>
+              <Link to={`${match.url}`}>🎨 내가 올린 작품</Link>
+              <Link to={`${match.url}/purchase`}>💰 내가 구매한 작품</Link>
+              <Link to={`${match.url}/wishList`}>❤️ 좋아요한 작품</Link>
+            </MyPageLink>
+          </section>
+          <MyPageTab>
+            <Route path={`${match.url}`} exact component={MyUpload} />
+            <Route
+              path={`${match.url}/purchase`}
+              exact
+              component={PurchaseImage}
+            />
+            <Route path={`${match.url}/wishList`} exact component={LikeImage} />
+          </MyPageTab>
+        </MypageContent>
       </MyPageContainer>
     </>
   );
