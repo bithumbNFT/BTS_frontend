@@ -9,6 +9,7 @@ function App() {
   const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
   const SignUp = lazy(() => import('./pages/signup'));
+  const Post = lazy(() => import('./pages/board_post'));
 
   return (
     <Router>
@@ -26,6 +27,8 @@ function App() {
           <Route exact path="/mypage" component={MyPage} />
           {/* 회원가입 */}
           <Route exact path="/signup" component={SignUp} />
+          {/* 게시글 view */}
+          <Route exact path="/board_post" component={Post} />
           <Redirect path="*" to="/" />
         </CacheSwitch>
       </Suspense>
