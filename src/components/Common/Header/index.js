@@ -18,7 +18,7 @@ function Header() {
 export default Header;
 
 const Gnb = styled.nav`
-  position: fixed;
+  position: sticky;
   z-index: 50;
   width: 100%;
   height: 60px;
@@ -26,6 +26,7 @@ const Gnb = styled.nav`
   background-color: transparent;
   left: 0;
   top: 0;
+  right: 0;
   transition: background-color 0.2s ease;
   border-bottom-color: rgba(0, 27, 55, 0.1);
   .navWrap {
