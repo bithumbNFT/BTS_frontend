@@ -51,6 +51,7 @@ const Gnb = styled.nav`
   background-color: #fff;
   left: 0;
   top: 0;
+  right: 0;
   transition: background-color 0.2s ease;
   border-bottom-color: rgba(0, 27, 55, 0.1);
   .navWrap {

@@ -15,6 +15,7 @@
   "extends": ["airbnb"],
   "plugins": ["import", "react-hooks"],
   "rules": {
+    "react/prop-types": 0,
     "jsx-a11y/label-has-associated-control": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "no-console": "off",
