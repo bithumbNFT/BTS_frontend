@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CommentView from 'components/Board/CommentView';
 import { PostWrap, Title, CommentWrap } from './styles';
+import CommentWrite from '../CommentWrite';
 
 function Post({ title, content, user, time, num }) {
   return (
@@ -31,6 +32,7 @@ function Post({ title, content, user, time, num }) {
         <CommentView />
 
         {/* 댓글 달기 form */}
+        <CommentWrite />
       </CommentWrap>
     </>
   );

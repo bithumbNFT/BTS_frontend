@@ -4,6 +4,7 @@ export const ItemView = styled.li`
   padding: 20px 0;
   border-bottom: 1px solid #dee2e6;
   width: 100%;
+  transition: all 0.3s;
   &:nth-of-type(1) {
     border-top: 1px solid #dee2e6;
     margin-top: 1.4em;
@@ -12,6 +13,9 @@ export const ItemView = styled.li`
     display: grid;
     grid-template-columns: 6fr 1fr;
     width: 100%;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
   }
 `;
 

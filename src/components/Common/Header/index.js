@@ -8,7 +8,9 @@ function Header() {
     <Gnb>
       <div className="navWrap">
         <Menu>
-          <Title>BTS</Title>
+          <Title>
+            <Link to="/">BTS</Link>
+          </Title>
 
           <Link to="/board" className="board">
             커뮤니티
