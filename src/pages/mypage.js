@@ -2,7 +2,7 @@ import React from 'react';
 import Profile from 'components/MyPage/Profile/Profile';
 // import Footer from 'components/Common/Footer';
 import styled from '@emotion/styled';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, BrowserRouter } from 'react-router-dom';
 import LikeImage from 'components/MyPage/LikeImage/LikeImage';
 import PurchaseImage from 'components/MyPage/PurchaseImgae/PurchaseImage';
 import MyUpload from 'components/MyPage/MyUpload/MyUpload';
@@ -51,21 +51,23 @@ function mypage({ match }) {
       <Header />
       <MyPageContainer>
         <MypageTitle>마이페이지</MypageTitle>
-        <MypageContent>
-          <section className="menutab">
-            <Profile />
-            <MyPageLink>
-              <Link to={`${match.url}`}>🎨 내가 올린 작품</Link>
-              <Link to={`${match.url}/purchase`}>💰 내가 구매한 작품</Link>
-              <Link to={`${match.url}/wishList`}>❤️ 좋아요한 작품</Link>
-            </MyPageLink>
-          </section>
-          <MyPageTab>
-            <Route path={`${match.url}`} exact component={MyUpload} />
-            <Route path={`${match.url}/purchase`} component={PurchaseImage} />
-            <Route path={`${match.url}/wishList`} component={LikeImage} />
-          </MyPageTab>
-        </MypageContent>
+        <BrowserRouter>
+          <MypageContent>
+            <section className="menutab">
+              <Profile />
+              <MyPageLink>
+                <Link to={`${match.url}`}>🎨 내가 올린 작품</Link>
+                <Link to={`${match.url}/purchase`}>💰 내가 구매한 작품</Link>
+                <Link to={`${match.url}/wishList`}>❤️ 좋아요한 작품</Link>
+              </MyPageLink>
+            </section>
+            <MyPageTab>
+              <Route path={`${match.url}`} exact component={MyUpload} />
+              <Route path={`${match.url}/purchase`} component={PurchaseImage} />
+              <Route path={`${match.url}/wishList`} component={LikeImage} />
+            </MyPageTab>
+          </MypageContent>
+        </BrowserRouter>
       </MyPageContainer>
     </>
   );

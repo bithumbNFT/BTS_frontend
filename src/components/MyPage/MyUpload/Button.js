@@ -3,14 +3,10 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 const ButtonContainer = styled.button`
-  background-color: #343F56;
+  background-color: #fe5000;
   color: #ffffff;
   padding: 0.4rem 0.6rem;
-  border-radius: 10px;
-
-  :hover {
-    background-color: #566991;
-  }
+  border-radius: 5px;
 `;
 
 function Button() {
