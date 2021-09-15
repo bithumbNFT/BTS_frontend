@@ -5,8 +5,9 @@ import styled from '@emotion/styled';
 const ButtonContainer = styled.button`
   background-color: #fe5000;
   color: #ffffff;
-  padding: 0.4rem 0.6rem;
+  padding: 0.5rem 0.6rem;
   border-radius: 5px;
+  font-size: 16px;
 `;
 
 function Button() {
@@ -21,7 +22,9 @@ function Button() {
   };
   return (
     <>
-      <ButtonContainer onClick={openModal} type="button">작품 등록하기</ButtonContainer>
+      <ButtonContainer onClick={openModal} type="button">
+        작품 등록하기
+      </ButtonContainer>
       <UploadImageModal isOpen={isModalOpen} close={closeModal} />
     </>
   );

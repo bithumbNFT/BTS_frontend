@@ -1,47 +1,17 @@
 import React from 'react';
-import Profile from 'components/MyPage/Profile/Profile';
-// import Footer from 'components/Common/Footer';
-import styled from '@emotion/styled';
+import Profile from 'components/MyPage/Profile';
 import { Route, Link, BrowserRouter } from 'react-router-dom';
-import LikeImage from 'components/MyPage/LikeImage/LikeImage';
-import PurchaseImage from 'components/MyPage/PurchaseImgae/PurchaseImage';
-import MyUpload from 'components/MyPage/MyUpload/MyUpload';
+import LikeImage from 'components/MyPage/LikeImage';
+import PurchaseImage from 'components/MyPage/PurchaseImgae';
+import MyUpload from 'components/MyPage/MyUpload';
 import Header from 'components/Common/Header';
-
-const MypageTitle = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-`;
-const MyPageContainer = styled.div`
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  margin: 4rem 0 0 5rem;
-`;
-
-const MypageContent = styled.div`
-  display: flex;
-  justify-content: space-around;
-  section {
-    margin-right: 1rem;
-  }
-`;
-
-const MyPageLink = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  a {
-    margin-top: 1.5rem;
-  }
-`;
-
-const MyPageTab = styled.div`
-  padding: 20px;
-  border: 1px solid #f5f5f5;
-  margin-left: 2rem;
-`;
+import {
+  MypageTitle,
+  MyPageContainer,
+  MypageContent,
+  MyPageLink,
+  MyPageTab,
+} from './styles';
 
 function mypage({ match }) {
   console.log(match);

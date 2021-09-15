@@ -5,7 +5,7 @@ import { ItemView, Desc, Comment } from './styles';
 function Item({ title, content, user, time, num }) {
   return (
     <ItemView>
-      <a href="/board_post" target="_blank">
+      <a href="/board_post">
         <Desc>
           <h3>{title}</h3>
           <p>{content}</p>
