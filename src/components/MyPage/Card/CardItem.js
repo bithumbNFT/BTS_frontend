@@ -6,23 +6,17 @@ const CardContainer = styled.div`
   border: 1px solid #ddd;
   width: 220px;
   border-radius: 5px;
-  margin-bottom: 15px;
-  padding-bottom: 1rem;
+  margin-bottom: 20px;
 `;
 
 const CardTitle = styled.h5`
-  padding-left: 15px;
   font-weight: bold;
 `;
-const CardDescription = styled.p`
-  padding-left: 15px;
-`;
+
 const CardImage = styled.img`
   width: 100%;
 `;
-const Author = styled.div`
-  padding-left: 15px;
-`;
+
 const Status = styled.div`
   width: fit-content;
   height: auto;
@@ -35,8 +29,9 @@ const Status = styled.div`
 const CardDetail = styled.section`
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
+  padding: 15px;
 `;
+
 const CardLeft = styled.div``;
 const CardRight = styled.div`
   display: flex;
@@ -55,8 +50,8 @@ function Card() {
       <CardDetail>
         <CardLeft>
           <CardTitle>title1</CardTitle>
-          <CardDescription>description</CardDescription>
-          <Author>author</Author>
+          <p>description</p>
+          <p>author</p>
         </CardLeft>
 
         <CardRight>

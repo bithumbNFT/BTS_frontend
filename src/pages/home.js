@@ -1,14 +1,14 @@
 import React from 'react';
 import Header from 'components/Common/Header';
 import HomeIntro from 'components/Home/Intro';
-import CardList from 'components/Home/CardList';
+import AuctionList from 'components/Home/AuctionList';
 
 function home() {
   return (
     <>
       <Header />
       <HomeIntro />
-      <CardList />
+      <AuctionList />
     </>
   );
 }

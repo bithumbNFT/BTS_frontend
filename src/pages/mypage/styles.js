@@ -15,9 +15,6 @@ export const MyPageContainer = styled.div`
 
 export const MypageContent = styled.div`
   display: flex;
-  section {
-    margin-right: 1rem;
-  }
 `;
 
 export const MyPageLink = styled.div`

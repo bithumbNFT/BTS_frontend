@@ -39,8 +39,10 @@ export const User = styled.ul`
     margin-left: 0.8em;
     &.user {
       border: 1px solid #dbdbdb;
-      padding: 5px 8px;
       border-radius: 5px;
+      button {
+        padding: 5px 8px;
+      }
     }
   }
   .search {
