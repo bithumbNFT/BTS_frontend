@@ -6,7 +6,7 @@ const CardListWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 15px;
-  width: 768px;
+  width: 100%;
   margin: 0 auto;
   padding: 50px 0 100px;
 

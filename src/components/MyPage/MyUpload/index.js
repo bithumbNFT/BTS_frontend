@@ -4,14 +4,19 @@ import CardList from '../Card/CardList';
 import Button from './Button';
 
 const MyUploadHeader = styled.div`
-  display :flex;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
 `;
 function MyUpload() {
   return (
     <>
       <MyUploadHeader>
-        <div>내가 올린 작품</div>
+        <h2>내가 올린 작품</h2>
         <Button />
       </MyUploadHeader>
       <CardList />

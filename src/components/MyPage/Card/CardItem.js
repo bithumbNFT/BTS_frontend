@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { VscHeart } from 'react-icons/vsc';
 
 const CardContainer = styled.div`
-  width: 250px;
   border: 1px solid #ddd;
+  width: 220px;
   border-radius: 5px;
   margin-bottom: 15px;
   padding-bottom: 1rem;
@@ -44,16 +44,21 @@ const CardRight = styled.div`
   align-items: flex-end;
   justify-content: space-between;
 `;
+
 function Card() {
   return (
     <CardContainer>
-      <CardImage src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
+      <a href="#this">
+        <CardImage src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
+      </a>
+
       <CardDetail>
         <CardLeft>
           <CardTitle>title1</CardTitle>
           <CardDescription>description</CardDescription>
           <Author>author</Author>
         </CardLeft>
+
         <CardRight>
           <VscHeart />
           <Status>판매중</Status>
