@@ -90,14 +90,14 @@ export const Form = styled.form`
 `;
 
 export const Button = styled.button`
-  font-size: 14px;
+  font-size: 16px;
   line-height: 18px;
   background: #fe5000;
   width: 80%;
   border-radius: 4px;
-  padding: 8px 0;
+  padding: 10px 0;
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 400;
   margin-top: 8px;
 `;
 

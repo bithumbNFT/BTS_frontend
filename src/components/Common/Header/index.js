@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import LoginModal from 'components/LoginModal';
@@ -7,9 +7,15 @@ import { Gnb, Menu, User, Title } from './styles';
 function Header() {
   const [isShowing, setIsShowing] = useState(false);
 
-  const toggleModal = useCallback(() => {
-    setIsShowing(!isShowing);
-  }, []);
+  const openModal = () => {
+    setIsShowing(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setIsShowing(false);
+    document.body.style.overflow = 'unset';
+  };
 
   return (
     <Gnb>
@@ -35,12 +41,14 @@ function Header() {
           </li>
 
           <li className="user">
-            <p>로그인</p>
+            <button type="button" onClick={openModal}>
+              로그인
+            </button>
           </li>
         </User>
       </div>
 
-      {isShowing && <LoginModal onClose={toggleModal} />}
+      <LoginModal onClose={closeModal} open={isShowing} />
     </Gnb>
   );
 }

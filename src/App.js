@@ -9,7 +9,6 @@ function App() {
   const Board = lazy(() => import('./pages/board'));
   const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
-  const SignUp = lazy(() => import('./pages/signup'));
   const Post = lazy(() => import('./pages/board_post'));
   const Notice = lazy(() => import('./pages/notice'));
   const NotFount = lazy(() => import('./pages/404page'));
@@ -29,8 +28,6 @@ function App() {
           <Route exact path="/board" component={Board} />
           {/* 마이페이지 */}
           <Route exact path="/mypage" component={MyPage} />
-          {/* 회원가입 */}
-          <Route exact path="/signup" component={SignUp} />
           {/* 게시글 view */}
           <Route exact path="/board_post" component={Post} />
           {/* 사용자 알람 view */}
