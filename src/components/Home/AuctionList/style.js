@@ -6,8 +6,9 @@ export const CardWrap = styled.div`
   padding: 5% 0;
 `;
 
-export const CardListBox = styled.ul`
+export const CardListBox = styled.section`
+  display: grid;
+  grid-template-columns: auto auto auto auto;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  margin: 0 auto;
 `;

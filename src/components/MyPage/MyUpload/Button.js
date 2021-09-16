@@ -1,4 +1,4 @@
-import UploadImageModal from 'components/UploadImage/UploadImageModal';
+import UploadImageModal from 'components/UploadImage';
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 

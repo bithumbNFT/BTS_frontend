@@ -21,12 +21,13 @@ export const CommentWriteBox = styled.div`
   textarea {
     resize: none;
     background: #fff;
-    padding: 10px 15px;
+    padding: 15px;
     width: 90%;
     height: 100%;
     border: 1px solid #e9ecef;
     margin-bottom: 1em;
     display: flex;
+    border-radius: 4px;
   }
 `;
 

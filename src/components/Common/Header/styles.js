@@ -39,8 +39,10 @@ export const User = styled.ul`
     margin-left: 0.8em;
     &.user {
       border: 1px solid #dbdbdb;
-      padding: 5px 8px;
       border-radius: 5px;
+      button {
+        padding: 5px 8px;
+      }
     }
   }
   .search {
@@ -81,5 +83,9 @@ export const Menu = styled.div`
     color: #4a4a4a;
     line-height: 1.5;
     font-size: 16px;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
   }
 `;

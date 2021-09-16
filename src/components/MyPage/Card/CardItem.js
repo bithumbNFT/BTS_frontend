@@ -1,43 +1,55 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { VscHeart } from 'react-icons/vsc';
 
 const CardContainer = styled.div`
   border: 1px solid #ddd;
   width: 220px;
   border-radius: 5px;
-  margin-bottom: 15px;
-  padding-bottom: 1rem;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+  opacity: 0.7;
+  &:hover {
+    box-shadow: 1px 1px 20px #ddd;
+    opacity: 1;
+  }
 `;
 
 const CardTitle = styled.h5`
-  padding-left: 15px;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
 `;
-const CardDescription = styled.p`
-  padding-left: 15px;
-`;
+
 const CardImage = styled.img`
   width: 100%;
 `;
-const Author = styled.div`
-  padding-left: 15px;
-`;
+
 const Status = styled.div`
   width: fit-content;
   height: auto;
-  padding: 3px;
+  padding: 5px;
   border-radius: 10%;
   background-color: #f5e6ca;
   font-size: 12px;
   color: #343f56;
+  margin-top: 3em;
 `;
+
 const CardDetail = styled.section`
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
+  padding: 15px;
 `;
-const CardLeft = styled.div``;
+
+const CardLeft = styled.div`
+  p {
+    font-size: 14px;
+    line-height: 1.2;
+    margin-top: 0.3em;
+  }
+`;
 const CardRight = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,15 +60,14 @@ const CardRight = styled.div`
 function Card() {
   return (
     <CardContainer>
-      <a href="#this">
+      <Link to="/auction">
         <CardImage src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
-      </a>
+      </Link>
 
       <CardDetail>
         <CardLeft>
-          <CardTitle>title1</CardTitle>
-          <CardDescription>description</CardDescription>
-          <Author>author</Author>
+          <CardTitle>머리카락 휘날리며</CardTitle>
+          <p>by 피카소</p>
         </CardLeft>
 
         <CardRight>
