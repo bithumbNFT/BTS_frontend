@@ -5,30 +5,47 @@ import LikeImage from 'components/MyPage/LikeImage';
 import PurchaseImage from 'components/MyPage/PurchaseImgae';
 import MyUpload from 'components/MyPage/MyUpload';
 import Header from 'components/Common/Header';
-import {
-  MypageTitle,
-  MyPageContainer,
-  MypageContent,
-  MyPageLink,
-  MyPageTab,
-} from './styles';
+import { Title, Container, Content, MyPageLink, MyPageTab } from './styles';
 
 function mypage({ match }) {
-  console.log(match);
-  console.log(`${match.url}/comments`);
+  const subTabs = [
+    {
+      id: 1,
+      path: `${match.url}`,
+      comp: MyUpload,
+      tabName: '🎨 내가 등록한 작품',
+    },
+    {
+      id: 2,
+      path: `${match.url}/purchase`,
+      comp: PurchaseImage,
+      tabName: '💰 내가 구매한 작품',
+    },
+    {
+      id: 3,
+      path: `${match.url}/wishlist`,
+      comp: LikeImage,
+      tabName: '❤️ 좋아요한 작품',
+    },
+  ];
+  console.log(subTabs);
   return (
     <>
       <Header />
-      <MyPageContainer>
-        <MypageTitle>마이페이지</MypageTitle>
+      <Container>
+        <Title>마이페이지</Title>
         <BrowserRouter>
-          <MypageContent>
+          <Content>
             <section className="menutab">
               <Profile />
               <MyPageLink>
-                <Link to={`${match.url}`}>🎨 내가 올린 작품</Link>
-                <Link to={`${match.url}/purchase`}>💰 내가 구매한 작품</Link>
-                <Link to={`${match.url}/wishList`}>❤️ 좋아요한 작품</Link>
+                <ul>
+                  {subTabs.map((subTab) => (
+                    <li key={subTab.id}>
+                      <Link to={subTab.path}>{subTab.tabName}</Link>
+                    </li>
+                  ))}
+                </ul>
               </MyPageLink>
             </section>
             <MyPageTab>
@@ -36,9 +53,9 @@ function mypage({ match }) {
               <Route path={`${match.url}/purchase`} component={PurchaseImage} />
               <Route path={`${match.url}/wishList`} component={LikeImage} />
             </MyPageTab>
-          </MypageContent>
+          </Content>
         </BrowserRouter>
-      </MyPageContainer>
+      </Container>
     </>
   );
 }
