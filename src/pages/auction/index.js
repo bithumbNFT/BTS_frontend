@@ -30,9 +30,19 @@ function auction() {
               <span>(￦3,179,688)</span>
             </div>
 
-            <div className="detail__button">
-              <button type="button">매수접수(입찰)</button>
+            <h3 className="current">👤 현재 매수왕</h3>
+            <div className="email">
+              <p>me@email.com</p>
             </div>
+
+            <div className="detail__button">
+              <button type="button">구매확정</button>
+            </div>
+          </Border>
+
+          <Border>
+            <h3>⏱ 남은 경매시간</h3>
+            <p>19:05:19</p>
           </Border>
 
           <Border>

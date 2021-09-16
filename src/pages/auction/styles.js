@@ -59,10 +59,19 @@ export const Border = styled.div`
       margin-left: 0.3rem;
     }
   }
+  .email {
+    p {
+      font-size: 1em;
+      font-weight: 500;
+    }
+  }
+  .current {
+    margin-top: 20px;
+  }
   h3 {
     color: #8a939b;
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
   }
   p {
     line-height: 1.4;
