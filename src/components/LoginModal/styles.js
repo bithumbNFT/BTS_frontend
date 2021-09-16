@@ -97,7 +97,7 @@ export const Button = styled.button`
   border-radius: 4px;
   padding: 8px 0;
   color: #ffffff;
-  font-weight: 800;
+  font-weight: 500;
   margin-top: 8px;
 `;
 
