@@ -68,7 +68,6 @@ export const Form = styled.form`
         margin-right: 16px;
         border: 1px solid #dee2e6;
         color: #495057;
-
         background-color: #fff;
       }
       &:nth-of-type(2) {

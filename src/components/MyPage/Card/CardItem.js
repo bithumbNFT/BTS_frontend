@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { VscHeart } from 'react-icons/vsc';
 
 const CardContainer = styled.div`
@@ -20,7 +21,7 @@ const CardImage = styled.img`
 const Status = styled.div`
   width: fit-content;
   height: auto;
-  padding: 3px;
+  padding: 5px;
   border-radius: 10%;
   background-color: #f5e6ca;
   font-size: 12px;
@@ -43,9 +44,9 @@ const CardRight = styled.div`
 function Card() {
   return (
     <CardContainer>
-      <a href="#this">
+      <Link to="/auction">
         <CardImage src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
-      </a>
+      </Link>
 
       <CardDetail>
         <CardLeft>
