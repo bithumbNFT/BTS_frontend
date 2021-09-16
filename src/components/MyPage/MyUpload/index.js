@@ -12,11 +12,17 @@ const MyUploadHeader = styled.div`
     font-weight: 400;
   }
 `;
+
+const MyUploadText = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
+`;
 function MyUpload() {
   return (
     <>
       <MyUploadHeader>
-        <h2>내가 올린 작품</h2>
+        <MyUploadText># 내가 등록한 작품</MyUploadText>
         <Button />
       </MyUploadHeader>
       <CardList />
