@@ -8,10 +8,18 @@ const CardContainer = styled.div`
   width: 220px;
   border-radius: 5px;
   margin-bottom: 20px;
+  transition: all 0.3s;
+  opacity: 0.7;
+  &:hover {
+    box-shadow: 1px 1px 20px #ddd;
+    opacity: 1;
+  }
 `;
 
 const CardTitle = styled.h5`
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
 `;
 
 const CardImage = styled.img`
@@ -26,14 +34,22 @@ const Status = styled.div`
   background-color: #f5e6ca;
   font-size: 12px;
   color: #343f56;
+  margin-top: 3em;
 `;
+
 const CardDetail = styled.section`
   display: flex;
   justify-content: space-between;
   padding: 15px;
 `;
 
-const CardLeft = styled.div``;
+const CardLeft = styled.div`
+  p {
+    font-size: 14px;
+    line-height: 1.2;
+    margin-top: 0.3em;
+  }
+`;
 const CardRight = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,9 +66,8 @@ function Card() {
 
       <CardDetail>
         <CardLeft>
-          <CardTitle>title1</CardTitle>
-          <p>description</p>
-          <p>author</p>
+          <CardTitle>머리카락 휘날리며</CardTitle>
+          <p>by 피카소</p>
         </CardLeft>
 
         <CardRight>

@@ -83,5 +83,9 @@ export const Menu = styled.div`
     color: #4a4a4a;
     line-height: 1.5;
     font-size: 16px;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
   }
 `;
