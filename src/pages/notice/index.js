@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from 'components/Common/Header';
+import NoticeList from 'components/Notice/NoticeList';
 import { Container, Title } from './styles';
 
 function Upload() {
@@ -7,7 +8,8 @@ function Upload() {
     <>
       <Header />
       <Container>
-        <Title>작품 등록하기</Title>
+        <Title>알림</Title>
+        <NoticeList />
       </Container>
     </>
   );
