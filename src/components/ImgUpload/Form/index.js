@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { Wrapper, ImgSection, InputSection } from './styles';
+import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 
 const Input = ({ label, register, required }) => (
   <>
@@ -37,7 +37,7 @@ function UploadForm() {
     watch,
     // formState: { errors },
   } = useForm();
-
+  const uploadImageInput = useRef(null);
   const watchPrice = watch('경매시작가격');
   // const [price, setPrice] = useState(watchPrice || 0);
   const currentKLAYPrice = 1542;
@@ -47,17 +47,37 @@ function UploadForm() {
     const klayToWon = priceToString(price * klay);
     return `${klayToWon} ₩`;
   };
+
+  const onImgChange = async (event) => {
+    const formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    // const response = await apiClient.post('/brand/logo_image', formData)
+  };
   // setPrice(() => watchPrice * currentKLAYPrice);
 
   // useEffect(() => {
   //   setPrice();
   // }, [price]);
 
+  const onImgDivClick = (event) => {
+    event.preventDefault();
+    uploadImageInput.current.click();
+    console.log('click onImgae div');
+  };
+
   console.log(typeof watch('경매시작가격'));
   // register -> formControlName 이라고 생각
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
-      <ImgSection />
+      <ImgSection onClick={onImgDivClick}>+ 이곳에 작품을 등록해주세요!</ImgSection>
+      <ImageInput
+        ref={uploadImageInput}
+        type="file"
+        id="uploadImg"
+        accept="image/*"
+        name="file"
+        onChange={onImgChange}
+      />
       <InputSection>
         <Input label="작품제목" register={register} required />
         {/* {errors.title && '제목을 입력해주세요'} */}

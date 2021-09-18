@@ -16,7 +16,14 @@ export const Wrapper = styled.form`
 export const ImgSection = styled.div`
   width: 500px;
   height: 500px;
-  border: 1px solid;
+  border: 3px dashed #dee2e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #8a8a8a;
+  cursor: pointer;
 `;
 
 export const InputSection = styled.div`
@@ -46,7 +53,7 @@ export const InputSection = styled.div`
   input:nth-of-type(2) {
     background-image: url(./images/klaytn.png);
     background-position: right 8px center;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-size: 20px;
     padding-right: 35px;
     text-align: right;
@@ -81,4 +88,8 @@ export const InputSection = styled.div`
     margin-bottom: 24px;
     padding-right: 20px;
   }
+`;
+
+export const ImageInput = styled.input`
+  display: none;
 `;
