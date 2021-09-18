@@ -24,6 +24,11 @@ export const ImgSection = styled.div`
   font-weight: 500;
   color: #8a8a8a;
   cursor: pointer;
+
+  img {
+    width: 100%;
+    height; auto;
+  }
 `;
 
 export const InputSection = styled.div`
@@ -36,6 +41,10 @@ export const InputSection = styled.div`
     font-weight: 600;
     margin-bottom: 0.5em;
     color: #4a4a4a;
+  }
+
+  label:nth-of-type(4) {
+    margin-top : 24px;
   }
 
   input {
@@ -85,7 +94,6 @@ export const InputSection = styled.div`
     color: #8a939b;
     font-weight: bold;
     text-align: right;
-    margin-bottom: 24px;
     padding-right: 20px;
   }
 `;
