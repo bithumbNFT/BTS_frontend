@@ -43,6 +43,23 @@ export const InputSection = styled.div`
     letter-spacing: -0.3px;
   }
 
+  input:nth-of-type(2) {
+    background-image: url(./images/klaytn.png);
+    background-position: right 8px center;
+    background-repeat:no-repeat;
+    background-size: 20px;
+    padding-right: 35px;
+    text-align: right;
+    margin-bottom: 5px;
+  }
+
+  input:nth-of-type(4) {
+    border: 1px solid #fe5000;
+    background-color: #fe5000;
+    color: white;
+    font-weight: bold;
+  }
+
   textarea {
     width: 100%;
     border: 1px solid #dee2e6;
@@ -60,5 +77,8 @@ export const InputSection = styled.div`
     display: inline-block;
     color: #8a939b;
     font-weight: bold;
+    text-align: right;
+    margin-bottom: 24px;
+    padding-right: 20px;
   }
 `;

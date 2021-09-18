@@ -7,7 +7,7 @@ export const Title = styled.h1`
 `;
 
 export const Container = styled.div`
-  width: 80%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
