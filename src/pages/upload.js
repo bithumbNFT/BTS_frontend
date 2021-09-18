@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Header from 'components/Common/Header';
+import UploadForm from 'components/ImgUpload/Form';
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -22,6 +23,7 @@ function Upload() {
       <Header />
       <Container>
         <Title>작품 등록하기</Title>
+        <UploadForm />
       </Container>
     </>
   );
