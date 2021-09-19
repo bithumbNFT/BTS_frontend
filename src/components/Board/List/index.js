@@ -1,31 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import Item from '../Item';
-import PostWrite from '../PostWrite';
 import { ListView, ListWrap } from './styles';
 
 function List() {
-  const [isShowing, setIsShowing] = useState(false);
-
-  const openModal = () => {
-    setIsShowing(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setIsShowing(false);
-    document.body.style.overflow = 'unset';
-  };
-
   return (
     <ListWrap>
       <div className="write">
-        <button type="button" className="postButton" onClick={openModal}>
-          <i>
-            <HiPencilAlt />
-          </i>
-          글쓰기
-        </button>
+        <a href="/board_write">
+          <button type="button" className="postButton">
+            <i>
+              <HiPencilAlt />
+            </i>
+            글쓰기
+          </button>
+        </a>
       </div>
 
       <ListView>
@@ -38,8 +27,6 @@ function List() {
         <Item />
         <Item />
       </ListView>
-
-      <PostWrite onClose={closeModal} open={isShowing} />
     </ListWrap>
   );
 }

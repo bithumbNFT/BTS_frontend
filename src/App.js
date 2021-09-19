@@ -10,8 +10,10 @@ function App() {
   const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
   const Post = lazy(() => import('./pages/board_post'));
+  const Write = lazy(() => import('./pages/board_write'));
   const Notice = lazy(() => import('./pages/notice'));
   const NotFount = lazy(() => import('./pages/404page'));
+
   return (
     <Router>
       {GlobalStyles}
@@ -30,6 +32,8 @@ function App() {
           <Route exact path="/mypage" component={MyPage} />
           {/* 게시글 view */}
           <Route exact path="/board_post" component={Post} />
+          {/* 게시글 view */}
+          <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />
           {/* <Redirect path="*" to="/" /> */}

@@ -23,11 +23,12 @@ export const LoginPopUp = styled.div`
   width: 100%;
   text-align: center;
   padding: 10px 0 38px;
-
+  display: grid;
+  place-items: center;
   .logo {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 32px;
-    color: #fe5000;
+    color: #444;
     text-align: center;
     margin: 32px 0 18px;
   }
@@ -99,6 +100,19 @@ export const Button = styled.button`
   color: #ffffff;
   font-weight: 400;
   margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.kakao {
+    background: #fee500;
+    color: #444;
+  }
+  &.naver {
+    background: #1ec800;
+  }
+  span {
+    margin-left: 0.8em;
+  }
 `;
 
 export const Close = styled.button`
