@@ -24,6 +24,14 @@ export const Form = styled.form`
   text-align: center;
   padding: 28px;
 
+  h1 {
+    text-align: left;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 4rem;
+    font-weight: 600;
+  }
+
   input {
     width: 100%;
     border: 1px solid #dee2e6;
@@ -63,16 +71,8 @@ export const Form = styled.form`
       border-radius: 4px;
       margin-top: 30px;
       margin-bottom: 20px;
-      &:nth-of-type(1) {
-        margin-right: 16px;
-        border: 1px solid #dee2e6;
-        color: #495057;
-        background-color: #fff;
-      }
-      &:nth-of-type(2) {
-        background-color: #fe5000;
-        color: #fff;
-      }
+      color: #fff;
+      background-color: #fe5000;
     }
   }
 `;

@@ -15,6 +15,9 @@ export const ChartWrap = styled.section`
 `;
 export const Chart = styled.article`
   max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   color: #fff;
   position: relative;
