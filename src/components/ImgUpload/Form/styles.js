@@ -44,7 +44,7 @@ export const InputSection = styled.div`
   }
 
   label:nth-of-type(4) {
-    margin-top : 24px;
+    margin-top: 24px;
   }
 
   input {

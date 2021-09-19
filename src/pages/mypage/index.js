@@ -1,14 +1,14 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import Profile from 'components/MyPage/Profile';
 import { Route, Link, Switch } from 'react-router-dom';
-// import LikeImage from 'components/MyPage/LikeImage';
+import LikeImage from 'components/MyPage/LikeImage';
 import PurchaseImage from 'components/MyPage/PurchaseImgae';
 import MyUpload from 'components/MyPage/MyUpload';
 import Header from 'components/Common/Header';
 import { Title, Container, Content, MyPageLink, MyPageTab } from './styles';
 
 function mypage() {
-  const LikeImage = lazy(() => import('components/MyPage/LikeImage'));
+  // const LikeImage = lazy(() => import('components/MyPage/LikeImage'));
   // const location = useLocation();
   // const location = { pathname: 'a' };
   const subTabs = [
