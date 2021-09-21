@@ -10,15 +10,25 @@ import axios from 'axios';
 import shortId from 'shortid';
 
 import {
+  // 게시물 작성
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
   ADD_POST_FAILURE,
+
+  // 게시물 삭제
   REMOVE_POST_REQUEST,
   REMOVE_POST_SUCCESS,
   REMOVE_POST_FAILURE,
+
+  // 댓글 작성
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
+
+  // 댓글 삭제
+  REMOVE_COMMENT_REQUEST,
+  REMOVE_COMMENT_SUCCESS,
+  REMOVE_COMMENT_FAILURE,
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
