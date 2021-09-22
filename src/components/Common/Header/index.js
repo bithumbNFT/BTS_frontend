@@ -6,6 +6,7 @@ import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from 'utils/OAuth';
 import { Gnb, Menu, User, Title } from './styles';
 
 function Header() {
+  // [TODO] 로그인 상태에 맞게 header 변경하기 ('로그인'/'로그아웃')
   const [isShowing, setIsShowing] = useState(false);
 
   const openModal = () => {
