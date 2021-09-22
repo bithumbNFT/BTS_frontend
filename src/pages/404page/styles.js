@@ -9,10 +9,24 @@ export const NotFoundPageWrapper = styled.div`
   height: 100vh;
 `;
 
+export const NotFoundName = styled.div`
+  font-size: 30px;
+  text-align: center;
+  line-height: 1.3;
+  margin-bottom : 1rem;
+  font-weight: 600;
+  color: #fe5000;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`;
+
 export const NotFoundText = styled.div`
   font-size: 25px;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.5;
+  font-weight: 500;
 
   @media (max-width: 768px) {
     font-size: 20px;
