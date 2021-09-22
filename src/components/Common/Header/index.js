@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import LoginModal from 'components/LoginModal';
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from 'utils/OAuth';
 import { Gnb, Menu, User, Title } from './styles';
 
 function Header() {
@@ -17,6 +18,13 @@ function Header() {
     document.body.style.overflow = 'unset';
   };
 
+  const handleKakaoLoginClick = platform => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  const handleNaverLoginClick = platform => {
+    window.location.href = NAVER_AUTH_URL;
+  };
   return (
     <Gnb>
       <div className="navWrap">
@@ -48,7 +56,12 @@ function Header() {
         </User>
       </div>
 
-      <LoginModal onClose={closeModal} open={isShowing} />
+      <LoginModal
+        onClose={closeModal}
+        open={isShowing}
+        onKakaoLogin={handleKakaoLoginClick}
+        onNaverLogin={handleNaverLoginClick}
+      />
     </Gnb>
   );
 }

@@ -13,7 +13,8 @@ function App() {
   const Write = lazy(() => import('./pages/board_write'));
   const Notice = lazy(() => import('./pages/notice'));
   const NotFount = lazy(() => import('./pages/404page'));
-
+  const Kakao = lazy(() => import('./pages/login/kakao'));
+  const Naver = lazy(() => import('./pages/login/naver'));
   return (
     <Router>
       {GlobalStyles}
@@ -36,6 +37,10 @@ function App() {
           <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />
+          {/* kakao login redirect view */}
+          <Route exact path="/login/oauth2/code/kakao" component={Kakao} />
+          {/* kakao login redirect view */}
+          <Route exact path="/login/oauth2/code/naver" component={Naver} />
           {/* <Redirect path="*" to="/" /> */}
           <Route component={NotFount} />
         </CacheSwitch>
