@@ -30,7 +30,7 @@ function App() {
           {/* 소통 게시판 */}
           <Route exact path="/board" component={Board} />
           {/* 마이페이지 */}
-          <Route exact path="/mypage" component={MyPage} />
+          <Route path="/mypage" component={MyPage} />
           {/* 게시글 view */}
           <Route exact path="/board_post" component={Post} />
           {/* 게시글 view */}

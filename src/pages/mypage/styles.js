@@ -26,9 +26,13 @@ export const MyPageLink = styled.div`
   flex-direction: column;
   margin-top: 1rem;
   margin-left: 2rem;
-  li {
-    padding: 1rem 0;
-  }
+`;
+
+export const TabList = styled.li`
+  padding: 1.2rem 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color : ${props => (props.current ? '#4a4a4a' : '#9a9a9a')}
 `;
 
 export const MyPageTab = styled.div`

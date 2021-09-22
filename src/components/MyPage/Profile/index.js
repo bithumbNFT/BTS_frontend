@@ -59,7 +59,7 @@ function Profile() {
               {imgSrc ? (
                 <img src={imgSrc} alt="profileImg" />
               ) : (
-                <img src="images/defaultProfile.svg" alt="default" />
+                <img src="/images/defaultProfile.svg" alt="default" />
               )}
               <EditImgIcon><MdEdit /></EditImgIcon>
             </ProfileImage>

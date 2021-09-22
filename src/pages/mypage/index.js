@@ -1,13 +1,13 @@
 import React from 'react';
 import Profile from 'components/MyPage/Profile';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import LikeImage from 'components/MyPage/LikeImage';
 import PurchaseImage from 'components/MyPage/PurchaseImgae';
 import MyUpload from 'components/MyPage/MyUpload';
 import Header from 'components/Common/Header';
-import { Title, Container, Content, MyPageLink, MyPageTab } from './styles';
+import { Title, Container, Content, MyPageLink, MyPageTab, TabList } from './styles';
 
-function mypage() {
+function mypage({ location: { pathname } }) {
   // const LikeImage = lazy(() => import('components/MyPage/LikeImage'));
   // const location = useLocation();
   // const location = { pathname: 'a' };
@@ -32,7 +32,7 @@ function mypage() {
     },
   ];
   return (
-    <>
+    <div>
       <Header />
       <Container>
         <Title>마이페이지</Title>
@@ -42,24 +42,24 @@ function mypage() {
             <MyPageLink>
               <ul>
                 {subTabs.map(subTab => (
-                  <li key={subTab.id}>
+                  <TabList key={subTab.id} current={pathname === subTab.path}>
                     <Link to={subTab.path}>{subTab.tabName}</Link>
-                  </li>
+                  </TabList>
                 ))}
               </ul>
             </MyPageLink>
           </section>
           <MyPageTab>
             <Switch>
-              <Route path="/mypage" exact component={MyUpload} />
-              <Route path="/mypage/purchase" component={PurchaseImage} />
-              <Route path="/mypage/wishList" component={LikeImage} />
+              <Route exact path="/mypage" component={MyUpload} />
+              <Route path="/mypage/purchase" exact component={PurchaseImage} />
+              <Route path="/mypage/wishList" exact component={LikeImage} />
             </Switch>
           </MyPageTab>
         </Content>
       </Container>
-    </>
+    </div>
   );
 }
 
-export default mypage;
+export default withRouter(mypage);
