@@ -7,8 +7,15 @@ function CommentView({ content, user, time }) {
     <>
       <CommentForm>
         <div className="userTimeNum">
-          <span className="name">{user}</span>
-          <span className="date">{time}</span>
+          <div className="left">
+            <span className="name">{user}</span>
+            <span className="date">{time}</span>
+          </div>
+
+          <div className="right">
+            <button type="button">수정</button>
+            <button type="button">삭제</button>
+          </div>
         </div>
 
         <BoardBody>

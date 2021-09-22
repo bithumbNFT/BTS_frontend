@@ -51,25 +51,14 @@ export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
-const dummyUser = (data) => ({
+const dummyUser = data => ({
   ...data,
   nickname: 'hyunju',
   id: 1,
   Posts: [{ id: 1 }],
-  Followings: [
-    { nickname: '혀주' },
-    { nickname: 'hjlee' },
-    { nickname: 'hjl' },
-  ],
-  Followers: [
-    { nickname: '혀주' },
-    { nickname: 'hj lee' },
-    { nickname: 'hjl' },
-    { nickname: 'hjl' },
-  ],
 });
 
-export const loginRequestAction = (data) => ({
+export const loginRequestAction = data => ({
   type: LOG_IN_REQUEST,
   data,
 });
@@ -178,7 +167,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         me: {
           ...state.me,
-          Posts: state.me.posts.filter((v) => v.id !== action.data),
+          Posts: state.me.posts.filter(v => v.id !== action.data),
         },
       };
     default:

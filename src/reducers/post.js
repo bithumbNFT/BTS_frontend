@@ -52,9 +52,9 @@ export const initialState = {
 };
 
 // 게시글 작성
-export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
-export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const ADD_POST_REQUEST = 'post/ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'post/ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'post/ADD_POST_FAILURE';
 
 // 게시물 삭제
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
@@ -71,29 +71,28 @@ export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
 export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
 export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
 
-export const addPost = (data) => ({
+export const addPost = data => ({
   type: ADD_POST_REQUEST,
   data,
 });
 
-export const addComment = (data) => ({
+export const addComment = data => ({
   type: ADD_COMMENT_REQUEST,
   data,
 });
 
 // 가짜 객체 생성
-const dummyPost = (data) => ({
+const dummyPost = data => ({
   id: data.id,
   content: data.content,
   User: {
     id: 1,
     nickname: '이현주',
   },
-  Images: [],
   Comments: [],
 });
 
-const dummyCommnet = (data) => ({
+const dummyCommnet = data => ({
   id: shortId.generate(),
   content: data,
   User: {
@@ -138,7 +137,7 @@ const reducer = (state = initialState, action) => {
     case REMOVE_POST_SUCCESS:
       return {
         ...state,
-        mainPosts: state.mainPosts.filter((v) => v.id !== action.data),
+        mainPosts: state.mainPosts.filter(v => v.id !== action.data),
         removePostLoading: false,
         removePostDone: true,
       };
@@ -161,7 +160,7 @@ const reducer = (state = initialState, action) => {
 
     case ADD_COMMENT_SUCCESS: {
       const postIndex = state.mainPosts.findIndex(
-        (v) => v.id === action.data.postId,
+        v => v.id === action.data.postId,
       );
       const post = { ...state.mainPosts[postIndex] };
       post.Comments = [dummyCommnet(action.data.content), ...post.Comments];
