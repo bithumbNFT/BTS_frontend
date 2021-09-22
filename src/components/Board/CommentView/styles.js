@@ -10,13 +10,27 @@ export const CommentForm = styled.div`
   border: 1px solid #e9ecef;
   margin-bottom: 1em;
   .userTimeNum {
-    .name {
-      color: #fe5000;
-      margin-right: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .left {
+      .name {
+        color: #fe5000;
+        margin-right: 0.5em;
+      }
+      .date {
+        font-weight: 400;
+        color: #adb5bd;
+      }
     }
-    .date {
-      font-weight: 400;
-      color: #adb5bd;
+    .right {
+      font-size: 16px;
+      button {
+        color: #fe5000;
+        &:nth-of-type(1) {
+          margin-right: 1em;
+        }
+      }
     }
   }
 `;

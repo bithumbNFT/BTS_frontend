@@ -11,6 +11,19 @@ export const PostWrap = styled.article`
   .boardHeader {
     border-bottom: 1px solid #f1f3f5;
     margin-bottom: 10px;
+    .align {
+      display: flex;
+      justify-content: space-between;
+      .right {
+        color: #fe5000;
+        font-size: 16px;
+        button {
+          &:nth-of-type(1) {
+            margin-right: 1em;
+          }
+        }
+      }
+    }
   }
   .userTimeNum {
     display: flex;

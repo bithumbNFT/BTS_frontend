@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { VscHeart } from 'react-icons/vsc';
+import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 
 const CardContainer = styled.div`
   border: 1px solid #ddd;
@@ -58,6 +58,11 @@ const CardRight = styled.div`
 `;
 
 function Card() {
+  const [liked, setLiked] = useState(false);
+  const onToggleLike = useCallback(() => {
+    setLiked((prev) => !prev);
+  }, []);
+
   return (
     <CardContainer>
       <Link to="/auction">
@@ -71,7 +76,12 @@ function Card() {
         </CardLeft>
 
         <CardRight>
-          <VscHeart />
+          {liked ? (
+            <RiHeartFill onClick={onToggleLike} />
+          ) : (
+            <RiHeartLine onClick={onToggleLike} />
+          )}
+
           <Status>판매중</Status>
         </CardRight>
       </CardDetail>
