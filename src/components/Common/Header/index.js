@@ -18,11 +18,11 @@ function Header() {
     document.body.style.overflow = 'unset';
   };
 
-  const handleKakaoLoginClick = platform => {
+  const onKakaoLoginClick = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
-  const handleNaverLoginClick = platform => {
+  const onNaverLoginClick = () => {
     window.location.href = NAVER_AUTH_URL;
   };
   return (
@@ -59,8 +59,8 @@ function Header() {
       <LoginModal
         onClose={closeModal}
         open={isShowing}
-        onKakaoLogin={handleKakaoLoginClick}
-        onNaverLogin={handleNaverLoginClick}
+        onKakaoLogin={onKakaoLoginClick}
+        onNaverLogin={onNaverLoginClick}
       />
     </Gnb>
   );

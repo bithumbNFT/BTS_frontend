@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from 'components/Common/Header';
+import { useSelector } from 'react-redux';
 import HomeIntro from 'components/Home/Intro';
 import AuctionList from 'components/Home/AuctionList';
 import styled from '@emotion/styled';
@@ -17,6 +18,12 @@ const Title = styled.h2`
 `;
 
 function home() {
+  const { logInLoading, logInDone, logInError } = useSelector(state => ({
+    logInLoading: state.userReducer.logInLoading,
+    logInDone: state.userReducer.logInDone,
+    logInError: state.userReducer.logInError,
+  }));
+  console.log('state in home', logInLoading, logInDone, logInError);
   return (
     <>
       <Header />

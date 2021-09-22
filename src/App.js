@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import { GlobalStyles } from 'styles/global-styles';
 
@@ -13,10 +13,10 @@ function App() {
   const Write = lazy(() => import('./pages/board_write'));
   const Notice = lazy(() => import('./pages/notice'));
   const NotFount = lazy(() => import('./pages/404page'));
-  const Kakao = lazy(() => import('./pages/login/kakao'));
-  const Naver = lazy(() => import('./pages/login/naver'));
+  const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
+  const Naver = lazy(() => import('./components/LoginModal/login/naver'));
   return (
-    <Router>
+    <>
       {GlobalStyles}
       <Suspense fallback={<div>Loading...</div>}>
         <CacheSwitch>
@@ -45,7 +45,7 @@ function App() {
           <Route component={NotFount} />
         </CacheSwitch>
       </Suspense>
-    </Router>
+    </>
   );
 }
 

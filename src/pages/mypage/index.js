@@ -41,7 +41,7 @@ function mypage() {
             <Profile />
             <MyPageLink>
               <ul>
-                {subTabs.map((subTab) => (
+                {subTabs.map(subTab => (
                   <li key={subTab.id}>
                     <Link to={subTab.path}>{subTab.tabName}</Link>
                   </li>

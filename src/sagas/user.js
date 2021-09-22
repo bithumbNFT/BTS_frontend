@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { redirect, push } from 'utils/historyUtils';
 import {
   all,
   fork,
@@ -11,28 +12,78 @@ import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
+  NAVER_LOG_IN_REQUEST,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
-  SIGN_UP_REQUEST,
-  SIGN_UP_SUCCESS,
-  SIGN_UP_FAILURE,
 } from '../reducers/user';
-
 //------------------------------------------------
-function logInAPI(data) {
-  return axios.post('/api/login', data);
+function kakaoLogInAPI(code) {
+  const response = axios({
+    method: 'GET',
+    url: `/test?code=${code}`,
+  });
+  // [TODO] 실제 response로 바꿔야함 , 토큰 받아서 axios header에 저장
+  const dummyData = {
+    data: {
+      accessToken: 'kakaologin 토큰',
+    },
+  };
+  return dummyData;
 }
 
-function* logIn(action) {
+function* kakaoLogIn(action) {
   try {
     console.log('사가 로그인');
-    yield delay(1000);
+    const result = yield call(kakaoLogInAPI, action.payload);
+    yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
+    yield call(redirect, '/');
+    console.log('redirect');
   } catch (err) {
+    console.log('사가 로그인 실패');
+    yield put({
+      type: LOG_IN_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+//------------------------------------------------
+
+function naverLogInAPI(code, state) {
+  const response = axios({
+    method: 'GET',
+    url: `/test?code=${code}&state=${state}`,
+  });
+  // [TODO] 실제 response로 바꿔야함
+  const dummyData = {
+    data: {
+      accessToken: 'naverlogin 토큰',
+    },
+  };
+  return dummyData;
+}
+
+function* naverLogIn(action) {
+  try {
+    console.log('사가 로그인');
+    const result = yield call(
+      naverLogInAPI,
+      action.data.code,
+      action.data.state,
+    );
+    yield delay(2000);
+    yield put({
+      type: LOG_IN_SUCCESS,
+      data: result.data,
+    });
+    yield call(redirect, '/');
+    console.log('redirect');
+  } catch (err) {
+    console.log('사가 로그인 실패');
     yield put({
       type: LOG_IN_FAILURE,
       error: err.response.data,
@@ -61,35 +112,16 @@ function* logOut() {
 
 //------------------------------------------------
 
-function signUpAPI() {
-  return axios.post('/api/signUp');
+function* watchKakaoLogIn() {
+  yield takeLatest(LOG_IN_REQUEST, kakaoLogIn);
 }
-
-function* signUp() {
-  try {
-    const result = yield call(signUpAPI);
-    yield delay(1000);
-    yield put({
-      type: SIGN_UP_SUCCESS,
-    });
-  } catch (err) {
-    yield put({
-      type: SIGN_UP_FAILURE,
-      error: err.response.data,
-    });
-  }
-}
-//------------------------------------------------
-
-function* watchLogIn() {
-  yield takeLatest(LOG_IN_REQUEST, logIn);
+function* watchNaverLogIn() {
+  yield takeLatest(NAVER_LOG_IN_REQUEST, naverLogIn);
 }
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
-function* watchSignUp() {
-  yield takeLatest(SIGN_UP_REQUEST, signUp);
-}
+
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchSignUp)]);
+  yield all([fork(watchKakaoLogIn), fork(watchNaverLogIn), fork(watchLogOut)]);
 }

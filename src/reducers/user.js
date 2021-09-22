@@ -27,6 +27,7 @@ export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+export const NAVER_LOG_IN_REQUEST = 'NAVER_LOG_IN_REQUEST';
 
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
@@ -58,9 +59,17 @@ const dummyUser = data => ({
   Posts: [{ id: 1 }],
 });
 
-export const loginRequestAction = data => ({
+export const kakaoLoginRequestAction = code => ({
   type: LOG_IN_REQUEST,
-  data,
+  payload: code,
+});
+
+export const naverLoginRequestAction = (code, state) => ({
+  type: NAVER_LOG_IN_REQUEST,
+  data: {
+    code,
+    state,
+  },
 });
 
 export const logoutRequestAction = () => ({
@@ -70,6 +79,7 @@ export const logoutRequestAction = () => ({
 // 리듀서 상태 선언
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case NAVER_LOG_IN_REQUEST:
     case LOG_IN_REQUEST:
       console.log('리듀서 로그인');
       return {
@@ -87,6 +97,7 @@ const reducer = (state = initialState, action) => {
         me: dummyUser(action.data),
       };
     case LOG_IN_FAILURE:
+      console.log('리듀서 로그인 실패');
       return {
         ...state,
         logInLoading: false,
