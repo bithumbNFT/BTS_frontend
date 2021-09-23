@@ -16,9 +16,6 @@ export const Container = styled.div`
 export const Content = styled.div`
   display: flex;
   justify-content: space-around;
-  section {
-    margin-right: 1rem;
-  }
 `;
 
 export const MyPageLink = styled.div`
