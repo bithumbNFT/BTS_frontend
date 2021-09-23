@@ -27,5 +27,12 @@
       "name": "Kim",
       "role": "designer"
     }
+  ],
+  "logout": [
+    {
+      "id": 1,
+      "name": "Lee",
+      "role": "developer"
+    }
   ]
 }

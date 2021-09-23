@@ -59,9 +59,13 @@ const dummyUser = data => ({
   Posts: [{ id: 1 }],
 });
 
-export const kakaoLoginRequestAction = code => ({
+export const kakaoLoginRequestAction = (code, state) => ({
   type: LOG_IN_REQUEST,
   payload: code,
+  data: {
+    code,
+    state,
+  },
 });
 
 export const naverLoginRequestAction = (code, state) => ({
@@ -94,7 +98,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         logInLoading: false,
         logInDone: true,
-        me: dummyUser(action.data),
+        me: action.data,
       };
     case LOG_IN_FAILURE:
       console.log('리듀서 로그인 실패');

@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import LoginModal from 'components/LoginModal';
+import { BsBell } from 'react-icons/bs';
+// import { VscBell } from 'react-icons/vsc';
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from 'utils/OAuth';
-import { Gnb, Menu, User, Title } from './styles';
+import { logoutRequestAction } from 'reducers/user';
+import { Gnb, Menu, User, Title, UserProfile, NotiIcon } from './styles';
 
 function Header() {
   // [TODO] 로그인 상태에 맞게 header 변경하기 ('로그인'/'로그아웃')
+  const { logInLoading, logInDone, logInError, me } = useSelector(state => ({
+    logInLoading: state.userReducer.logInLoading,
+    logInDone: state.userReducer.logInDone,
+    logInError: state.userReducer.logInError,
+    me: state.userReducer.me,
+  }));
   const [isShowing, setIsShowing] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const openModal = () => {
     setIsShowing(true);
@@ -19,12 +31,19 @@ function Header() {
     document.body.style.overflow = 'unset';
   };
 
-  const onKakaoLoginClick = () => {
-    window.location.href = KAKAO_AUTH_URL;
+  const onLoginClick = social => {
+    if (social === 'kakao') {
+      window.location.href = KAKAO_AUTH_URL;
+    } else if (social === 'naver') {
+      window.location.href = NAVER_AUTH_URL;
+    }
   };
 
-  const onNaverLoginClick = () => {
-    window.location.href = NAVER_AUTH_URL;
+  const LogoutClick = useCallback(() => dispatch(logoutRequestAction()));
+
+  const GoToPage = name => {
+    console.log(name);
+    history.push(name);
   };
   return (
     <Gnb>
@@ -49,19 +68,35 @@ function Header() {
             </span>
           </li>
 
-          <li className="user">
-            <button type="button" onClick={openModal}>
-              로그인
-            </button>
-          </li>
+          {logInDone && me ? (
+            <>
+              <NotiIcon onClick={() => GoToPage('/notice')}>
+                <BsBell />
+              </NotiIcon>
+              <UserProfile onClick={() => GoToPage('/mypage')}>
+                <img src={me.picture} alt="profileImage" />
+              </UserProfile>
+              <li className="user">
+                <button type="button" onClick={LogoutClick}>
+                  로그아웃
+                </button>
+              </li>
+            </>
+          ) : (
+            <li className="user">
+              <button type="button" onClick={openModal}>
+                로그인
+              </button>
+            </li>
+          )}
         </User>
       </div>
 
       <LoginModal
         onClose={closeModal}
         open={isShowing}
-        onKakaoLogin={onKakaoLoginClick}
-        onNaverLogin={onNaverLoginClick}
+        onKakaoLogin={() => onLoginClick('kakao')}
+        onNaverLogin={() => onLoginClick('naver')}
       />
     </Gnb>
   );
