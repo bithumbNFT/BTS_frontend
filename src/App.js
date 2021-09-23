@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import { GlobalStyles } from 'styles/global-styles';
 
@@ -12,10 +12,11 @@ function App() {
   const Post = lazy(() => import('./pages/board_post'));
   const Write = lazy(() => import('./pages/board_write'));
   const Notice = lazy(() => import('./pages/notice'));
-  const NotFount = lazy(() => import('./pages/404page'));
-
+  const NotFound = lazy(() => import('./pages/404page'));
+  const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
+  const Naver = lazy(() => import('./components/LoginModal/login/naver'));
   return (
-    <Router>
+    <>
       {GlobalStyles}
       <Suspense fallback={<div>Loading...</div>}>
         <CacheSwitch>
@@ -29,18 +30,22 @@ function App() {
           {/* 소통 게시판 */}
           <Route exact path="/board" component={Board} />
           {/* 마이페이지 */}
-          <Route exact path="/mypage" component={MyPage} />
+          <Route path="/mypage" component={MyPage} />
           {/* 게시글 view */}
           <Route exact path="/board_post" component={Post} />
           {/* 게시글 view */}
           <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />
+          {/* kakao login redirect view */}
+          <Route exact path="/login/oauth2/code/kakao" component={Kakao} />
+          {/* kakao login redirect view */}
+          <Route exact path="/login/oauth2/code/naver" component={Naver} />
           {/* <Redirect path="*" to="/" /> */}
-          <Route component={NotFount} />
+          <Route component={NotFound} />
         </CacheSwitch>
       </Suspense>
-    </Router>
+    </>
   );
 }
 

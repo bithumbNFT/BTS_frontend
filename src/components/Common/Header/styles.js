@@ -36,7 +36,7 @@ export const User = styled.ul`
     color: #4a4a4a;
     line-height: 1.5;
     font-size: 16px;
-    margin-left: 0.8em;
+    margin-left: 1em;
     &.user {
       border: 1px solid #dbdbdb;
       border-radius: 5px;
@@ -86,6 +86,34 @@ export const Menu = styled.div`
     opacity: 0.8;
     &:hover {
       opacity: 1;
+    }
+  }
+`;
+
+export const UserProfile = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: 1em;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+`;
+
+export const NotiIcon = styled.div`
+  svg {
+    font-size: 20px;
+    color: #4a4a4a;
+    margin-left: 2em;
+    cursor: pointer;
+
+    &:hover {
+      color: #fe5000;
+      fill: #fe5000;
     }
   }
 `;

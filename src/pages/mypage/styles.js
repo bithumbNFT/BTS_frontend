@@ -23,8 +23,17 @@ export const MyPageLink = styled.div`
   flex-direction: column;
   margin-top: 1rem;
   margin-left: 2rem;
-  li {
-    padding: 1rem 0;
+`;
+
+export const TabList = styled.li`
+  padding: 1.2rem 10px;
+  color : ${props => (props.current ? '#4a4a4a' : '#9a9a9a')};
+  font-weight: ${props => (props.current ? 600 : 400)};
+  font-size: 1.1rem;
+  border-radius: 5px;
+  
+  &:hover {
+    background-color: #f8f8f8;
   }
 `;
 

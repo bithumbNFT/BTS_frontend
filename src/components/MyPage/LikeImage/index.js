@@ -7,6 +7,7 @@ const MyUploadText = styled.div`
   font-weight: bold;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
   width: fit-content;
+  margin: 8px 0;
 `;
 
 function LikeImage() {

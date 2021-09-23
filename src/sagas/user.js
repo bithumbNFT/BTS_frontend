@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { redirect, push } from 'utils/historyUtils';
 import {
   all,
   fork,
@@ -11,42 +12,119 @@ import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
+  NAVER_LOG_IN_REQUEST,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
-  SIGN_UP_REQUEST,
-  SIGN_UP_SUCCESS,
-  SIGN_UP_FAILURE,
 } from '../reducers/user';
-
 //------------------------------------------------
-function logInAPI(data) {
-  return axios.post('/api/login', data);
+function kakaoLogInAPI(code, state) {
+  const response = axios({
+    method: 'GET',
+    url: `/test?code=${code}&state=${state}&type=kakao`,
+  });
+  // [TODO] 실제 response로 바꿔야함 , 토큰 받아서 axios header에 저장
+  const dummyData = {
+    data: {
+      id: 1,
+      email: 'qor7111@naver.com',
+      social: 'naver',
+      name: '백인준',
+      picture: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+      coinWallet: '',
+      token: 'accesstoken',
+      refreshToken: 'refreshToken',
+    },
+  };
+  return dummyData;
 }
 
-function* logIn(action) {
+function* kakaoLogIn(action) {
   try {
     console.log('사가 로그인');
-    yield delay(1000);
+    const result = yield call(kakaoLogInAPI, action.payload);
+    const ACCESS_TOKEN = result.data.token;
+    localStorage.setItem('token', ACCESS_TOKEN);
+    // yield localStorage.setItem('token', ACCESS_TOKEN);
+    yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
+    yield call(redirect, '/');
+    console.log('redirect');
   } catch (err) {
+    console.log('사가 로그인 실패');
     yield put({
       type: LOG_IN_FAILURE,
-      error: err.response.data,
+      error: err.response,
     });
+    yield call(redirect, '/');
+  }
+}
+//------------------------------------------------
+
+function naverLogInAPI(code, state) {
+  const response = axios({
+    method: 'GET',
+    url: `/test?code=${code}&state=${state}&type=naver`,
+  });
+  // [TODO] 실제 response로 바꿔야함
+  const dummyData = {
+    data: {
+      email: 'qor7111@naver.com',
+      social: 'naver',
+      name: '백인준',
+      picture: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
+      coinWallet: '',
+      token: 'accesstoken',
+      refreshToken: 'refreshToken',
+    },
+  };
+  return dummyData;
+}
+
+function* naverLogIn(action) {
+  try {
+    console.log('사가 로그인');
+    const result = yield call(
+      naverLogInAPI,
+      action.data.code,
+      action.data.state,
+    );
+    const ACCESS_TOKEN = result.data.token;
+    localStorage.setItem('token', ACCESS_TOKEN);
+    yield delay(2000);
+    yield put({
+      type: LOG_IN_SUCCESS,
+      data: result.data,
+    });
+
+    yield call(redirect, '/');
+    console.log('redirect');
+  } catch (err) {
+    console.log('사가 로그인 실패');
+    yield put({
+      type: LOG_IN_FAILURE,
+      error: err.response,
+    });
+    yield call(redirect, '/');
   }
 }
 //------------------------------------------------
 
 function logOutAPI() {
-  return axios.post('/api/logout');
+  const response = axios({
+    method: 'GET',
+    url: '/logout',
+  });
+  return response;
 }
 
 function* logOut() {
   try {
+    const result = yield call(logOutAPI);
+    localStorage.removeItem('token');
     yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
@@ -61,35 +139,16 @@ function* logOut() {
 
 //------------------------------------------------
 
-function signUpAPI() {
-  return axios.post('/api/signUp');
+function* watchKakaoLogIn() {
+  yield takeLatest(LOG_IN_REQUEST, kakaoLogIn);
 }
-
-function* signUp() {
-  try {
-    const result = yield call(signUpAPI);
-    yield delay(1000);
-    yield put({
-      type: SIGN_UP_SUCCESS,
-    });
-  } catch (err) {
-    yield put({
-      type: SIGN_UP_FAILURE,
-      error: err.response.data,
-    });
-  }
-}
-//------------------------------------------------
-
-function* watchLogIn() {
-  yield takeLatest(LOG_IN_REQUEST, logIn);
+function* watchNaverLogIn() {
+  yield takeLatest(NAVER_LOG_IN_REQUEST, naverLogIn);
 }
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
-function* watchSignUp() {
-  yield takeLatest(SIGN_UP_REQUEST, signUp);
-}
+
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchSignUp)]);
+  yield all([fork(watchKakaoLogIn), fork(watchNaverLogIn), fork(watchLogOut)]);
 }
