@@ -10,13 +10,14 @@ import { logoutRequestAction } from 'reducers/user';
 import { Gnb, Menu, User, Title, UserProfile, NotiIcon } from './styles';
 
 function Header() {
-  // [TODO] 로그인 상태에 맞게 header 변경하기 ('로그인'/'로그아웃')
-  const { logInLoading, logInDone, logInError, me } = useSelector(state => ({
+  // [TODO] logInLoading, logInError 일 때 상태 처리하기
+  const { logInLoading, logInDone, logInError } = useSelector(state => ({
     logInLoading: state.userReducer.logInLoading,
     logInDone: state.userReducer.logInDone,
     logInError: state.userReducer.logInError,
     me: state.userReducer.me,
   }));
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const [isShowing, setIsShowing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -68,13 +69,13 @@ function Header() {
             </span>
           </li>
 
-          {logInDone && me ? (
+          {logInDone || userInfo ? (
             <>
               <NotiIcon onClick={() => GoToPage('/notice')}>
                 <BsBell />
               </NotiIcon>
               <UserProfile onClick={() => GoToPage('/mypage')}>
-                <img src={me.picture} alt="profileImage" />
+                <img src={userInfo.picture} alt="profileImage" />
               </UserProfile>
               <li className="user">
                 <button type="button" onClick={LogoutClick}>

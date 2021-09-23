@@ -13,6 +13,7 @@ const OAuth2RedirectHandler = () => {
   const params = new URL(document.location).searchParams;
   const code = params.get('code');
   const state = params.get('state');
+  console.log(state);
   useEffect(() => dispatch(kakaoLoginRequestAction(code, state)), [dispatch]);
 
   return <></>;

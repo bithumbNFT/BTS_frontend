@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MdEdit } from 'react-icons/md';
+
 import {
   Wrapper,
   UserInfo,
@@ -34,18 +35,18 @@ function Profile() {
     setImgSrc(undefined);
   };
 
-  const onChangeImg = (evt) => {
+  const onChangeImg = evt => {
     if (evt.target.files.length) {
       const imgTarget = evt.target.files[0];
       const fileReader = new FileReader();
       fileReader.readAsDataURL(imgTarget);
-      fileReader.onload = (e) => {
+      fileReader.onload = e => {
         setImgSrc(e.target.result);
       };
     }
   };
 
-  const onImgDivClick = (event) => {
+  const onImgDivClick = event => {
     event.preventDefault();
     profileImgInput.current.click();
   };
@@ -61,7 +62,9 @@ function Profile() {
               ) : (
                 <img src="/images/defaultProfile.svg" alt="default" />
               )}
-              <EditImgIcon><MdEdit /></EditImgIcon>
+              <EditImgIcon>
+                <MdEdit />
+              </EditImgIcon>
             </ProfileImage>
             <ImageInput
               ref={profileImgInput}

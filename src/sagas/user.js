@@ -8,6 +8,7 @@ import {
   put,
   call,
 } from '@redux-saga/core/effects';
+import { UserInfo } from 'components/MyPage/Profile/styles';
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -42,10 +43,14 @@ function kakaoLogInAPI(code, state) {
 function* kakaoLogIn(action) {
   try {
     console.log('사가 로그인');
-    const result = yield call(kakaoLogInAPI, action.payload);
-    const ACCESS_TOKEN = result.data.token;
-    localStorage.setItem('token', ACCESS_TOKEN);
-    // yield localStorage.setItem('token', ACCESS_TOKEN);
+    const result = yield call(
+      kakaoLogInAPI,
+      action.data.code,
+      action.data.state,
+    );
+    const { token, refreshToken, ...userInfo } = result.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
@@ -92,8 +97,10 @@ function* naverLogIn(action) {
       action.data.code,
       action.data.state,
     );
-    const ACCESS_TOKEN = result.data.token;
-    localStorage.setItem('token', ACCESS_TOKEN);
+
+    const { token, refreshToken, ...userInfo } = result.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
@@ -113,18 +120,11 @@ function* naverLogIn(action) {
 }
 //------------------------------------------------
 
-function logOutAPI() {
-  const response = axios({
-    method: 'GET',
-    url: '/logout',
-  });
-  return response;
-}
-
 function* logOut() {
   try {
-    const result = yield call(logOutAPI);
+    // 로그아웃 시, localstorage에 저장된 토큰 삭제
     localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
     yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
