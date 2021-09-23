@@ -55,12 +55,15 @@ const CardRight = styled.div`
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
+  svg {
+    cursor: pointer;
+  }
 `;
 
 function Card() {
   const [liked, setLiked] = useState(false);
   const onToggleLike = useCallback(() => {
-    setLiked((prev) => !prev);
+    setLiked(prev => !prev);
   }, []);
 
   return (
