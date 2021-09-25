@@ -1,41 +1,56 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import { REMOVE_COMMENT_REQUEST } from 'reducers/post';
 import { CommentForm, BoardBody } from './styles';
 
-function CommentView({ content, user, time }) {
+moment.locale('ko');
+console.log(moment);
+function CommentView({ post }) {
+  const dispatch = useDispatch();
+  const id = useSelector(state => state.userReducer.me?.id);
+  const { removeCommentLoading } = useSelector(state => state.postReducer);
+
+  const onRemovePost = useCallback(() => {
+    dispatch({
+      type: REMOVE_COMMENT_REQUEST,
+      data: post.id,
+    });
+  }, [id]);
+
   return (
     <>
       <CommentForm>
         <div className="userTimeNum">
           <div className="left">
-            <span className="name">{user}</span>
-            <span className="date">{time}</span>
+            <span className="name">작성자{post.comment_writer}</span>
+            <span className="date">
+              {moment(post.createdAt, 'YYYYMMDD').fromNow()}
+            </span>
           </div>
 
           <div className="right">
-            <button type="button">수정</button>
-            <button type="button">삭제</button>
+            <button
+              type="button"
+              loading={removeCommentLoading}
+              onClick={onRemovePost}
+            >
+              삭제
+            </button>
           </div>
         </div>
 
         <BoardBody>
-          <p>{content}</p>
+          <p>{post.comment_content}</p>
         </BoardBody>
       </CommentForm>
     </>
   );
 }
 
-CommentView.defaultProps = {
-  content: '비트코인 물렸습니다ㅏ....... 언제 쯤 오를까요 ??',
-  user: '이현주',
-  time: '30분 전',
-};
-
 CommentView.propTypes = {
-  content: PropTypes.string,
-  user: PropTypes.string,
-  time: PropTypes.string,
+  board: PropTypes.shape({}).isRequired,
 };
 
 export default CommentView;

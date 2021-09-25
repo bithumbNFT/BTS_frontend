@@ -32,7 +32,7 @@ import {
   ADD_COMMENT_FAILURE,
 
   // 댓글 삭제
-  REMOVE_COMMENT_OF_ME,
+  REMOVE_COMMENT_REQUEST,
   REMOVE_COMMENT_SUCCESS,
   REMOVE_COMMENT_FAILURE,
 } from '../reducers/post';
@@ -143,7 +143,7 @@ function* removeComment(action) {
       data: action.data,
     });
     yield put({
-      type: REMOVE_COMMENT_OF_ME,
+      type: REMOVE_COMMENT_REQUEST,
       data: action.data,
     });
   } catch (err) {
@@ -170,11 +170,16 @@ function* watchLoadPosts() {
   yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
 
+function* watchRemoveComment() {
+  yield takeLatest(REMOVE_COMMENT_REQUEST, removeComment);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchAddPost),
     fork(watchRemovePost),
     fork(watchAddComment),
     fork(watchLoadPosts),
+    fork(watchRemoveComment),
   ]);
 }

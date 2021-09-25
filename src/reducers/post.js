@@ -13,16 +13,16 @@ export const initialState = {
       view_cnt: 0,
 
       // 📝 댓글 부분
-      commentList: [
+      comment_list: [
         {
-          c_id: shortId.generate(),
+          c_id: '하이',
           comment_content: '안녕',
-          comment_write: '메롱',
+          comment_writer: '메롱',
         },
       ],
     },
   ],
-
+  mainPosts: [],
   // 👉 초기상태 정의
   // 게시물 작성
   addPostLoading: false,
@@ -44,6 +44,7 @@ export const initialState = {
   removeCommentDone: false,
   removeCommentError: null,
 };
+
 // 게시물 로드
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
@@ -65,7 +66,7 @@ export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 // 댓글 삭제
-export const REMOVE_COMMENT_OF_ME = 'REMOVE_COMMENT_OF_ME';
+export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
 export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
 export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
 
@@ -90,10 +91,10 @@ const dummyBoard = data => ({
 const dummyComment = data => ({
   c_id: shortId.generate(),
   comment_content: data.comment_content,
-  comment_write: data.comment_write,
+  comment_writer: data.comment_writer,
 });
 
-const reducer = (state = initialState, action) =>
+const postReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       // 게시물 로드
@@ -125,7 +126,6 @@ const reducer = (state = initialState, action) =>
       }
       case ADD_POST_SUCCESS: {
         draft.board.unshift(dummyBoard(action.data));
-
         draft.addPostLoading = false;
         draft.addPostDone = true;
         break;
@@ -180,7 +180,9 @@ const reducer = (state = initialState, action) =>
         break;
       }
 
-      case REMOVE_COMMENT_OF_ME: {
+      // ------------------------------------
+      //  댓글 삭제
+      case REMOVE_COMMENT_REQUEST: {
         draft.removeCommentLoading = true;
         draft.removeCommentDone = false;
         draft.removeCommentError = null;
@@ -204,4 +206,4 @@ const reducer = (state = initialState, action) =>
     }
   });
 
-export default reducer;
+export default postReducer;
