@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 
 const Input = ({ label, regiName, register, required }) => (
@@ -21,6 +22,7 @@ export function priceToString(price) {
 }
 
 function UploadForm() {
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -32,22 +34,26 @@ function UploadForm() {
   const uploadImageInput = useRef(null);
   const watchPrice = watch('price');
   const currentKLAYPrice = 1542;
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = data => console.log(data);
 
   const handlePrice = (price, klay) => {
     const klayToWon = priceToString(price * klay);
     return `${klayToWon} ₩`;
   };
 
-  const onChangeImg = (evt) => {
+  const onChangeImg = evt => {
     if (evt.target.files.length) {
       const imgTarget = evt.target.files[0];
       const fileReader = new FileReader();
       fileReader.readAsDataURL(imgTarget);
-      fileReader.onload = (e) => {
+      fileReader.onload = e => {
         setImgSrc(e.target.result);
       };
     }
+  };
+
+  const goToPrevPage = () => {
+    history.goBack();
   };
 
   // const onImgChange = async event => {
@@ -56,7 +62,7 @@ function UploadForm() {
   //   // const response = await apiClient.post('/brand/logo_image', formData)
   // };
 
-  const onImgDivClick = (event) => {
+  const onImgDivClick = event => {
     event.preventDefault();
     uploadImageInput.current.click();
   };
@@ -106,6 +112,9 @@ function UploadForm() {
           required
         />
         <input type="submit" />
+        <button type="button" onClick={goToPrevPage}>
+          취소
+        </button>
       </InputSection>
       {/* {errors.exampleRequired && <span>This field is required</span>} */}
     </Wrapper>
