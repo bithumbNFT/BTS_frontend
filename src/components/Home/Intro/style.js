@@ -49,7 +49,7 @@ export const Button = styled.button`
 export const CoinDesc = styled.div`
   display: grid;
   margin-top: 20px;
-  grid-template-columns: 1.5fr 0.5fr;
+  grid-template-columns: 1.4fr 0.6fr;
   gap: 20px;
   font-size: 28px;
   font-weight: 400;

@@ -8,7 +8,6 @@ import {
   put,
   call,
 } from '@redux-saga/core/effects';
-import { UserInfo } from 'components/MyPage/Profile/styles';
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
