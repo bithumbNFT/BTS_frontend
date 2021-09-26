@@ -16,6 +16,7 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_COIN_REQUEST:
+      console.log('리듀서 차트 데이터');
       return {
         ...state,
         loadCoinData: true,

@@ -11,13 +11,13 @@ import logger from 'redux-logger';
 
 import { Router } from 'react-router';
 import { browserHistory } from 'utils/historyUtils';
-
+import { API_SERVER_PATH } from 'utils/config';
 import rootReducer, { rootSaga } from './utils/modules';
 import App from './App';
 import './styles/font.css';
 
 // axios 설정
-// axios.defaults.baseURL = API_SERVER_PATH;
+axios.defaults.baseURL = API_SERVER_PATH;
 // [TODO] withCredentials를 true로 설정해야 refreshToken cookie를 주고 받을 수 있다?
 axios.defaults.withCredentials = true;
 
@@ -29,7 +29,6 @@ const store = createStore(
   enhancedReducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware, logger)),
 );
-console.log(store);
 
 sagaMiddleware.run(rootSaga);
 

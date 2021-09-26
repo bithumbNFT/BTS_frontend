@@ -3,9 +3,9 @@ import {
   all,
   fork,
   takeLatest,
-  delay,
   put,
   call,
+  delay,
 } from '@redux-saga/core/effects';
 import {
   LOAD_COIN_REQUEST,
@@ -18,6 +18,7 @@ function klaytnDataAPI() {
     method: 'GET',
     url: '/klayapi',
   });
+  // response가 promise 객체
   // [TODO] 실제 response로 바꿔야함
   const dummyData = {
     data: {
@@ -27,6 +28,8 @@ function klaytnDataAPI() {
       highest_price: '6900', // 고가
       lowest_price: '2660', // 저가
       trading_volume: '20306439.987773099405751505', // 거래량
+      fluctate_24H: '5320',
+      fluctate_rate_24H: '0.4321',
     },
   };
   return dummyData;
@@ -34,7 +37,9 @@ function klaytnDataAPI() {
 
 function* klaytnData() {
   try {
+    console.log('사가 클레이튼 데이터 받아오기');
     const result = yield call(klaytnDataAPI);
+    yield delay(1000);
     yield put({
       type: LOAD_COIN_SUCCESS,
       data: result.data,
@@ -53,5 +58,5 @@ function* watchKlaytnData() {
 }
 
 export default function* chartSaga() {
-  yield all([fork[watchKlaytnData]]);
+  yield all([fork(watchKlaytnData)]);
 }

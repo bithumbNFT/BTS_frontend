@@ -6,7 +6,7 @@ export const HomeMain = styled.main`
 export const ChartWrap = styled.section`
   font-size: 40px;
   text-align: center;
-  height: 100vh;
+  height: 80vh;
   border-bottom: 1px solid #262626;
   background: #000;
   display: flex;

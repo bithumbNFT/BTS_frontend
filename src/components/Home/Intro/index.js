@@ -30,10 +30,7 @@ function HomeIntro() {
               </InfoLeft>
               <InfoRight>
                 <img src="/images/klaytnLogo.png" alt="klaytnImg" />
-                <h4>
-                  KLAYTN을 이용하여
-                  안전하게 거래할 수 있습니다.
-                </h4>
+                <h4>KLAYTN을 이용하여 안전하게 거래할 수 있습니다.</h4>
               </InfoRight>
             </CoinDesc>
             <Button>
