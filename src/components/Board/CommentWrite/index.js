@@ -40,11 +40,7 @@ function CommentWrite({ post }) {
           value={commentText}
         />
 
-        <Button
-          htmlType="submit"
-          value={commentText}
-          loading={addCommentLoading}
-        >
+        <Button type="submit" loading={addCommentLoading}>
           댓글달기
         </Button>
       </CommentWriteBox>

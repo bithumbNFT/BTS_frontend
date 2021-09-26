@@ -16,6 +16,11 @@ import {
   LOAD_AUCTION_SUCCESS,
   LOAD_AUCTION_FAILURE,
 
+  // 경매템 view 로드 (단일 게시물)
+  LOAD_ONE_AUCTION_REQUEST,
+  LOAD_ONE_AUCTION_SUCCESS,
+  LOAD_ONE_AUCTION_FAILURE,
+
   // 경매템 작성
   ADD_AUCTION_REQUEST,
   ADD_AUCTION_SUCCESS,
@@ -44,7 +49,7 @@ function loadAuctionAPI(lastId) {
   return axios.get(`/posts?lastId=${lastId || 0}`);
 }
 
-function* loadAuctions(action) {
+function* loadAuction(action) {
   try {
     const result = yield call(loadAuctionAPI, action.lastId);
     yield put({
@@ -55,6 +60,27 @@ function* loadAuctions(action) {
     console.error(err);
     yield put({
       type: LOAD_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+// 경매템 view 로드 (단일 게시물)
+function loadOneAuctionAPI(data) {
+  return axios.get(`/posts/${data}`);
+}
+
+function* loadOneAuction(action) {
+  try {
+    const result = yield call(loadOneAuctionAPI, action.data);
+    yield put({
+      type: LOAD_ONE_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_ONE_AUCTION_FAILURE,
       error: err.response.data,
     });
   }
@@ -154,7 +180,12 @@ function* unLikeAuction(action) {
 
 // 경매템 게시물 로드
 function* watchLoadAuction() {
-  yield takeLatest(LOAD_AUCTION_REQUEST, loadAuctions);
+  yield takeLatest(LOAD_AUCTION_REQUEST, loadAuction);
+}
+
+// 경매템 view 로드 (단일 게시물)
+function* watchLoadOneAuction() {
+  yield takeLatest(LOAD_ONE_AUCTION_REQUEST, loadOneAuction);
 }
 // 경매템 작성로드
 function* watchAddAuction() {
@@ -179,6 +210,7 @@ function* watchUnLikeAuctions() {
 export default function* auctionSaga() {
   yield all([
     fork(watchLoadAuction),
+    fork(watchLoadOneAuction),
     fork(watchAddAuction),
     fork(watchRemoveAuction),
     fork(watchLikeAuctions),

@@ -1,8 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from 'components/Common/Header';
+import CardItem from 'components/MyPage/Card/CardItem';
+import { Pagination } from 'antd';
 import HomeIntro from 'components/Home/Intro';
-import AuctionList from 'components/Home/AuctionList';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
 import styled from '@emotion/styled';
+
+function home() {
+  const dispatch = useDispatch();
+  const { auction } = useSelector(state => state.auctionReducer);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_AUCTION_REQUEST,
+    });
+  }, [auction]);
+  return (
+    <>
+      <Header />
+      <HomeIntro />
+
+      <BottomMailn>
+        <Title>
+          🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을
+          만나보세요 🥰
+        </Title>
+
+        <CardWrap>
+          <CardListBox>
+            {auction.map(post => (
+              <CardItem key={post.id} post={post} />
+            ))}
+          </CardListBox>
+          <Pagination defaultCurrent={1} total={10} />
+        </CardWrap>
+      </BottomMailn>
+    </>
+  );
+}
+
+export default home;
 
 const Title = styled.h2`
   font-weight: 400;
@@ -16,19 +54,33 @@ const Title = styled.h2`
   }
 `;
 
-function home() {
-  return (
-    <>
-      <Header />
-      <HomeIntro />
+const CardWrap = styled.div`
+  width: 1000px;
+  margin: 0 auto;
+  padding: 5% 0;
+`;
 
-      <Title>
-        🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을
-        만나보세요 🥰
-      </Title>
-      <AuctionList />
-    </>
-  );
-}
+const CardListBox = styled.article`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 100%;
+  margin: 0 auto;
+`;
 
-export default home;
+const BottomMailn = styled.section`
+  height: 100vh;
+  position: relative;
+  .ant-pagination {
+    text-align: right;
+    margin-right: 3%;
+    margin-top: 10%;
+  }
+  .ant-pagination-item-active a {
+    color: #fe5000;
+  }
+  .ant-pagination-item-active {
+    font-weight: 500;
+    background: #fff;
+    border-color: #fe5000;
+  }
+`;

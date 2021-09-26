@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from 'components/Common/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
+import { LOAD_ONE_AUCTION_REQUEST } from 'reducers/auction';
 import { Nfting, Images, Detail, Border } from './styles';
 
-function auction() {
+function auction({ match }) {
+  console.warn(match);
+  console.log(`"파라미터" + ${match.params.id}`);
+  const dispatch = useDispatch();
+  const { singlePost } = useSelector(state => state.auctionReducer);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_ONE_AUCTION_REQUEST,
+    });
+  }, [singlePost]);
+
   return (
     <>
       <Header />
@@ -10,17 +24,14 @@ function auction() {
       <Nfting>
         {/* NFT 경매 이미지 */}
         <Images>
-          <img
-            src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-            alt="경매이미지"
-          />
+          <img src="o.jpb" alt="ㅇㅇ" />
         </Images>
 
         {/* NFT 경매 아이템 정보 */}
         <Detail>
           <div className="detail__header">
-            <h2>머리카락 휘날리며</h2>
-            <p>by 피카소</p>
+            <h2>ㅇㅇ</h2>
+            <p>by ㅇㅇ</p>
           </div>
 
           <Border>
@@ -47,11 +58,7 @@ function auction() {
 
           <Border>
             <h3>🎨 작품설명</h3>
-            <p>
-              문화매거진N의 첫 번째 아티스트, 특별전의 주인공 류지수. 이번
-              특별전을 통해 멀티 아트 퍼포머로서의 한 걸음을 떼는 그녀의 작품을
-              기대해 주세요.
-            </p>
+            <p>ㅇㅇ</p>
           </Border>
 
           <Border>
@@ -80,4 +87,4 @@ function auction() {
   );
 }
 
-export default auction;
+export default withRouter(auction);

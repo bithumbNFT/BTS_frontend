@@ -9,16 +9,27 @@ export const initialState = {
       // 📝 경매 아이템
       id: shortId.generate(),
       no: shortId.generate(),
-      name: faker.name(),
+      name: faker.name.firstName(),
       description: faker.lorem.paragraph(),
       image: faker.image.image(),
       owner: shortId.generate(),
-      date: faker.date(),
     },
   ],
+
   mainAuctions: [],
+  singlePost: null,
 
   // 👉 초기상태 정의
+  // 경매템 리스트 로드
+  loadAuctionLoading: false,
+  loadAuctionDone: false,
+  loadAuctionError: null,
+
+  // 경매템 view 로드 (단일 게시물)
+  loadOneAuctionLoading: false,
+  loadOneAuctionDone: false,
+  loadOneAuctionError: null,
+
   // 경매템 작성
   addAuctionLoading: false,
   addAuctionDone: false,
@@ -30,14 +41,14 @@ export const initialState = {
   removeAuctionError: null,
 
   // 경매템 찜하기
-  likePostLoading: false,
-  likePostDone: false,
-  likePostError: null,
+  likeAuctionLoading: false,
+  likeAuctionDone: false,
+  likeAuctionError: null,
 
   // 경매템 찜 취소
-  unlikePostLoading: false,
-  unlikePostDone: false,
-  unlikePostError: null,
+  unlikeAuctionLoading: false,
+  unlikeAuctionDone: false,
+  unlikeAuctionError: null,
 };
 
 // ----------------------------
@@ -46,7 +57,12 @@ export const LOAD_AUCTION_REQUEST = 'LOAD_AUCTION_REQUEST';
 export const LOAD_AUCTION_SUCCESS = 'LOAD_AUCTION_SUCCESS';
 export const LOAD_AUCTION_FAILURE = 'LOAD_AUCTION_FAILURE';
 
-// 게시글 작성
+// 경매템 view 로드 (단일 게시물)
+export const LOAD_ONE_AUCTION_REQUEST = 'LOAD_AUCTION_REQUEST';
+export const LOAD_ONE_AUCTION_SUCCESS = 'LOAD_AUCTION_SUCCESS';
+export const LOAD_ONE_AUCTION_FAILURE = 'LOAD_AUCTION_FAILURE';
+
+// 경매템 작성
 export const ADD_AUCTION_REQUEST = 'post/ADD_AUCTION_REQUEST';
 export const ADD_AUCTION_SUCCESS = 'post/ADD_AUCTION_SUCCESS';
 export const ADD_AUCTION_FAILURE = 'post/ADD_AUCTION_FAILURE';
@@ -67,7 +83,7 @@ export const UNLIKE_AUCTION_REQUEST = 'UNLIKE_AUCTION_REQUEST';
 export const UNLIKE_AUCTION_SUCCESS = 'UNLIKE_AUCTION_SUCCESS';
 export const UNLIKE_AUCTION_FAILURE = 'UNLIKE_AUCTION_FAILURE';
 
-export const addPost = data => ({
+export const addAuction = data => ({
   type: LOAD_AUCTION_REQUEST,
   data,
 });
@@ -101,54 +117,74 @@ const postReducer = (state = initialState, action) =>
     switch (action.type) {
       // 경매템 로드
       case LOAD_AUCTION_REQUEST:
-        draft.loadPostsLoading = true;
-        draft.loadPostsDone = false;
-        draft.loadPostsError = null;
+        draft.loadAuctionLoading = true;
+        draft.loadAuctionDone = false;
+        draft.loadAuctionError = null;
         break;
 
       case LOAD_AUCTION_SUCCESS: {
-        draft.loadPostsLoading = false;
-        draft.loadPostsDone = true;
-        draft.board = draft.board.concat(action.data);
+        draft.loadAuctionLoading = false;
+        draft.loadAuctionDone = true;
+        draft.auction = action.data.concat(draft.auction);
         break;
       }
 
       case LOAD_AUCTION_FAILURE: {
-        draft.loadPostsLoading = false;
-        draft.loadPostsError = action.error;
+        draft.loadAuctionLoading = false;
+        draft.loadAuctionError = action.error;
+        break;
+      }
+
+      // 경매템 view 로드 (단일 게시물)
+      case LOAD_ONE_AUCTION_REQUEST:
+        draft.loadOneAuctionLoading = true;
+        draft.loadOneAuctionDone = false;
+        draft.loadOneAuctionError = null;
+        break;
+
+      case LOAD_ONE_AUCTION_SUCCESS: {
+        draft.loadOneAuctionLoading = false;
+        draft.loadOneAuctionDone = true;
+        draft.singlePost = action.data;
+        break;
+      }
+
+      case LOAD_ONE_AUCTION_FAILURE: {
+        draft.loadOneAuctionLoading = false;
+        draft.loadOneAuctionError = action.error;
         break;
       }
 
       //  경매템 추가
       case ADD_AUCTION_REQUEST: {
-        draft.addPostLoading = true;
-        draft.addPostDone = false;
-        draft.addPostError = null;
+        draft.addAuctionLoading = true;
+        draft.addAuctionDone = false;
+        draft.addAuctionError = null;
         break;
       }
       case ADD_AUCTION_SUCCESS: {
-        draft.board.unshift(dummyAuction(action.data.id));
-        draft.addPostLoading = false;
-        draft.addPostDone = true;
+        draft.auction.unshift(dummyAuction(action.data.id));
+        draft.addAuctionLoading = false;
+        draft.addAuctionDone = true;
         break;
       }
       case ADD_AUCTION_FAILURE: {
-        draft.addPostLoading = false;
-        draft.addPostError = action.error;
+        draft.addAuctionLoading = false;
+        draft.addAuctionError = action.error;
         break;
       }
 
       //  경매템 삭제
       case REMOVE_AUCTION_REQUEST: {
-        draft.removePostLoading = true;
-        draft.removePostDone = false;
-        draft.removePostError = null;
+        draft.removeAuctionLoading = true;
+        draft.removeAuctionDone = false;
+        draft.removeAuctionError = null;
         break;
       }
       case REMOVE_AUCTION_SUCCESS: {
-        draft.board = draft.board.filter(v => v.id !== action.data);
-        draft.removePostLoading = false;
-        draft.removePostDone = true;
+        draft.auction = draft.auction.filter(v => v.id !== action.data);
+        draft.removeAuctionLoading = false;
+        draft.removeAuctionDone = true;
         break;
       }
 
@@ -156,36 +192,36 @@ const postReducer = (state = initialState, action) =>
       //  경매템 찜하기
 
       case LIKE_AUCTION_REQUEST:
-        draft.followLoading = true;
-        draft.followError = null;
-        draft.followDone = false;
+        draft.likeAuctionLoading = true;
+        draft.likeAuctionError = null;
+        draft.likeAuctionDone = false;
         break;
       case LIKE_AUCTION_SUCCESS:
-        draft.followLoading = false;
+        draft.likeAuctionLoading = false;
         draft.me.Followings.push({ id: action.data.id });
-        draft.followDone = true;
+        draft.likeAuctionDone = true;
         break;
       case LIKE_AUCTION_FAILURE:
-        draft.followLoading = false;
-        draft.followError = action.error;
+        draft.likeAuctionLoading = false;
+        draft.likeAuctionError = action.error;
         break;
 
       //  경매템 찜 취소
       case UNLIKE_AUCTION_REQUEST:
-        draft.unfollowLoading = true;
-        draft.unfollowError = null;
-        draft.unfollowDone = false;
+        draft.unlikeAuctionLoading = true;
+        draft.unlikeAuctionError = null;
+        draft.unlikeAuctionDone = false;
         break;
       case UNLIKE_AUCTION_SUCCESS:
-        draft.unfollowLoading = false;
+        draft.unlikeAuctionLoading = false;
         draft.me.Followings = draft.me.Followings.filter(
           v => v.id !== action.data.id,
         );
-        draft.unfollowDone = true;
+        draft.unlikeAuctionDone = true;
         break;
       case UNLIKE_AUCTION_FAILURE:
-        draft.unfollowLoading = false;
-        draft.unfollowError = action.error;
+        draft.unlikeAuctionLoading = false;
+        draft.unlikeAuctionError = action.error;
         break;
 
       default:

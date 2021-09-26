@@ -24,7 +24,8 @@ function App() {
           {/* 홈화면 */}
           <Route exact path="/" component={Home} />
           {/* 경매 페이지 */}
-          <Route exact path="/auction" component={Auction} />
+          {/* <Route path="/auction" component={Auction} /> */}
+          <Route path="/auction/:id" component={Auction} />
           {/* 작품 업로드 페이지 */}
           <Route exact path="/upload" component={Upload} />
           {/* 소통 게시판 */}

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { LOAD_POSTS_REQUEST } from 'reducers/post';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'antd';
@@ -35,10 +36,21 @@ function List() {
           <Item key={post.id} post={post} />
         ))}
 
-        <Pagination defaultCurrent={1} total={50} />
+        <Pagination defaultCurrent={1} total={10} />
       </ListView>
     </ListWrap>
   );
 }
+
+Item.propTypes = {
+  board: PropTypes.shape({
+    author: PropTypes.string,
+    content: PropTypes.string,
+    createPostDate: PropTypes.string,
+    p_id: PropTypes.number,
+    title: PropTypes.string,
+    view_cnt: PropTypes.number,
+  }).isRequired,
+};
 
 export default List;

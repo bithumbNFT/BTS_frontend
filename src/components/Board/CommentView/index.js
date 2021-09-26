@@ -1,16 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { REMOVE_COMMENT_REQUEST } from 'reducers/post';
+import 'moment/locale/ko';
+import { REMOVE_COMMENT_REQUEST, LOAD_COMMENT_REQUEST } from 'reducers/post';
 import { CommentForm, BoardBody } from './styles';
 
-moment.locale('ko');
-console.log(moment);
 function CommentView({ post }) {
+  const nowTime = moment().format('YYYY.MM.DD HH:mm');
+  console.log(nowTime);
+
   const dispatch = useDispatch();
   const id = useSelector(state => state.userReducer.me?.id);
-  const { removeCommentLoading } = useSelector(state => state.postReducer);
+  const { removeCommentLoading, commentList } = useSelector(
+    state => state.postReducer,
+  );
 
   const onRemovePost = useCallback(() => {
     dispatch({
@@ -19,15 +23,19 @@ function CommentView({ post }) {
     });
   }, [id]);
 
+  useEffect(() => {
+    dispatch({
+      type: LOAD_COMMENT_REQUEST,
+    });
+  }, [commentList]);
+
   return (
     <>
       <CommentForm>
         <div className="userTimeNum">
           <div className="left">
-            <span className="name">작성자{post.comment_writer}</span>
-            <span className="date">
-              {moment(post.createdAt, 'YYYYMMDD').fromNow()}
-            </span>
+            <span className="name">{post.c_id}</span>
+            <span className="date">{nowTime}</span>
           </div>
 
           <div className="right">
