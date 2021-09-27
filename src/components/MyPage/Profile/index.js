@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   MdEdit,
-  MdKeyboardArrowDown,
   MdContentCopy,
   MdCheck,
 } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 import { createWalletAction, checkBalanceAction } from 'reducers/user';
-// import { RiArrowDropDownLine } from 'react-icons/ri';
-// IoMdArrowDropdown
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
@@ -24,7 +21,6 @@ import {
   CancelButton,
   ButtonContainer,
   EditImgIcon,
-  InputBox,
   ImgWithBtn,
   CopyInputBtn,
   CopySuccess,

@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 export const LOAD_COIN_REQUEST = 'LOAD_COIN_REQUEST';
 export const LOAD_COIN_SUCCESS = 'LOAD_COIN_SUCCESS';
 export const LOAD_COIN_FAILURE = 'LOAD_COIN_FAILURE';
@@ -13,32 +15,26 @@ export const initialState = {
   coinData: {},
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOAD_COIN_REQUEST:
-      console.log('리듀서 차트 데이터');
-      return {
-        ...state,
-        loadCoinData: true,
-        loadCoinDone: false,
-        loadCoinError: null,
-      };
-    case LOAD_COIN_SUCCESS:
-      return {
-        ...state,
-        loadCoinData: false,
-        loadCoinDone: true,
-        coinData: action.data,
-      };
-    case LOAD_COIN_FAILURE:
-      return {
-        ...state,
-        loadCoinData: false,
-        loadCoinError: action.error,
-      };
-    default:
-      return state;
-  }
-};
+const reducer = (state = initialState, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case LOAD_COIN_REQUEST:
+        draft.loadCoinData = true;
+        draft.loadCoinDone = false;
+        draft.loadCoinError = null;
+        break;
+      case LOAD_COIN_SUCCESS:
+        draft.loadCoinData = false;
+        draft.loadCoinDone = true;
+        draft.coinData = action.data;
+        break;
+      case LOAD_COIN_FAILURE:
+        draft.loadCoinData = false;
+        draft.loadCoinError = action.error;
+        break;
+      default:
+        break;
+    }
+  });
 
 export default reducer;
