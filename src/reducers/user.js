@@ -17,9 +17,13 @@ export const initialState = {
   createWalletLoading: false, // 지갑 생성 시도중
   createWalletDone: false,
   createWalletError: null,
+  checkBalanceLoading: false, // 클레이튼 잔고 조회
+  checkBalanceDone: false,
+  checkBalanceError: null,
   me: null,
   signUpData: {},
   loginData: {},
+  balanceData: 0,
 };
 
 // 액션 선언
@@ -59,6 +63,10 @@ export const CREATE_WALLET_REQUEST = 'CREATE_WALLET_REQUEST';
 export const CREATE_WALLET_SUCCESS = 'CREATE_WALLET_SUCCESS';
 export const CREATE_WALLET_FAILURE = 'CREATE_WALLET_FAILURE';
 
+export const CHECK_BALANCE_REQUEST = 'CHECK_BALANCE_REQUEST';
+export const CHECK_BALANCE_SUCCESS = 'CHECK_BALANCE_SUCCESS';
+export const CHECK_BALANCE_FAILURE = 'CHECK_BALANCE_FAILURE';
+
 const dummyUser = data => ({
   ...data,
   nickname: 'hyunju',
@@ -91,6 +99,11 @@ export const createWalletAction = email => ({
   type: CREATE_WALLET_REQUEST,
   payload: email,
   data: email,
+});
+
+export const checkBalanceAction = wallet => ({
+  type: CHECK_BALANCE_REQUEST,
+  payload: wallet,
 });
 
 // 리듀서 상태 선언
@@ -222,6 +235,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         createWalletLoading: false,
         createWalletError: action.error,
+      };
+    // --------------------------------------------
+    case CHECK_BALANCE_REQUEST:
+      console.log('리듀서 지갑 생성 요청');
+      return {
+        ...state,
+        checkBalanceLoading: true,
+        checkBalanceDone: false,
+        checkBalanceError: null,
+      };
+    case CHECK_BALANCE_SUCCESS:
+      return {
+        ...state,
+        checkBalanceLoading: false,
+        checkBalanceDone: true,
+        balanceData: action.data,
+      };
+    case CHECK_BALANCE_FAILURE:
+      return {
+        ...state,
+        checkBalanceLoading: false,
+        checkBalanceError: action.error,
       };
     default:
       return state;

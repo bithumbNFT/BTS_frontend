@@ -6,7 +6,7 @@ import {
   MdCheck,
 } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
-import { createWalletAction } from 'reducers/user';
+import { createWalletAction, checkBalanceAction } from 'reducers/user';
 // import { RiArrowDropDownLine } from 'react-icons/ri';
 // IoMdArrowDropdown
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
@@ -90,7 +90,24 @@ function Profile() {
     dispatch(createWalletAction(email));
   };
 
-  const coinWallet = useSelector(state => state.userReducer.me);
+  const getKlayBalance = () => {
+    if (userInfo.coinWallet !== '') {
+      console.log('1');
+      dispatch(checkBalanceAction(userInfo.coinWallet));
+    } else if (localStorage.getItem('coinWallet')) {
+      console.log('2');
+      dispatch(checkBalanceAction(localStorage.getItem('coinWallet')));
+    } else {
+      return 0;
+    }
+  };
+
+  const { checkBalanceLoading, balanceData } = useSelector(
+    state => state.userReducer,
+  );
+
+  useEffect(() => getKlayBalance(), [dispatch]);
+
   return (
     <>
       <Wrapper>
@@ -197,7 +214,12 @@ function Profile() {
           )}
         </UserEmail>
         <UserEmail>
-          <div>- 현재 잔액</div> <span>15 KLAY</span>
+          <div>- 현재 잔액</div>{' '}
+          {checkBalanceLoading ? (
+            <span>로딩중</span>
+          ) : (
+            <span>{balanceData} KLAY</span>
+          )}
         </UserEmail>
       </Wrapper>
     </>

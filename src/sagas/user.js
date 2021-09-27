@@ -20,6 +20,9 @@ import {
   CREATE_WALLET_SUCCESS,
   CREATE_WALLET_FAILURE,
   CREATE_WALLET_REQUEST,
+  CHECK_BALANCE_SUCCESS,
+  CHECK_BALANCE_FAILURE,
+  CHECK_BALANCE_REQUEST,
 } from '../reducers/user';
 //------------------------------------------------
 function kakaoLogInAPI(code, state) {
@@ -174,6 +177,40 @@ function* createWallet(action) {
 }
 //------------------------------------------------
 
+function checkBalanceAPI(wallet) {
+  const response = instance({
+    method: 'GET',
+    url: `/test?wallet=${wallet}`,
+    // url: `/Wallet/much/`${wallet}`,
+  });
+
+  const dummyData = {
+    klay: 7.990325,
+  };
+
+  return dummyData;
+}
+
+function* checkBalance(action) {
+  try {
+    console.log(action);
+    console.log('사가 잔고 조회');
+    const result = yield call(checkBalanceAPI, action.payload);
+    yield delay(2000);
+    yield put({
+      type: CHECK_BALANCE_SUCCESS,
+      data: result.klay,
+    });
+  } catch (err) {
+    console.log('사가 잔고 조회 실패');
+    yield put({
+      type: CHECK_BALANCE_FAILURE,
+      error: err.response,
+    });
+  }
+}
+//------------------------------------------------
+
 function* watchKakaoLogIn() {
   yield takeLatest(LOG_IN_REQUEST, kakaoLogIn);
 }
@@ -187,11 +224,16 @@ function* watchCreateWallet() {
   yield takeLatest(CREATE_WALLET_REQUEST, createWallet);
 }
 
+function* watchCheckBalanceWallet() {
+  yield takeLatest(CHECK_BALANCE_REQUEST, checkBalance);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchKakaoLogIn),
     fork(watchNaverLogIn),
     fork(watchLogOut),
     fork(watchCreateWallet),
+    fork(watchCheckBalanceWallet),
   ]);
 }
