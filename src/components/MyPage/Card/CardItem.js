@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 
 function Card({ post }) {
@@ -12,11 +12,9 @@ function Card({ post }) {
 
   return (
     <CardContainer>
-      <Router>
-        <Link to={`/auction/${post.id}`}>
-          <CardImage src={post.image} />
-        </Link>
-      </Router>
+      <Link to={`/auction/${post.id}`}>
+        <CardImage src={post.image} />
+      </Link>
 
       <CardDetail>
         <CardLeft>
