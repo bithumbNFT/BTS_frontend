@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { REMOVE_POST_REQUEST, REMOVE_COMMENT_REQUEST } from 'reducers/post';
@@ -12,7 +12,7 @@ console.log(nowTime);
 
 function Post({ post }) {
   const dispatch = useDispatch();
-  const { removePostLoading, board, removeCommentLoading } = useSelector(
+  const { removePostLoading, removeCommentLoading } = useSelector(
     state => state.postReducer,
   );
 
@@ -20,7 +20,7 @@ function Post({ post }) {
     dispatch({
       type: REMOVE_POST_REQUEST,
     });
-  }, [board]);
+  }, []);
 
   const onRemoveComment = useCallback(() => {
     dispatch({

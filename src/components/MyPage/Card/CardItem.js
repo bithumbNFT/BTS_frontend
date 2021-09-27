@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
-import auction from 'pages/auction';
 
 function Card({ post }) {
   const [liked, setLiked] = useState(false);
@@ -16,10 +16,6 @@ function Card({ post }) {
         <Link to={`/auction/${post.id}`}>
           <CardImage src={post.image} />
         </Link>
-
-        <Route path="/auction/:id">
-          <auction />
-        </Route>
       </Router>
 
       <CardDetail>
@@ -41,17 +37,27 @@ function Card({ post }) {
     </CardContainer>
   );
 }
+Card.propTypes = {
+  post: PropTypes.shape({
+    image: PropTypes.string,
+    owner: PropTypes.string,
+    description: PropTypes.string,
+    id: PropTypes.number,
+    no: PropTypes.number,
+    name: PropTypes.string,
+  }).isRequired,
+};
 
 export default Card;
 
 const CardContainer = styled.div`
   border: 1px solid #ddd;
-  width: 220px;
+  width: 300px;
   border-radius: 5px;
   margin-bottom: 20px;
   transition: all 0.3s;
   opacity: 0.7;
-  height: 330px;
+  height: 380px;
   display: grid;
   overflow: hidden;
   grid-auto-rows: 2fr 1fr;

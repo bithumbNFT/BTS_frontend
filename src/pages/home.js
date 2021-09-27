@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import Header from 'components/Common/Header';
 import CardItem from 'components/MyPage/Card/CardItem';
 import { Pagination } from 'antd';
@@ -9,6 +9,7 @@ import styled from '@emotion/styled';
 
 function home() {
   const dispatch = useDispatch();
+  const focusScreen = useRef([]);
   const { auction } = useSelector(state => state.auctionReducer);
 
   useEffect(() => {
@@ -16,15 +17,24 @@ function home() {
       type: LOAD_AUCTION_REQUEST,
     });
   }, [auction]);
+
+  // 버튼 클릭시 경매템 섹션으로 이동
+  const scrollToAuction = useCallback(() => {
+    focusScreen.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, []);
+
   return (
     <>
       <Header />
-      <HomeIntro />
+      <HomeIntro onClick={scrollToAuction} />
 
-      <BottomMailn>
+      <BottomMailn ref={focusScreen}>
         <Title>
-          🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을
-          만나보세요 🥰
+          🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을{' '}
+          <strong>경매</strong>해보세요 🥰
         </Title>
 
         <CardWrap>
@@ -57,7 +67,7 @@ const Title = styled.h2`
 const CardWrap = styled.div`
   width: 1000px;
   margin: 0 auto;
-  padding: 5% 0;
+  padding: 20px 0;
 `;
 
 const CardListBox = styled.article`
@@ -70,6 +80,7 @@ const CardListBox = styled.article`
 const BottomMailn = styled.section`
   height: 100vh;
   position: relative;
+
   .ant-pagination {
     text-align: right;
     margin-right: 3%;

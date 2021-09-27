@@ -37,7 +37,11 @@ function boardPost() {
 
       <Form onSubmit={onSubmit}>
         <h1>글작성</h1>
-        <input type="text" placeholder="제목을 입력해주세요." />
+        <input
+          type="text"
+          placeholder="제목을 입력해주세요. (80자 이내)"
+          maxLength="80"
+        />
         <textarea
           placeholder="글 내용을 입력해주세요."
           onChange={onChangeText}

@@ -27,7 +27,7 @@ export const ImgSection = styled.div`
 
   img {
     width: 100%;
-    height; auto;
+    height: auto;
   }
 `;
 

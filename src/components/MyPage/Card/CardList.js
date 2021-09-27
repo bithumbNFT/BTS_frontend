@@ -1,20 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
 import CardItem from './CardItem';
 
-function CardList({ post }) {
-  const dispatch = useDispatch();
-  const { auction } = useSelector(state => state.auctionReducer);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_AUCTION_REQUEST,
-    });
-  }, [auction]);
-
+function CardList() {
   return (
     <CardWrap>
       <CardListWrapper>

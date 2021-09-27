@@ -5,6 +5,20 @@ export const ItemView = styled.li`
   border-bottom: 1px solid #dee2e6;
   width: 100%;
   transition: all 0.3s;
+  position: relative;
+  height: 120px;
+  .postTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    width: 580px;
+    height: 40px;
+  }
+  .userTime {
+    position: absolute;
+    bottom: 26px;
+  }
   &:nth-of-type(1) {
     border-top: 1px solid #dee2e6;
     margin-top: 1.4em;

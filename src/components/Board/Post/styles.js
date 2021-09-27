@@ -51,6 +51,11 @@ export const PostWrap = styled.article`
   }
   .boardBody {
     padding: 16px 0;
+    p {
+      line-height: 1.5;
+      color: #444;
+      letter-spacing: -0.3px;
+    }
   }
 `;
 

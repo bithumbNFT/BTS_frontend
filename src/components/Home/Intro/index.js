@@ -2,7 +2,7 @@ import React from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 import { HomeMain, ChartWrap, Chart, Button } from './style';
 
-function HomeIntro() {
+function HomeIntro({ onClick }) {
   return (
     <>
       <HomeMain>
@@ -10,7 +10,7 @@ function HomeIntro() {
           <Chart>
             <h1>한층 더 새로워진 NFT 사용법</h1>
 
-            <Button>
+            <Button onClick={onClick}>
               <HiChevronDown />
             </Button>
           </Chart>

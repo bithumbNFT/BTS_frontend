@@ -63,9 +63,9 @@ export const LOAD_ONE_AUCTION_SUCCESS = 'LOAD_AUCTION_SUCCESS';
 export const LOAD_ONE_AUCTION_FAILURE = 'LOAD_AUCTION_FAILURE';
 
 // 경매템 작성
-export const ADD_AUCTION_REQUEST = 'post/ADD_AUCTION_REQUEST';
-export const ADD_AUCTION_SUCCESS = 'post/ADD_AUCTION_SUCCESS';
-export const ADD_AUCTION_FAILURE = 'post/ADD_AUCTION_FAILURE';
+export const ADD_AUCTION_REQUEST = 'ADD_AUCTION_REQUEST';
+export const ADD_AUCTION_SUCCESS = 'ADD_AUCTION_SUCCESS';
+export const ADD_AUCTION_FAILURE = 'ADD_AUCTION_FAILURE';
 
 // 경매템 삭제
 export const REMOVE_AUCTION_REQUEST = 'REMOVE_AUCTION_REQUEST';
@@ -84,33 +84,18 @@ export const UNLIKE_AUCTION_SUCCESS = 'UNLIKE_AUCTION_SUCCESS';
 export const UNLIKE_AUCTION_FAILURE = 'UNLIKE_AUCTION_FAILURE';
 
 export const addAuction = data => ({
-  type: LOAD_AUCTION_REQUEST,
+  type: ADD_AUCTION_REQUEST,
   data,
 });
 
 const dummyAuction = data => ({
-  name: data.name,
-  description: data.description,
-  image: data.image,
-  owner: data.owner,
-  no: data.no,
+  name: faker.name.findName(),
+  description: faker.lorem.paragraph(),
+  image: faker.image.image(),
+  owner: faker.name.findName(),
+  no: shortId.generate(),
   date: data.date,
 });
-
-export const generateDummyAuction = number =>
-  Array(number)
-    .fill()
-    .map(() => ({
-      id: shortId.generate(),
-      no: shortId.generate(),
-      description: faker.lorem.paragraph(),
-      image: [
-        {
-          src: faker.image.image(),
-        },
-      ],
-      name: faker.name(),
-    }));
 
 const postReducer = (state = initialState, action) =>
   produce(state, draft => {
@@ -125,7 +110,7 @@ const postReducer = (state = initialState, action) =>
       case LOAD_AUCTION_SUCCESS: {
         draft.loadAuctionLoading = false;
         draft.loadAuctionDone = true;
-        draft.auction = action.data.concat(draft.auction);
+        draft.auction = draft.auction.concat(action.data);
         break;
       }
 

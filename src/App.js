@@ -33,7 +33,8 @@ function App() {
           {/* 마이페이지 */}
           <Route path="/mypage" component={MyPage} />
           {/* 게시글 view */}
-          <Route exact path="/board_post" component={Post} />
+          {/* <Route exact path="/board_post" component={Post} /> */}
+          <Route exact path="/board_post/:id" component={Post} />
           {/* 게시글 view */}
           <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}

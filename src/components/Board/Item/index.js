@@ -11,9 +11,9 @@ function Item({ post }) {
 
   return (
     <ItemView>
-      <Link to="/board_post">
+      <Link to={`/board_post/${post.p_id}`}>
         <Desc>
-          <h3>{post.title}</h3>
+          <h3 className="postTitle">{post.title}</h3>
 
           <div className="userTime">
             {/* 작성자 */}
