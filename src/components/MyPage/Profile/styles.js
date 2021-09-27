@@ -8,8 +8,7 @@ export const UserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2rem;
-  margin-left: 1rem;
+  margin: 2rem 0 1.5rem 0;
 `;
 export const ProfileImage = styled.div`
   width: 80px;
@@ -24,6 +23,12 @@ export const ProfileImage = styled.div`
   }
 `;
 
+export const ImgWithBtn = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+`;
+
 export const UserName = styled.span`
   font-weight: 700;
   margin-left: 1em;
@@ -31,7 +36,7 @@ export const UserName = styled.span`
 `;
 
 export const UserEmail = styled.div`
-  margin: 2rem;
+  margin: 1rem 2rem 2rem 2rem;
   font-weight: 400;
   div {
     font-weight: 700;
@@ -42,8 +47,67 @@ export const UserEmail = styled.div`
   span {
     padding-left: 10px;
   }
+  .warn-msg {
+    font-size: 0.9rem;
+    color: #9e9e9e;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+  button {
+    margin: 0 1rem 0 1rem;
+    width: 70%;
+    position: relative;
+  }
+  svg {
+    vertical-align: middle;
+    font-size: 1rem;
+  }
+
+  .menu {
+    margin-top: 10px;
+    padding: 20px 20px 0 20px;
+    color: #000000;
+    background: #ffffff;
+    border-radius: 8px;
+    position: absolute;
+    width: 300px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  }
+
+  .menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 `;
 
+export const CopyInputBtn = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  border-radius: 5px;
+  margin-bottom: 0;
+  input {
+    width: 100%;
+    padding: 7px;
+    color: #000000;
+    border-right: 1px solid #9c9c9c;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  button {
+    width: fit-content;
+    margin: 0;
+    padding: 7px;
+  }
+`;
 export const ImageInput = styled.input`
   display: none;
 `;
@@ -55,7 +119,7 @@ export const EditButton = styled.button`
   width: 90%;
   padding: 5px 0;
   border-radius: 5px;
-  margin: 0 1rem 1rem 1rem;
+  margin: 0 1rem 1rem 1.2rem;
 `;
 
 export const SaveButton = styled.button`
@@ -64,7 +128,7 @@ export const SaveButton = styled.button`
   text-align: center;
   padding: 5px 0;
   border-radius: 5px;
-  margin: 0 0.3rem 1rem 1rem;
+  margin: 0 0.3rem 1rem 0.3rem;
   color: white;
   font-weight: 600;
   width: 90%;
@@ -76,12 +140,13 @@ export const CancelButton = styled.button`
   text-align: center;
   padding: 5px 0;
   border-radius: 5px;
-  margin: 0 1rem 1rem 0.3rem;
+  margin: 0 0.3rem 1rem 0.3rem;
   width: 90%;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
+  padding-left: 15px;
 `;
 
 export const EditImgIcon = styled.div`
@@ -105,4 +170,37 @@ export const InputBox = styled.input`
   border-radius: 4px;
   background-color: #fff;
   line-height: 1.47;
+`;
+
+export const CopySuccess = styled.div`
+  position: relative;
+  background: #212121;
+  border-radius: 3px;
+  width: fit-content;
+  height: 23px;
+  position: absolute;
+  top: 25px;
+  right: 4px;
+  span{
+    color: #fff;
+    font-size: 12px;
+    padding: 0;
+    margin: 10px;
+    font-weight: 500;
+  }
+
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #212121;
+    border-bottom: 0;
+    margin-left: -6px;
+    margin-bottom: -6px;
+}
+  }
 `;

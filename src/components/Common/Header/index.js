@@ -69,7 +69,7 @@ function Header() {
             </span>
           </li>
 
-          {logInDone || userInfo ? (
+          {logInDone && userInfo ? (
             <>
               <NotiIcon onClick={() => GoToPage('/notice')}>
                 <BsBell />

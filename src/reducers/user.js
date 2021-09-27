@@ -14,6 +14,9 @@ export const initialState = {
   changeNicknameLoading: false, // 닉네임 변경 시도중
   changeNicknameDone: false,
   changeNicknameError: null,
+  createWalletLoading: false, // 지갑 생성 시도중
+  createWalletDone: false,
+  createWalletError: null,
   me: null,
   signUpData: {},
   loginData: {},
@@ -52,6 +55,10 @@ export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
+export const CREATE_WALLET_REQUEST = 'CREATE_WALLET_REQUEST';
+export const CREATE_WALLET_SUCCESS = 'CREATE_WALLET_SUCCESS';
+export const CREATE_WALLET_FAILURE = 'CREATE_WALLET_FAILURE';
+
 const dummyUser = data => ({
   ...data,
   nickname: 'hyunju',
@@ -78,6 +85,12 @@ export const naverLoginRequestAction = (code, state) => ({
 
 export const logoutRequestAction = () => ({
   type: LOG_OUT_REQUEST,
+});
+
+export const createWalletAction = email => ({
+  type: CREATE_WALLET_REQUEST,
+  payload: email,
+  data: email,
 });
 
 // 리듀서 상태 선언
@@ -184,6 +197,31 @@ const reducer = (state = initialState, action) => {
           ...state.me,
           Posts: state.me.posts.filter(v => v.id !== action.data),
         },
+      };
+    // --------------------------------------------
+    case CREATE_WALLET_REQUEST:
+      console.log('리듀서 지갑 생성 요청');
+      return {
+        ...state,
+        createWalletLoading: true,
+        createWalletDone: false,
+        createWalletError: null,
+      };
+    case CREATE_WALLET_SUCCESS:
+      return {
+        ...state,
+        createWalletLoading: false,
+        createWalletDone: true,
+        me: {
+          ...state.me,
+          coinWallet: action.data,
+        },
+      };
+    case CREATE_WALLET_FAILURE:
+      return {
+        ...state,
+        createWalletLoading: false,
+        createWalletError: action.error,
       };
     default:
       return state;

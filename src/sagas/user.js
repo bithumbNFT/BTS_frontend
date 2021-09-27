@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
 import {
   all,
@@ -16,6 +17,9 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
+  CREATE_WALLET_SUCCESS,
+  CREATE_WALLET_FAILURE,
+  CREATE_WALLET_REQUEST,
 } from '../reducers/user';
 //------------------------------------------------
 function kakaoLogInAPI(code, state) {
@@ -122,8 +126,7 @@ function* naverLogIn(action) {
 function* logOut() {
   try {
     // 로그아웃 시, localstorage에 저장된 토큰 삭제
-    localStorage.removeItem('token');
-    localStorage.removeItem('userInfo');
+    localStorage.clear();
     yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
@@ -137,6 +140,39 @@ function* logOut() {
 }
 
 //------------------------------------------------
+function createWalletAPI(user) {
+  const response = instance({
+    method: 'GET',
+    url: '/test',
+    // url: `/Wallet/create?user=${user}`,
+  });
+
+  const dummyData = {
+    address: '0x65D074E30D1443fD66B76780b9F050A396baC46f',
+  };
+
+  return dummyData;
+}
+
+function* createWallet(action) {
+  try {
+    console.log('사가 지갑생성');
+    const result = yield call(createWalletAPI, action.data.email);
+    localStorage.setItem('coinWallet', result.address);
+    yield delay(2000);
+    yield put({
+      type: CREATE_WALLET_SUCCESS,
+      data: result.address,
+    });
+  } catch (err) {
+    console.log('사가 지갑 실패');
+    yield put({
+      type: CREATE_WALLET_FAILURE,
+      error: err.response,
+    });
+  }
+}
+//------------------------------------------------
 
 function* watchKakaoLogIn() {
   yield takeLatest(LOG_IN_REQUEST, kakaoLogIn);
@@ -147,7 +183,15 @@ function* watchNaverLogIn() {
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
+function* watchCreateWallet() {
+  yield takeLatest(CREATE_WALLET_REQUEST, createWallet);
+}
 
 export default function* userSaga() {
-  yield all([fork(watchKakaoLogIn), fork(watchNaverLogIn), fork(watchLogOut)]);
+  yield all([
+    fork(watchKakaoLogIn),
+    fork(watchNaverLogIn),
+    fork(watchLogOut),
+    fork(watchCreateWallet),
+  ]);
 }
