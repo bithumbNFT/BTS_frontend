@@ -14,7 +14,7 @@ import {
 import CoinChart from '../CoinChart';
 import CoinHeader from '../CoinHeader';
 
-function HomeIntro() {
+function HomeIntro({ onClick }) {
   return (
     <>
       <HomeMain>
@@ -33,7 +33,7 @@ function HomeIntro() {
                 <h4>KLAYTN을 이용하여 안전하게 거래할 수 있습니다.</h4>
               </InfoRight>
             </CoinDesc>
-            <Button>
+            <Button onClick={onClick}>
               <HiChevronDown />
             </Button>
           </Chart>

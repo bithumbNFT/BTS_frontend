@@ -24,7 +24,8 @@ function App() {
           {/* 홈화면 */}
           <Route exact path="/" component={Home} />
           {/* 경매 페이지 */}
-          <Route exact path="/auction" component={Auction} />
+          {/* <Route path="/auction" component={Auction} /> */}
+          <Route path="/auction/:id" component={Auction} />
           {/* 작품 업로드 페이지 */}
           <Route exact path="/upload" component={Upload} />
           {/* 소통 게시판 */}
@@ -32,7 +33,8 @@ function App() {
           {/* 마이페이지 */}
           <Route path="/mypage" component={MyPage} />
           {/* 게시글 view */}
-          <Route exact path="/board_post" component={Post} />
+          {/* <Route exact path="/board_post" component={Post} /> */}
+          <Route exact path="/board_post/:id" component={Post} />
           {/* 게시글 view */}
           <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}

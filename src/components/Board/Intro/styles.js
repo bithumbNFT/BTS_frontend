@@ -33,9 +33,11 @@ export const Text = styled.div`
   h2 {
     font-size: 26px;
     font-weight: 700;
+    color: #fff;
     margin-bottom: 0.5em;
   }
   p {
     font-size: 18px;
+    color: #fff;
   }
 `;

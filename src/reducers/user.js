@@ -17,7 +17,6 @@ export const initialState = {
   checkBalanceDone: false,
   checkBalanceError: null,
   me: null,
-  signUpData: {},
   loginData: {},
   balanceData: 0,
 };

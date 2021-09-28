@@ -5,7 +5,14 @@ import LikeImage from 'components/MyPage/LikeImage';
 import PurchaseImage from 'components/MyPage/PurchaseImgae';
 import MyUpload from 'components/MyPage/MyUpload';
 import Header from 'components/Common/Header';
-import { Title, Container, Content, MyPageLink, MyPageTab, TabList } from './styles';
+import {
+  Title,
+  Container,
+  Content,
+  MyPageLink,
+  MyPageTab,
+  TabList,
+} from './styles';
 
 function mypage({ location: { pathname } }) {
   // const LikeImage = lazy(() => import('components/MyPage/LikeImage'));

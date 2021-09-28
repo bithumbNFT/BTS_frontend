@@ -31,4 +31,8 @@ export const ListView = styled.ul`
   font-size: 12px;
   font-weight: 500;
   color: #616568;
+  .ant-pagination {
+    text-align: center;
+    margin-top: 5em;
+  }
 `;

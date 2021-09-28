@@ -26,20 +26,26 @@ import {
   REMOVE_POST_SUCCESS,
   REMOVE_POST_FAILURE,
 
+  // 댓글 로드
+  LOAD_COMMENT_REQUEST,
+  LOAD_COMMENT_SUCCESS,
+  LOAD_COMMENT_FAILURE,
+
   // 댓글 작성
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
 
   // 댓글 삭제
-  REMOVE_COMMENT_OF_ME,
+  REMOVE_COMMENT_REQUEST,
   REMOVE_COMMENT_SUCCESS,
   REMOVE_COMMENT_FAILURE,
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
 function loadPostsAPI(lastId) {
-  return axios.get(`/posts?lastId=${lastId || 0}`);
+  // return axios.get(`/posts?lastId=${lastId || 0}`);
+  return axios.get('/todos', lastId);
 }
 
 function* loadPosts(action) {
@@ -110,6 +116,26 @@ function* removePost(action) {
   }
 }
 
+function loadCommentAPI(lastId) {
+  return axios.get(`/posts?lastId=${lastId || 0}`);
+}
+
+function* loadComment(action) {
+  try {
+    const result = yield call(loadCommentAPI, action.lastId);
+    yield put({
+      type: LOAD_COMMENT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_COMMENT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function addCommentAPI(data) {
   return axios.post('/api/post/${data.postId}/comment', data);
 }
@@ -143,7 +169,7 @@ function* removeComment(action) {
       data: action.data,
     });
     yield put({
-      type: REMOVE_COMMENT_OF_ME,
+      type: REMOVE_COMMENT_REQUEST,
       data: action.data,
     });
   } catch (err) {
@@ -154,6 +180,10 @@ function* removeComment(action) {
   }
 }
 
+function* watchLoadPosts() {
+  yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
+}
+
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 }
@@ -162,12 +192,16 @@ function* watchRemovePost() {
   yield takeLatest(REMOVE_POST_REQUEST, removePost);
 }
 
+function* watchLoadComment() {
+  yield throttle(2000, LOAD_COMMENT_REQUEST, loadComment);
+}
+
 function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
-function* watchLoadPosts() {
-  yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
+function* watchRemoveComment() {
+  yield takeLatest(REMOVE_COMMENT_REQUEST, removeComment);
 }
 
 export default function* postSaga() {
@@ -176,5 +210,7 @@ export default function* postSaga() {
     fork(watchRemovePost),
     fork(watchAddComment),
     fork(watchLoadPosts),
+    fork(watchRemoveComment),
+    fork(watchLoadComment),
   ]);
 }
