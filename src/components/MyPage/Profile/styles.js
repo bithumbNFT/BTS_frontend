@@ -84,6 +84,14 @@ export const UserEmail = styled.div`
     visibility: visible;
     transform: translateY(0);
   }
+
+  nav {
+    div{
+      &:nth-of-type(1){
+        color: #4a4a4a;
+      }
+    }
+  }
 `;
 
 export const CopyInputBtn = styled.div`

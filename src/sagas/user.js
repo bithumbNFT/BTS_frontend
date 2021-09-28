@@ -161,7 +161,9 @@ function* createWallet(action) {
   try {
     console.log('사가 지갑생성');
     const result = yield call(createWalletAPI, action.data.email);
-    localStorage.setItem('coinWallet', result.address);
+    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    userInfo = { ...userInfo, coinWallet: result.address };
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield delay(2000);
     yield put({
       type: CREATE_WALLET_SUCCESS,

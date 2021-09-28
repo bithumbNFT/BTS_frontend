@@ -50,7 +50,7 @@ export const CoinDesc = styled.div`
   display: grid;
   margin-top: 20px;
   grid-template-columns: 1.4fr 0.6fr;
-  gap: 20px;
+  gap: 40px;
   font-size: 28px;
   font-weight: 400;
 `;
