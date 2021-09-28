@@ -96,6 +96,11 @@ export const InputSection = styled.div`
     text-align: right;
     padding-right: 20px;
   }
+  button {
+    border : 1px solid #dee2e6;
+    padding: 13px 12px;
+    border-radius: 4px;
+  }
 `;
 
 export const ImageInput = styled.input`

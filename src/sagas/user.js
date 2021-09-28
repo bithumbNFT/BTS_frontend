@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
 import {
   all,
@@ -16,6 +17,12 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILURE,
+  CREATE_WALLET_SUCCESS,
+  CREATE_WALLET_FAILURE,
+  CREATE_WALLET_REQUEST,
+  CHECK_BALANCE_SUCCESS,
+  CHECK_BALANCE_FAILURE,
+  CHECK_BALANCE_REQUEST,
 } from '../reducers/user';
 //------------------------------------------------
 function kakaoLogInAPI(code, state) {
@@ -42,10 +49,14 @@ function kakaoLogInAPI(code, state) {
 function* kakaoLogIn(action) {
   try {
     console.log('사가 로그인');
-    const result = yield call(kakaoLogInAPI, action.payload);
-    const ACCESS_TOKEN = result.data.token;
-    localStorage.setItem('token', ACCESS_TOKEN);
-    // yield localStorage.setItem('token', ACCESS_TOKEN);
+    const result = yield call(
+      kakaoLogInAPI,
+      action.data.code,
+      action.data.state,
+    );
+    const { token, refreshToken, ...userInfo } = result.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
@@ -92,8 +103,10 @@ function* naverLogIn(action) {
       action.data.code,
       action.data.state,
     );
-    const ACCESS_TOKEN = result.data.token;
-    localStorage.setItem('token', ACCESS_TOKEN);
+
+    const { token, refreshToken, ...userInfo } = result.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
@@ -113,19 +126,10 @@ function* naverLogIn(action) {
 }
 //------------------------------------------------
 
-function logOutAPI() {
-  const response = axios({
-    method: 'GET',
-    url: '/logout',
-  });
-  return response;
-}
-
 function* logOut() {
   try {
-    // const result = yield call(logOutAPI);
-    console.log('로그아웃');
-    localStorage.removeItem('token');
+    // 로그아웃 시, localstorage에 저장된 토큰 삭제
+    localStorage.clear();
     yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
@@ -139,6 +143,75 @@ function* logOut() {
 }
 
 //------------------------------------------------
+function createWalletAPI(user) {
+  const response = instance({
+    method: 'GET',
+    url: '/test',
+    // url: `/Wallet/create?user=${user}`,
+  });
+
+  const dummyData = {
+    address: '0x65D074E30D1443fD66B76780b9F050A396baC46f',
+  };
+
+  return dummyData;
+}
+
+function* createWallet(action) {
+  try {
+    console.log('사가 지갑생성');
+    const result = yield call(createWalletAPI, action.data.email);
+    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    userInfo = { ...userInfo, coinWallet: result.address };
+    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    yield delay(2000);
+    yield put({
+      type: CREATE_WALLET_SUCCESS,
+      data: result.address,
+    });
+  } catch (err) {
+    console.log('사가 지갑 실패');
+    yield put({
+      type: CREATE_WALLET_FAILURE,
+      error: err.response,
+    });
+  }
+}
+//------------------------------------------------
+
+function checkBalanceAPI(wallet) {
+  const response = instance({
+    method: 'GET',
+    url: `/test?wallet=${wallet}`,
+    // url: `/Wallet/much/`${wallet}`,
+  });
+
+  const dummyData = {
+    klay: 7.990325,
+  };
+
+  return dummyData;
+}
+
+function* checkBalance(action) {
+  try {
+    console.log(action);
+    console.log('사가 잔고 조회');
+    const result = yield call(checkBalanceAPI, action.payload);
+    yield delay(2000);
+    yield put({
+      type: CHECK_BALANCE_SUCCESS,
+      data: result.klay,
+    });
+  } catch (err) {
+    console.log('사가 잔고 조회 실패');
+    yield put({
+      type: CHECK_BALANCE_FAILURE,
+      error: err.response,
+    });
+  }
+}
+//------------------------------------------------
 
 function* watchKakaoLogIn() {
   yield takeLatest(LOG_IN_REQUEST, kakaoLogIn);
@@ -149,7 +222,20 @@ function* watchNaverLogIn() {
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
+function* watchCreateWallet() {
+  yield takeLatest(CREATE_WALLET_REQUEST, createWallet);
+}
+
+function* watchCheckBalanceWallet() {
+  yield takeLatest(CHECK_BALANCE_REQUEST, checkBalance);
+}
 
 export default function* userSaga() {
-  yield all([fork(watchKakaoLogIn), fork(watchNaverLogIn), fork(watchLogOut)]);
+  yield all([
+    fork(watchKakaoLogIn),
+    fork(watchNaverLogIn),
+    fork(watchLogOut),
+    fork(watchCreateWallet),
+    fork(watchCheckBalanceWallet),
+  ]);
 }

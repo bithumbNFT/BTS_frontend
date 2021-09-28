@@ -11,7 +11,7 @@ export const ChartWrap = styled.section`
   background: #000;
   display: flex;
   justify-content: center;
-  align-items: center;
+  font-weight: bold;
 `;
 export const Chart = styled.article`
   max-width: 1000px;
@@ -22,6 +22,12 @@ export const Chart = styled.article`
   color: #fff;
   position: relative;
   height: 100%;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const TextWrapper = styled.span`
+  color: #fe5000;
 `;
 export const Button = styled.button`
   cursor: pointer;
@@ -39,3 +45,25 @@ export const Button = styled.button`
     color: #ffffff;
   }
 `;
+
+export const CoinDesc = styled.div`
+  display: grid;
+  margin-top: 20px;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 40px;
+  font-size: 28px;
+  font-weight: 400;
+`;
+
+export const InfoRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+`;
+
+export const InfoLeft = styled.div``;

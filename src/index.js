@@ -8,11 +8,11 @@ import createSagaMiddleware from 'redux-saga';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import logger from 'redux-logger';
-import { API_SERVER_PATH } from 'utils/config';
+// import { API_SERVER_PATH } from 'utils/config';
 
 import { Router } from 'react-router';
 import { browserHistory } from 'utils/historyUtils';
-
+import { API_SERVER_PATH } from 'utils/config';
 import rootReducer, { rootSaga } from './utils/modules';
 import App from './App';
 import './styles/font.css';
