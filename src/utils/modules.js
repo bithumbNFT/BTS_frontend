@@ -10,7 +10,6 @@ import postReducer from '../reducers/post';
 import chartReducer from '../reducers/chart';
 import auctionReducer from '../reducers/auction';
 
-
 const rootReducer = combineReducers({
   userReducer,
   postReducer,
@@ -19,7 +18,12 @@ const rootReducer = combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([fork(userSaga), fork(postSaga), fork(chartSaga), fork(auctionSaga)]);
-});
+  yield all([
+    fork(userSaga),
+    fork(postSaga),
+    fork(chartSaga),
+    fork(auctionSaga),
+  ]);
+}
 
 export default rootReducer;
