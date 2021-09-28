@@ -24,6 +24,12 @@ function Card({ post }) {
   };
 
   const onRemoveAuction = useCallback(() => {
+    if (window.confirm('정말 삭제하시겠습니까 ?')) {
+      alert('삭제되었습니다.');
+    } else {
+      return;
+    }
+
     dispatch({
       type: REMOVE_AUCTION_REQUEST,
     });

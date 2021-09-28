@@ -39,6 +39,7 @@
     "implicit-arrow-linebreak": "off",
     "consistent-return": "off",
     "arrow-body-style": "off",
-    "indent": "off"
+    "indent": "off",
+    "no-alert": "off"
   }
 }
