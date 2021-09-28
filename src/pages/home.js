@@ -20,9 +20,13 @@ function home() {
 
   // 버튼 클릭시 경매템 섹션으로 이동
   const scrollToAuction = useCallback(() => {
-    focusScreen.current.scrollIntoView({
+    const element = document.getElementById('position');
+    const headerOffset = 40;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition - headerOffset;
+    window.scrollTo({
+      top: offsetPosition,
       behavior: 'smooth',
-      block: 'start',
     });
   }, []);
 
@@ -31,7 +35,7 @@ function home() {
       <Header />
       <HomeIntro onClick={scrollToAuction} />
 
-      <BottomMailn ref={focusScreen}>
+      <BottomMailn ref={focusScreen} id="position">
         <Title>
           🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을{' '}
           <strong>경매</strong>해보세요 🥰
@@ -67,12 +71,12 @@ const Title = styled.h2`
 const CardWrap = styled.div`
   width: 1000px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 5% 0;
 `;
 
 const CardListBox = styled.article`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   margin: 0 auto;
 `;

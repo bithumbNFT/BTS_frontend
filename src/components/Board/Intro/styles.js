@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 
 export const IntroView = styled.section`
   width: 100vw;
-  height: 55vh;
+  height: 66vh;
   border-bottom: 1px solid #dbdbdb;
   box-sizing: border-box;
   overflow: hidden;
-  background: url('./images/board.png') center -50px;
+  background: url('./images/board.png') center 26px;
   background-size: cover;
   background-attachment: fixed;
   color: #ffffff;
@@ -30,14 +30,18 @@ export const Text = styled.div`
   position: absolute;
   letter-spacing: -0.5px;
   margin-top: 2em;
+
   h2 {
-    font-size: 26px;
+    font-size: 40px;
     font-weight: 700;
     color: #fff;
     margin-bottom: 0.5em;
+    font-family: 'SEBANG_Gothic_Bold' !important;
   }
   p {
-    font-size: 18px;
+    font-size: 24px;
     color: #fff;
+    font-family: 'SEBANG_Gothic_Bold' !important;
+    letter-spacing: 1.2px;
   }
 `;

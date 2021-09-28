@@ -6,7 +6,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 4.5em 2.5em;
+  padding: 4.5em 0;
   max-width: 1000px;
   overflow: hidden;
   box-sizing: border-box;

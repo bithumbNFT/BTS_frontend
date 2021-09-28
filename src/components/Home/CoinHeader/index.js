@@ -41,7 +41,7 @@ function CoinHeader() {
   return (
     <TableWrapper>
       {chartLoading ? (
-        <div>로딩중</div>
+        <h4>loading...</h4>
       ) : (
         <TableContainer
           className="table table-borderless table-light rounded-top shadow-sm text-left mb-0"

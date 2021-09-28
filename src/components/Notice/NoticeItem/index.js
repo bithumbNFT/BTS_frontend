@@ -9,7 +9,6 @@ const Container = styled.div`
   transition: all 0.3s;
   &:nth-of-type(1) {
     border-top: 1px solid #dee2e6;
-    margin-top: 1.4em;
   }
   &:hover {
     background: rgba(0, 0, 0, 0.04);

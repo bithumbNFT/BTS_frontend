@@ -57,6 +57,7 @@ export const UserEmail = styled.div`
     margin: 0 1rem 0 1rem;
     width: 70%;
     position: relative;
+    font-weight: 500;
   }
   svg {
     vertical-align: middle;
@@ -86,8 +87,8 @@ export const UserEmail = styled.div`
   }
 
   nav {
-    div{
-      &:nth-of-type(1){
+    div {
+      &:nth-of-type(1) {
         color: #4a4a4a;
       }
     }
@@ -189,7 +190,7 @@ export const CopySuccess = styled.div`
   position: absolute;
   top: 25px;
   right: 4px;
-  span{
+  span {
     color: #fff;
     font-size: 12px;
     padding: 0;
@@ -197,7 +198,7 @@ export const CopySuccess = styled.div`
     font-weight: 500;
   }
 
-  &:after{
+  &:after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -209,6 +210,5 @@ export const CopySuccess = styled.div`
     border-bottom: 0;
     margin-left: -6px;
     margin-bottom: -6px;
-}
   }
 `;

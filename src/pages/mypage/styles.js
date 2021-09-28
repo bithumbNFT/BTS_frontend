@@ -3,20 +3,22 @@ import styled from '@emotion/styled';
 export const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
-  width: 1000px;
-  margin: 2rem 0;
+  margin: 2em 0 3em 0;
+  letter-spacing: -0.8px;
 `;
 export const Container = styled.div`
-  width: 70%;
-  display: flex;
-  flex-direction: column;
+  width: 1000px;
   margin: 0 auto;
-  padding-top: 2rem;
+  padding-bottom: 10%;
 `;
 
 export const Content = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
+  .menutab {
+    width: 30%;
+  }
 `;
 
 export const MyPageLink = styled.div`
@@ -42,4 +44,5 @@ export const MyPageTab = styled.div`
   padding: 20px;
   border: 1px solid #f5f5f5;
   margin-left: 2rem;
+  width: 70%;
 `;

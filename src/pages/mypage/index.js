@@ -41,9 +41,12 @@ function mypage({ location: { pathname } }) {
   return (
     <div>
       <Header />
+
       <Container>
         <Title>마이페이지</Title>
+
         <Content>
+          {/* 왼쪽 (프로필) */}
           <section className="menutab">
             <Profile />
             <MyPageLink>
@@ -56,6 +59,8 @@ function mypage({ location: { pathname } }) {
               </ul>
             </MyPageLink>
           </section>
+
+          {/* 오른쪽 (경매 리스트) */}
           <MyPageTab>
             <Switch>
               <Route exact path="/mypage" component={MyUpload} />

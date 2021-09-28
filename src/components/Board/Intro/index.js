@@ -5,7 +5,7 @@ function Intro() {
   return (
     <IntroView>
       <Text>
-        <h2>Bithumb NFT SNS 💬 </h2>
+        <h2>Bithumb NFT SNS </h2>
         <p>함께 토론해봐요.</p>
       </Text>
     </IntroView>
