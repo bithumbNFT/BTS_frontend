@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const Title = styled.h1`
   font-size: 2rem;
   font-weight: bold;
+  width: 1000px;
   margin: 2rem 0;
 `;
 export const Container = styled.div`
@@ -15,7 +16,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 export const MyPageLink = styled.div`
@@ -27,11 +28,11 @@ export const MyPageLink = styled.div`
 
 export const TabList = styled.li`
   padding: 1.2rem 10px;
-  color : ${props => (props.current ? '#4a4a4a' : '#9a9a9a')};
+  color: ${props => (props.current ? '#4a4a4a' : '#9a9a9a')};
   font-weight: ${props => (props.current ? 600 : 400)};
   font-size: 1.1rem;
   border-radius: 5px;
-  
+
   &:hover {
     background-color: #f8f8f8;
   }

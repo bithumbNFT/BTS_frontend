@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import 'moment/locale/ko';
+import { Link } from 'react-router-dom';
 import { ItemView, Desc, Comment } from './styles';
 
-moment.locale('ko');
-console.log(moment);
 function Item({ post }) {
+  const nowTime = moment().format('YYYY.MM.DD HH:mm');
+  console.log(nowTime);
+
   return (
     <ItemView>
-      <a href="/board_post">
+      <Link to={`/board_post/${post.p_id}`}>
         <Desc>
-          <h3>{post.title}</h3>
+          <h3 className="postTitle">{post.title}</h3>
 
           <div className="userTime">
             {/* 작성자 */}
             <span>{post.author}</span>
 
             {/* 글 게시 날짜 */}
-            <span>{moment(post.createdAt, 'YYYYMMDD').fromNow()}</span>
+            <span>{nowTime}</span>
           </div>
         </Desc>
 
@@ -25,7 +28,7 @@ function Item({ post }) {
           <strong>{post.view_cnt}</strong>
           <p>댓글수</p>
         </Comment>
-      </a>
+      </Link>
     </ItemView>
   );
 }

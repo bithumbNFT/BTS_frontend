@@ -37,6 +37,8 @@
     "no-template-curly-in-string": "off",
     "arrow-parens": "off",
     "implicit-arrow-linebreak": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "arrow-body-style": "off",
+    "indent": "off"
   }
 }

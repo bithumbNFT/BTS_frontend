@@ -1,29 +1,36 @@
 import shortId from 'shortid';
 import produce from 'immer';
+import faker from 'faker';
 
 export const initialState = {
   // 👉 더미데이터
   board: [
     {
       // 📝 게시글 부분
-      author: '이현주',
-      content: '첫 번째 게시글',
+      author: faker.name.firstName(),
+      content: faker.lorem.paragraph(),
       p_id: shortId.generate(),
-      title: '안녕하세요~~',
+      title: faker.lorem.paragraph(),
       view_cnt: 0,
-
-      // 📝 댓글 부분
-      commentList: [
-        {
-          c_id: shortId.generate(),
-          comment_content: '안녕',
-          comment_write: '메롱',
-        },
-      ],
     },
   ],
 
+  // 📝 댓글 부분
+  commentList: [
+    {
+      c_id: shortId.generate(),
+      comment_content: faker.lorem.paragraph(),
+      comment_writer: faker.lorem.paragraph(),
+    },
+  ],
+
+  mainPosts: [],
   // 👉 초기상태 정의
+  // 게시물 로드
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: null,
+
   // 게시물 작성
   addPostLoading: false,
   addPostDone: false,
@@ -33,6 +40,11 @@ export const initialState = {
   removePostLoading: false,
   removePostDone: false,
   removePostError: null,
+
+  // 댓글 로드
+  loadCommentLoading: false,
+  loadCommentDone: false,
+  loadCommentError: null,
 
   // 댓글 작성
   addCommentLoading: false,
@@ -44,20 +56,26 @@ export const initialState = {
   removeCommentDone: false,
   removeCommentError: null,
 };
+
 // 게시물 로드
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
 // 게시글 작성
-export const ADD_POST_REQUEST = 'post/ADD_POST_REQUEST';
-export const ADD_POST_SUCCESS = 'post/ADD_POST_SUCCESS';
-export const ADD_POST_FAILURE = 'post/ADD_POST_FAILURE';
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
 // 게시물 삭제
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
+// 댓글 로드
+export const LOAD_COMMENT_REQUEST = 'LOAD_COMMENT_REQUEST';
+export const LOAD_COMMENT_SUCCESS = 'LOAD_COMMENT_SUCCESS';
+export const LOAD_COMMENT_FAILURE = 'LOAD_COMMENT_FAILURE';
 
 // 댓글 작성
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
@@ -65,7 +83,7 @@ export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 // 댓글 삭제
-export const REMOVE_COMMENT_OF_ME = 'REMOVE_COMMENT_OF_ME';
+export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
 export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
 export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
 
@@ -90,10 +108,10 @@ const dummyBoard = data => ({
 const dummyComment = data => ({
   c_id: shortId.generate(),
   comment_content: data.comment_content,
-  comment_write: data.comment_write,
+  comment_writer: data.comment_writer,
 });
 
-const reducer = (state = initialState, action) =>
+const postReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       // 게시물 로드
@@ -125,7 +143,6 @@ const reducer = (state = initialState, action) =>
       }
       case ADD_POST_SUCCESS: {
         draft.board.unshift(dummyBoard(action.data));
-
         draft.addPostLoading = false;
         draft.addPostDone = true;
         break;
@@ -158,17 +175,37 @@ const reducer = (state = initialState, action) =>
       }
 
       // ------------------------------------
+      // 댓글 로드
+      case LOAD_COMMENT_REQUEST:
+        draft.loadCommentLoading = true;
+        draft.loadCommentDone = false;
+        draft.loadCommentError = null;
+        break;
+
+      case LOAD_COMMENT_SUCCESS: {
+        draft.loadCommentLoading = false;
+        draft.loadCommentDone = true;
+        draft.board = draft.board.concat(action.data);
+        break;
+      }
+
+      case LOAD_COMMENT_FAILURE: {
+        draft.loadCommentLoading = false;
+        draft.loadCommentError = action.error;
+        break;
+      }
+
       //  댓글 작성
       case ADD_COMMENT_REQUEST: {
-        draft.addPostLoading = true;
-        draft.addPostDone = false;
-        draft.addPostError = null;
+        draft.addCommentLoading = true;
+        draft.addCommentDone = false;
+        draft.addCommentError = null;
         break;
       }
 
       case ADD_COMMENT_SUCCESS: {
-        const post = draft.board.find(v => v.id === action.data.c_id);
-        post.commentList.unshift(dummyComment(action.data.comment_content));
+        const post = draft.commentList.find(v => v.id === action.data.c_id);
+        post.commentList.unshift(dummyComment(action.data.commentList));
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
@@ -180,7 +217,9 @@ const reducer = (state = initialState, action) =>
         break;
       }
 
-      case REMOVE_COMMENT_OF_ME: {
+      // ------------------------------------
+      //  댓글 삭제
+      case REMOVE_COMMENT_REQUEST: {
         draft.removeCommentLoading = true;
         draft.removeCommentDone = false;
         draft.removeCommentError = null;
@@ -204,4 +243,4 @@ const reducer = (state = initialState, action) =>
     }
   });
 
-export default reducer;
+export default postReducer;

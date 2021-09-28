@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import axios from 'axios';
+import 'antd/dist/antd.css';
 import logger from 'redux-logger';
 import { API_SERVER_PATH } from 'utils/config';
 

@@ -27,9 +27,6 @@ export const CommentForm = styled.div`
       font-size: 16px;
       button {
         color: #fe5000;
-        &:nth-of-type(1) {
-          margin-right: 1em;
-        }
       }
     }
   }

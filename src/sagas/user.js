@@ -123,7 +123,8 @@ function logOutAPI() {
 
 function* logOut() {
   try {
-    const result = yield call(logOutAPI);
+    // const result = yield call(logOutAPI);
+    console.log('로그아웃');
     localStorage.removeItem('token');
     yield delay(1000);
     yield put({

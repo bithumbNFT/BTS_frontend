@@ -8,14 +8,8 @@ export const initialState = {
   logOutLoading: false, // 로그아웃 시도중
   logOutDone: false,
   logOutError: null,
-  signUpLoading: false, // 로그아웃 시도중
-  signUpDone: false,
-  signUpError: null,
-  changeNicknameLoading: false, // 닉네임 변경 시도중
-  changeNicknameDone: false,
-  changeNicknameError: null,
+
   me: null,
-  signUpData: {},
   loginData: {},
 };
 
