@@ -34,7 +34,7 @@ function Header() {
 
   const onLoginClick = social => {
     if (social === 'kakao') {
-      window.location.href = KAKAO_AUTH_URL;
+      window.href = KAKAO_AUTH_URL;
     } else if (social === 'naver') {
       window.location.href = NAVER_AUTH_URL;
     }
