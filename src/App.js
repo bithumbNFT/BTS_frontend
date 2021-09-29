@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import { GlobalStyles } from 'styles/global-styles';
+import AuthRoute from 'hooks/useAuthRoute';
 
 function App() {
   const Auction = lazy(() => import('./pages/auction'));
@@ -24,14 +25,19 @@ function App() {
           {/* 홈화면 */}
           <Route exact path="/" component={Home} />
           {/* 경매 페이지 */}
-          {/* <Route path="/auction" component={Auction} /> */}
-          <Route path="/auction/:id" component={Auction} />
+          {/* <Route path="/auction/:id" component={Auction} /> */}
+          <AuthRoute
+            path="/auction/:id"
+            render={props => <Auction {...props} />}
+          />
           {/* 작품 업로드 페이지 */}
           <Route exact path="/upload" component={Upload} />
           {/* 소통 게시판 */}
-          <Route exact path="/board" component={Board} />
+          <AuthRoute path="/board" render={props => <Board {...props} />} />
+          {/* <Route exact path="/board" component={Board} /> */}
           {/* 마이페이지 */}
-          <Route path="/mypage" component={MyPage} />
+          {/* <Route path="/mypage" component={MyPage} /> */}
+          <AuthRoute path="/mypage" render={props => <MyPage {...props} />} />
           {/* 게시글 view */}
           {/* <Route exact path="/board_post" component={Post} /> */}
           <Route exact path="/board_post/:id" component={Post} />

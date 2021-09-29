@@ -58,6 +58,7 @@ export const UserEmail = styled.div`
     width: 70%;
     position: relative;
     font-weight: 500;
+    font-size: 13px;
   }
   svg {
     vertical-align: middle;
@@ -110,6 +111,7 @@ export const CopyInputBtn = styled.div`
     border-radius: 5px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    font-size: 14px;
   }
   button {
     width: fit-content;

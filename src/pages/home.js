@@ -10,8 +10,7 @@ import styled from '@emotion/styled';
 function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
-  const { auction } = useSelector(state => state.auctionReducer);
-
+  const { auction } = useSelector(stateRedux => stateRedux.auctionReducer);
   useEffect(() => {
     dispatch({
       type: LOAD_AUCTION_REQUEST,
