@@ -57,7 +57,6 @@ function* kakaoLogIn(action) {
     const { token, refreshToken, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
@@ -107,7 +106,6 @@ function* naverLogIn(action) {
     const { token, refreshToken, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    yield delay(2000);
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,

@@ -3,6 +3,19 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 
+const Select = ({ label, regiName, register, options, required }) => {
+  return (
+    <>
+      <label>{label}</label>
+      <select {...register(regiName, { required })}>
+        {options.map(value => (
+          <option value={value}>{value}</option>
+        ))}
+      </select>
+    </>
+  );
+};
+
 const Input = ({ label, regiName, register, required }) => (
   <>
     <label>{label}</label>
@@ -109,6 +122,13 @@ function UploadForm() {
           label="📅 경매기간"
           regiName="period"
           register={register}
+          required
+        />
+        <Select
+          label="단위"
+          regiName="sex"
+          register={register}
+          options={['female', 'male']}
           required
         />
         <input type="submit" />
