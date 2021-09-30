@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const TableWrapper = styled.div`
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #9e9e9e;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -39,7 +39,7 @@ export const TableContainer = styled.table`
     }
     .word-sm {
       padding-right: 5px;
-      color: #D3D3D3;
+      color: #d3d3d3;
     }
   }
 `;

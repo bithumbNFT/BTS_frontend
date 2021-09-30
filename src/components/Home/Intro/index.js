@@ -8,7 +8,7 @@ import {
   Button,
   CoinDesc,
   InfoLeft,
-  InfoRight,
+  InfoDesc,
   ButtonWrap,
   TextWrapper,
 } from './style';
@@ -29,14 +29,14 @@ function HomeIntro({ onClick }) {
                 <CoinHeader />
                 <CoinChart />
               </InfoLeft>
-
-              <InfoRight>
-                <img src="/images/klaytnLogo.png" alt="klaytnImg" />
-                <h4>
-                  <strong>KLAYTN</strong>을 이용하여 안전하게 거래하세요.
-                </h4>
-              </InfoRight>
             </CoinDesc>
+
+            <InfoDesc>
+              <img src="/images/klaytnLogo.png" alt="klaytnImg" />
+              <h4>
+                <strong>KLAYTN</strong>을 이용하여 안전하게 거래하세요.
+              </h4>
+            </InfoDesc>
 
             <ButtonWrap>
               <Button onClick={onClick}>

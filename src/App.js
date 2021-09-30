@@ -9,7 +9,7 @@ function App() {
   const Auction = lazy(() => import('./pages/auction'));
   const Upload = lazy(() => import('./pages/upload'));
   const Board = lazy(() => import('./pages/board'));
-  const Home = lazy(() => pMinDelay(import('./pages/home'), 5000));
+  const Home = lazy(() => pMinDelay(import('./pages/home'), 3000));
   // const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
   const Post = lazy(() => import('./pages/board_post'));

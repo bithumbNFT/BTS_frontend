@@ -6,14 +6,14 @@ export const HomeMain = styled.main`
 export const ChartWrap = styled.section`
   border-bottom: 1px solid #262626;
   background: #000;
-  display: flex;
+  display: grid;
   justify-content: center;
   height: 100vh;
   margin-top: -65px;
   h1 {
     margin-top: 30px;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 32px;
     text-align: center;
   }
 `;
@@ -36,6 +36,7 @@ export const Chart = styled.article`
 
 export const TextWrapper = styled.span`
   color: #fe5000;
+  font-family: 'SEBANG_Gothic_Bold' !important;
 `;
 export const Button = styled.button`
   cursor: pointer;
@@ -58,7 +59,6 @@ export const CoinDesc = styled.div`
   display: flex;
   margin-top: 20px;
   width: 1000px;
-  justify-content: space-around;
   h4 {
     color: #ffffff;
     font-size: 21px;
@@ -67,29 +67,29 @@ export const CoinDesc = styled.div`
   }
 `;
 
-export const InfoRight = styled.div`
+export const InfoDesc = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 20%;
+  justify-content: end;
+  text-align: right;
+  width: 100%;
+  margin-top: 1rem;
   h4 {
     color: #fff;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 1.4;
     letter-spacing: -1.5px;
+    margin-left: 1rem;
     strong {
       font-weight: 700;
     }
   }
   img {
-    width: 100px;
-    margin-bottom: 10px;
+    width: 20px;
   }
 `;
 
 export const InfoLeft = styled.div`
-  width: 70%;
+  width: 100%;
 `;
 
 export const ButtonWrap = styled.div`
