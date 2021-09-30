@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { VscChromeClose } from 'react-icons/vsc';
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from 'utils/OAuth';
 import { LoginBg, LoginPopUp, Button, Close } from './styles';

@@ -2,13 +2,16 @@ import React, { lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import { GlobalStyles } from 'styles/global-styles';
+import Loader from 'components/Common/Loader';
+import pMinDelay from 'p-min-delay';
 import AuthRoute from 'hooks/useAuthRoute';
 
 function App() {
   const Auction = lazy(() => import('./pages/auction'));
   const Upload = lazy(() => import('./pages/upload'));
   const Board = lazy(() => import('./pages/board'));
-  const Home = lazy(() => import('./pages/home'));
+  const Home = lazy(() => pMinDelay(import('./pages/home'), 3000));
+  // const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
   const Post = lazy(() => import('./pages/board_post'));
   const Write = lazy(() => import('./pages/board_write'));
@@ -16,10 +19,12 @@ function App() {
   const NotFound = lazy(() => import('./pages/404page'));
   const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
   const Naver = lazy(() => import('./components/LoginModal/login/naver'));
+  const Login = lazy(() => import('./pages/login'));
+
   return (
     <>
       {GlobalStyles}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <CacheSwitch>
           <CacheRoute exact path="/" component={Home} />
           {/* 홈화면 */}
@@ -45,6 +50,8 @@ function App() {
           <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />
+          {/* 로그인 페이지 */}
+          <Route exact path="/login" component={Login} />
           {/* kakao login redirect view */}
           <Route exact path="/login/oauth2/code/kakao" component={Kakao} />
           {/* kakao login redirect view */}
