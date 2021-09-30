@@ -43,6 +43,10 @@ export const GlobalStyles = (
         color: inherit;
         text-decoration: none;
       }
+      a:hover {
+        color: inherit;
+        text-decoration: none;
+      }
       input,
       button {
         cursor: pointer;

@@ -44,8 +44,7 @@ import {
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
 function loadPostsAPI(lastId) {
-  // return axios.get(`/posts?lastId=${lastId || 0}`);
-  return axios.get('/todos', lastId);
+  return axios.get('/board');
 }
 
 function* loadPosts(action) {

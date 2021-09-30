@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import Header from 'components/Common/Header';
 import CardItem from 'components/MyPage/Card/CardItem';
+import Footer from 'components/Common/Footer';
+import SmallFooter from 'components/Common/SmallFooter';
 import { Pagination } from 'antd';
 import HomeIntro from 'components/Home/Intro';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,6 +51,9 @@ function home() {
           <Pagination defaultCurrent={1} total={10} />
         </CardWrap>
       </BottomMailn>
+
+      <Footer />
+      <SmallFooter />
     </>
   );
 }
@@ -70,7 +75,6 @@ const Title = styled.h2`
 const CardWrap = styled.div`
   width: 1000px;
   margin: 0 auto;
-  padding: 5% 0;
 `;
 
 const CardListBox = styled.article`
@@ -87,7 +91,6 @@ const BottomMailn = styled.section`
   .ant-pagination {
     text-align: right;
     margin-right: 3%;
-    margin-top: 10%;
   }
   .ant-pagination-item-active a {
     color: #fe5000;
