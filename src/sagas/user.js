@@ -121,7 +121,6 @@ function* naverLogIn(action) {
       type: LOG_IN_FAILURE,
       error: err.response,
     });
-    yield call(redirect, '/');
   }
 }
 //------------------------------------------------
@@ -130,7 +129,7 @@ function* logOut() {
   try {
     // 로그아웃 시, localstorage에 저장된 토큰 삭제
     localStorage.clear();
-    yield delay(1000);
+    // yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
