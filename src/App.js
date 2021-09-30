@@ -18,6 +18,7 @@ function App() {
   const NotFound = lazy(() => import('./pages/404page'));
   const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
   const Naver = lazy(() => import('./components/LoginModal/login/naver'));
+  const Login = lazy(() => import('./pages/login'));
 
   return (
     <>
@@ -43,6 +44,8 @@ function App() {
           <Route exact path="/board_write" component={Write} />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />
+          {/* 로그인 페이지 */}
+          <Route exact path="/login" component={Login} />
           {/* kakao login redirect view */}
           <Route exact path="/login/oauth2/code/kakao" component={Kakao} />
           {/* kakao login redirect view */}
