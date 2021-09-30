@@ -4,8 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import LoginModal from 'components/LoginModal';
 import { BsBell } from 'react-icons/bs';
-// import { VscBell } from 'react-icons/vsc';
-import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from 'utils/OAuth';
 import { logoutRequestAction } from 'reducers/user';
 import { Gnb, Menu, User, Title, UserProfile, NotiIcon } from './styles';
 
@@ -32,15 +30,10 @@ function Header() {
     document.body.style.overflow = 'unset';
   };
 
-  const onLoginClick = social => {
-    if (social === 'kakao') {
-      window.location.href = KAKAO_AUTH_URL;
-    } else if (social === 'naver') {
-      window.location.href = NAVER_AUTH_URL;
-    }
-  };
-
-  const LogoutClick = useCallback(() => dispatch(logoutRequestAction()));
+  const handleLogoutClick = useCallback(() => {
+    dispatch(logoutRequestAction());
+    window.location.href = '/';
+  });
 
   const GoToPage = name => {
     console.log(name);
@@ -78,7 +71,7 @@ function Header() {
                 <img src={userInfo.picture} alt="profileImage" />
               </UserProfile>
               <li className="user">
-                <button type="button" onClick={LogoutClick}>
+                <button type="button" onClick={handleLogoutClick}>
                   로그아웃
                 </button>
               </li>
@@ -93,12 +86,7 @@ function Header() {
         </User>
       </div>
 
-      <LoginModal
-        onClose={closeModal}
-        open={isShowing}
-        onKakaoLogin={() => onLoginClick('kakao')}
-        onNaverLogin={() => onLoginClick('naver')}
-      />
+      <LoginModal onClose={closeModal} open={isShowing} />
     </Gnb>
   );
 }
