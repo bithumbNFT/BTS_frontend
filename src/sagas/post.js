@@ -43,13 +43,14 @@ import {
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
-function loadPostsAPI(lastId) {
-  return axios.get('/board');
+function loadPostsAPI() {
+  return axios.get('/board/board');
 }
 
 function* loadPosts(action) {
   try {
-    const result = yield call(loadPostsAPI, action.lastId);
+    const result = yield call(loadPostsAPI, action);
+    console.log(result.data);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -64,7 +65,7 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post('/api/post', data);
+  return axios.post('/board/post', data);
 }
 
 function* addPost(action) {
@@ -92,7 +93,7 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete('/api/post', data);
+  return axios.delete('/board/post', data);
 }
 
 function* removePost(action) {
@@ -156,7 +157,7 @@ function* addComment(action) {
 }
 
 function removeCommentAPI(data) {
-  return axios.delete('/api/post', data);
+  return axios.delete('/board/post', data);
 }
 
 function* removeComment(action) {

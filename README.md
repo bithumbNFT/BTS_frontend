@@ -8,13 +8,12 @@
 
 ## 🧙🏻‍♀️ Front 기술 스택
 
-| 역할           | 스택명                                                                                                                                                                                                          |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| 프레임워크     | <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>                                                                                                             |
-| CSS-in-JS      | <img src="https://img.shields.io/badge/Emotion-DB7093?style=flat-square&logo=Styled-components&logoColor=white"/>                                                                                               |
-| 상태관리       | <img src="https://img.shields.io/badge/Redux-001add?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/ReduxSaga-001add?style=flat-square&logoColor=white"/>                           |     |
-| 기본 언어      | <img src="https://img.shields.io/badge/JavaScript-fe5000?style=flat-square&logo=JavaScript&logoColor=white"/>                                                                                                   |
-| 작업 환경 세팅 | <img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=Prettier&logoColor=white"/> <img src="https://img.shields.io/badge/Eslint-4B3263?style=flat-square&logo=Eslint&logoColor=white"/> |
+| 역할       | 스택명                                                                                                                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 프레임워크 | <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>                                                                                   |
+| CSS-in-JS  | <img src="https://img.shields.io/badge/Emotion-DB7093?style=flat-square&logo=Styled-components&logoColor=white"/>                                                                     |
+| 상태관리   | <img src="https://img.shields.io/badge/Redux-001add?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/ReduxSaga-001add?style=flat-square&logoColor=white"/> |
+| 기본 언어       | <img src="https://img.shields.io/badge/JavaScript-F7B93E?style=flat-square&logo=JavaScript&logoColor=white"/>                                                                         |
 
 <br>
 

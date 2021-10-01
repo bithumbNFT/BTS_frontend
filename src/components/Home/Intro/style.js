@@ -11,14 +11,13 @@ export const ChartWrap = styled.section`
   height: 100vh;
   margin-top: -65px;
   h1 {
-    margin-top: 30px;
+    margin: 30px 0;
     font-weight: bold;
     font-size: 32px;
     text-align: center;
   }
 `;
 export const Chart = styled.article`
-  max-width: 1000px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +57,7 @@ export const Button = styled.button`
 export const CoinDesc = styled.div`
   display: flex;
   margin-top: 20px;
-  width: 1000px;
+  width: 1200px;
   h4 {
     color: #ffffff;
     font-size: 21px;

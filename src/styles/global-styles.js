@@ -68,6 +68,12 @@ export const GlobalStyles = (
       li {
         list-style: none;
       }
+      .ant-pagination-item-active {
+        border-color: #fe5000;
+      }
+      .ant-pagination-item-active a {
+        color: #fe5000;
+      }
     `}
   />
 );

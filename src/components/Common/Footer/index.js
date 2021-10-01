@@ -23,6 +23,27 @@ function Footer() {
           src="/images/leehyunju.png"
           github="https://github.com/yurim22"
         />
+        <Member
+          koName="조원희"
+          enName="Cho Wonhe"
+          major="Backend Engineer"
+          src="/images/leehyunju.png"
+          github="https://github.com/wonhecho"
+        />
+        <Member
+          koName="백인준"
+          enName="Back Injun"
+          major="Backend Engineer"
+          src="/images/leehyunju.png"
+          github="https://github.com/baekinjun"
+        />
+        <Member
+          koName="문승재"
+          enName="Moon Seungjae"
+          major="Backend Engineer"
+          src="/images/leehyunju.png"
+          github="https://github.com/msj0319"
+        />
       </ul>
     </FooterBox>
   );
@@ -36,6 +57,7 @@ export const FooterBox = styled.footer`
   background-color: #f5f5f5;
   ul {
     display: flex;
+    justify-content: space-evenly;
   }
   .footerTitle {
     padding: 50px 20px;
