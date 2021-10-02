@@ -97,7 +97,7 @@ const dummyAuction = data => ({
   date: data.date,
 });
 
-const postReducer = (state = initialState, action) =>
+const auctionReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       // 경매템 로드
@@ -214,4 +214,4 @@ const postReducer = (state = initialState, action) =>
     }
   });
 
-export default postReducer;
+export default auctionReducer;
