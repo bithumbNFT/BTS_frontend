@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addAuction } from 'reducers/auction';
 import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 
 const Input = ({ label, regiName, register, required }) => (
@@ -37,9 +39,11 @@ function UploadForm() {
   const watchPrice = watch('price');
   const currentKLAYPrice = 1542;
 
+  const dispatch = useDispatch();
   // [TODO] form 제출
   const onSubmit = data => {
     data.file = imgData;
+    dispatch(addAuction(data));
     console.log(data);
   };
 
