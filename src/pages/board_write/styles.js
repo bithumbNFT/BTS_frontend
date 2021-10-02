@@ -74,5 +74,10 @@ export const Form = styled.form`
       color: #fff;
       background-color: #fe5000;
     }
+    button:disabled,
+    button[disabled] {
+      background-color: #d3cfcc;
+      color: #ffffff;
+    }
   }
 `;

@@ -1,9 +1,16 @@
-import { useState, useCallback } from 'react';
+import { useReducer } from 'react';
 
-export default (initValue = null) => {
-  const [value, setter] = useState(initValue);
-  const handler = useCallback(e => {
-    setter(e.target.value);
-  }, []);
-  return [value, handler, setter];
-};
+function reducer(state, action) {
+  return {
+    ...state,
+    [action.name]: action.value,
+  };
+}
+
+export default function useInputs(initialState) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const onChangeInput = e => {
+    dispatch(e.target);
+  };
+  return [state, onChangeInput];
+}

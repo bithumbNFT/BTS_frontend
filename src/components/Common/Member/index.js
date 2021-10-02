@@ -3,9 +3,9 @@ import { AiFillGithub } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-function Member({ koName, major, enName, src, github }) {
+function Member({ koName, major, enName, src, github, name }) {
   return (
-    <MemberBox>
+    <MemberBox className={name}>
       <MemberPhoto>
         <img src={src} alt={koName} />
       </MemberPhoto>
@@ -39,7 +39,7 @@ const MemberPhoto = styled.div`
   overflow: hidden;
   img {
     width: 100%;
-    margin-left: -16px;
+    margin-left: 18px;
   }
 `;
 

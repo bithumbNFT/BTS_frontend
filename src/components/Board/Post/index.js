@@ -6,26 +6,21 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import { PostWrap, Title, CommentWrap, CommentForm, BoardBody } from './styles';
 import CommentWrite from '../CommentWrite';
+import CommentView from '../CommentView';
 
 const nowTime = moment().format('YYYY.MM.DD HH:mm');
 console.log(nowTime);
 
 function Post({ post }) {
   const dispatch = useDispatch();
-  const { removePostLoading, removeCommentLoading } = useSelector(
+  const id = useSelector(state => state.userReducer.me?.id);
+  const { removePostLoading, mainPosts } = useSelector(
     state => state.postReducer,
   );
 
   const onRemovePost = useCallback(() => {
     dispatch({
       type: REMOVE_POST_REQUEST,
-    });
-  }, []);
-
-  const onRemoveComment = useCallback(() => {
-    dispatch({
-      type: REMOVE_COMMENT_REQUEST,
-      data: post.id,
     });
   }, []);
 
@@ -39,18 +34,22 @@ function Post({ post }) {
             <div className="userTimeNum">
               <span className="name">{post.author}</span>
               <span className="date">{nowTime}</span>
-              <span className="comment">답변수 {post.view_cnt}</span>
+              <span className="comment">댓글수 {post.comment_list.length}</span>
             </div>
 
             <div className="right">
-              <button type="button">수정</button>
-              <button
-                type="button"
-                onClick={onRemovePost}
-                loading={removePostLoading}
-              >
-                삭제
-              </button>
+              {id && post.User.id === id ? (
+                <>
+                  <button type="button">수정</button>
+                  <button
+                    type="button"
+                    onClick={onRemovePost}
+                    loading={removePostLoading}
+                  >
+                    삭제
+                  </button>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -62,30 +61,11 @@ function Post({ post }) {
 
       {/* 댓글 view */}
       <CommentWrap>
-        <CommentForm>
-          <div className="userTimeNum">
-            <div className="left">
-              <span className="name">작성자 {post.comment_writer}</span>
-              <span className="date">{nowTime}</span>
-            </div>
-
-            <div className="right">
-              <button
-                type="button"
-                onClick={onRemoveComment}
-                loading={removeCommentLoading}
-              >
-                삭제
-              </button>
-            </div>
-          </div>
-
-          <BoardBody>
-            <p>{post.comment_content}</p>
-          </BoardBody>
-        </CommentForm>
-        {/* 댓글 달기 form */}
         <CommentWrite post={post} />
+
+        {mainPosts.map(item => (
+          <CommentView key={post.id} post={post} />
+        ))}
       </CommentWrap>
     </>
   );
