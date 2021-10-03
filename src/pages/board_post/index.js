@@ -2,7 +2,11 @@
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POSTS_REQUEST, REMOVE_POST_REQUEST } from 'reducers/post';
+import {
+  LOAD_POSTS_REQUEST,
+  REMOVE_POST_REQUEST,
+  loadPost,
+} from 'reducers/post';
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
 import React, { useEffect, useCallback } from 'react';
@@ -12,18 +16,21 @@ import 'moment/locale/ko';
 
 const nowTime = moment().format('YYYY.MM.DD HH:mm');
 
-function boardPost({ post }) {
+function boardPost({ post, match }) {
   const dispatch = useDispatch();
   const id = useSelector(state => state.userReducer.me?.id);
-  const { removePostLoading, mainPosts } = useSelector(
+  const { removePostLoading, mainPosts, singlePost } = useSelector(
     state => state.postReducer,
   );
 
+  console.log('match', match.params.id);
+  console.log('siglePost', singlePost);
+
+  const getPostData = () => dispatch(loadPost(match.params.id));
+
   useEffect(() => {
-    dispatch({
-      type: LOAD_POSTS_REQUEST,
-    });
-  }, []);
+    getPostData();
+  }, [dispatch]);
 
   const onRemovePost = useCallback(() => {
     dispatch({
@@ -40,10 +47,10 @@ function boardPost({ post }) {
       {/* 게시글 view */}
       <PostWrap>
         <div className="boardHeader">
-          <Title>{mainPosts.title}</Title>
+          <Title>{singlePost.title}</Title>
           <div className="align">
             <div className="userTimeNum">
-              <span className="name">{mainPosts.author}</span>
+              <span className="name">{singlePost.author}</span>
               <span className="date">{nowTime}</span>
               <span className="comment">
                 {/* 댓글수 {post.comment_list.length} */}
@@ -68,7 +75,7 @@ function boardPost({ post }) {
         </div>
 
         <section className="boardBody">
-          <p>{mainPosts.content}</p>
+          <p>{singlePost.content}</p>
         </section>
       </PostWrap>
 

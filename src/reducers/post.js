@@ -76,6 +76,11 @@ export const addComment = data => ({
   data,
 });
 
+export const loadPost = data => ({
+  type: LOAD_POST_REQUEST,
+  data,
+});
+
 const postReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
@@ -87,7 +92,7 @@ const postReducer = (state = initialState, action) =>
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
-        draft.mainPosts = draft.mainPosts.concat(action.data);
+        draft.mainPosts = action.data;
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
@@ -101,7 +106,7 @@ const postReducer = (state = initialState, action) =>
       case LOAD_POST_SUCCESS:
         draft.loadPostLoading = false;
         draft.loadPostDone = true;
-        draft.singlePost = action.data.concat(action.data);
+        draft.singlePost = action.data;
         break;
       case LOAD_POST_FAILURE:
         draft.loadPostLoading = false;

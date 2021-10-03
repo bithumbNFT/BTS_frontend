@@ -35,10 +35,15 @@ function boardWrite({ history }) {
         inputContent.current.focus();
       } else {
         const formData = new FormData();
-        formData.append('content', title);
+        formData.append('author', JSON.parse(localStorage.getItem('userInfo')).name);
+        formData.append('title', title);
+        formData.append('content', content);
+        const author = JSON.parse(localStorage.getItem('userInfo')).name;
         dispatch({
           type: ADD_POST_REQUEST,
           data: {
+            author,
+            title,
             content,
           },
         });

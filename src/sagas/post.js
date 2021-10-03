@@ -48,9 +48,10 @@ function loadPostAPI(lastId) {
 }
 
 function* loadPost(action) {
+  console.log('action in loadPost', action);
   try {
     const result = yield call(loadPostAPI, action.data);
-    console.log(result.data);
+    console.log('result.data', result.data);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -73,7 +74,7 @@ function* loadPosts(action) {
   try {
     console.log('여러 게시물 로드');
     const result = yield call(loadPostsAPI, action.data);
-    console.log(result.data);
+    console.log('result.data', result.data);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -89,10 +90,20 @@ function* loadPosts(action) {
 
 // 게시물 작성
 function addPostAPI(data) {
-  return axios.post('/board/wirte', { content: data });
+  const response = axios({
+    url: '/board/write',
+    method: 'post',
+    data: {
+      author: data.author,
+      title: data.title,
+      content: data.content,
+    },
+  });
+  return response;
 }
 
 function* addPost(action) {
+  console.log('action in addPost', action);
   try {
     const result = yield call(addPostAPI, action.data);
     console.log(result.data);
@@ -100,10 +111,10 @@ function* addPost(action) {
       type: ADD_POST_SUCCESS,
       data: result.data,
     });
-    yield put({
-      type: ADD_POST_TO_ME,
-      data: result.data.id,
-    });
+    // yield put({
+    //   type: ADD_POST_TO_ME,
+    //   data: result.data.id,
+    // });
   } catch (err) {
     console.error(err);
     yield put({
