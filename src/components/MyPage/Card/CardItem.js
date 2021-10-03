@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from 'react';
-import styled from '@emotion/styled';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -76,6 +75,13 @@ function Card({ post }) {
       type: REMOVE_AUCTION_REQUEST,
     });
   }, []);
+
+  // 마이페이지 좋아요한 작품에는 하트 fill 처리
+  useEffect(() => {
+    if (window.location.pathname === '/mypage/wishlist') {
+      setLiked(true);
+    }
+  });
 
   return (
     <CardContainer onMouseOver={deleteButton}>
