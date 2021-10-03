@@ -1,4 +1,3 @@
-// import Post from 'components/Board/Post';
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -11,8 +10,8 @@ import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
 import React, { useEffect, useCallback } from 'react';
 import moment from 'moment';
-import { PostWrap, Title, CommentWrap } from './styles';
 import 'moment/locale/ko';
+import { PostWrap, Title, CommentWrap } from './styles';
 
 const nowTime = moment().format('YYYY.MM.DD HH:mm');
 

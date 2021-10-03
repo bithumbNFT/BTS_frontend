@@ -11,7 +11,6 @@ function App() {
   const Upload = lazy(() => import('./pages/upload'));
   const Board = lazy(() => import('./pages/board'));
   const Home = lazy(() => pMinDelay(import('./pages/home'), 3000));
-  // const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
   const Post = lazy(() => import('./pages/board_post'));
   const Write = lazy(() => import('./pages/board_write'));

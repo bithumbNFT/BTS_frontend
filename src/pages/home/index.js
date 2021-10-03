@@ -7,7 +7,7 @@ import { Pagination } from 'antd';
 import HomeIntro from 'components/Home/Intro';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
-import styled from '@emotion/styled';
+import { Title, CardWrap, CardListBox, BottomMailn } from './styles';
 
 function home() {
   const dispatch = useDispatch();
@@ -61,45 +61,3 @@ function home() {
 }
 
 export default home;
-
-const Title = styled.h2`
-  font-weight: 400;
-  font-size: 1.8rem;
-  line-height: 1.2;
-  text-align: center;
-  letter-spacing: -1.5px;
-  padding: 5%;
-  strong {
-    font-weight: 600;
-  }
-`;
-
-const CardWrap = styled.div`
-  width: 1000px;
-  margin: 0 auto;
-`;
-
-const CardListBox = styled.article`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 100%;
-  margin: 0 auto;
-`;
-
-const BottomMailn = styled.section`
-  height: 100%;
-  position: relative;
-
-  .ant-pagination {
-    text-align: right;
-    margin-right: 3%;
-  }
-  .ant-pagination-item-active a {
-    color: #fe5000;
-  }
-  .ant-pagination-item-active {
-    font-weight: 500;
-    background: #fff;
-    border-color: #fe5000;
-  }
-`;
