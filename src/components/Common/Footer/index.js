@@ -10,25 +10,28 @@ function Footer() {
       <ul>
         <Member
           koName="이현주"
-          enName="Lee Hyunju Ju"
+          enName="Lee HyunJu"
           major="Frontend Engineer"
-          src="/images/leehyunju.png"
+          src="/images/hyunju.png"
           github="https://github.com/leemember"
+          name="hyunju"
         />
 
         <Member
           koName="서유림"
           enName="Seo Yurim"
           major="Frontend Engineer"
-          src="/images/leehyunju.png"
+          src="/images/yurim.png"
           github="https://github.com/yurim22"
+          name="yurim"
         />
         <Member
           koName="조원희"
           enName="Cho Wonhe"
           major="Backend Engineer"
-          src="/images/leehyunju.png"
+          src="/images/wonhe.png"
           github="https://github.com/wonhecho"
+          name="wonhe"
         />
         <Member
           koName="백인준"
@@ -41,8 +44,9 @@ function Footer() {
           koName="문승재"
           enName="Moon Seungjae"
           major="Backend Engineer"
-          src="/images/leehyunju.png"
+          src="/images/seungjae.png"
           github="https://github.com/msj0319"
+          name="seungjae"
         />
       </ul>
     </FooterBox>
@@ -65,5 +69,15 @@ export const FooterBox = styled.footer`
     font-weight: 500;
     letter-spacing: -0.6px;
     font-family: 'paybooc-Bold' !important;
+  }
+  .seungjae {
+    img {
+      margin-left: 0;
+    }
+  }
+  .wonhe {
+    img {
+      margin-left: 0;
+    }
   }
 `;

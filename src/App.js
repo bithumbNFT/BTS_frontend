@@ -30,7 +30,6 @@ function App() {
           {/* 홈화면 */}
           <Route exact path="/" component={Home} />
           {/* 경매 페이지 */}
-          {/* <Route path="/auction/:id" component={Auction} /> */}
           <AuthRoute
             path="/auction/:id"
             render={props => <Auction {...props} />}
@@ -39,15 +38,22 @@ function App() {
           <Route exact path="/upload" component={Upload} />
           {/* 소통 게시판 */}
           <AuthRoute path="/board" render={props => <Board {...props} />} />
-          {/* <Route exact path="/board" component={Board} /> */}
           {/* 마이페이지 */}
-          {/* <Route path="/mypage" component={MyPage} /> */}
           <AuthRoute path="/mypage" render={props => <MyPage {...props} />} />
           {/* 게시글 view */}
-          {/* <Route exact path="/board_post" component={Post} /> */}
-          <Route exact path="/board_post/:id" component={Post} />
-          {/* 게시글 view */}
+          <Route
+            exact
+            path="/board_post/:id"
+            render={props => <Post {...props} />}
+          />
+          {/* 게시글 작성 */}
           <Route exact path="/board_write" component={Write} />
+          {/* 게시글 수정 */}
+          <Route
+            exact
+            path="/board_write:id"
+            render={props => <Write {...props} />}
+          />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />
           {/* 로그인 페이지 */}

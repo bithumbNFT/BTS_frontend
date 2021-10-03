@@ -1,32 +1,56 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import Header from 'components/Common/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_POST_REQUEST } from 'reducers/post';
-import useInput from 'hooks/useInput';
 import Intro from 'components/Board/Intro';
+import useInputs from 'hooks/useInput';
 import { Form } from './styles';
 
-function boardPost() {
+function boardWrite({ history }) {
   const dispatch = useDispatch();
-  const [text, onChangeText, setText] = useInput('');
   const { addPostDone } = useSelector(state => state.postReducer);
+  const [state, onChangeInput] = useInputs({ title: '', content: '' });
+  const { title, content } = state;
+  const inputTitle = useRef(null);
+  const inputContent = useRef(null);
 
   useEffect(() => {
     if (addPostDone) {
-      setText('');
-      console.log(setText);
+      title('');
+      content('');
+      console.log(title, content);
     }
   }, [addPostDone]);
 
   const onSubmit = useCallback(
-    async e => {
+    e => {
       e.preventDefault();
-      dispatch({
-        type: ADD_POST_REQUEST,
-        text,
-      });
+      alert(`자기소개: ${title}, 기술스택: ${content}`);
+
+      if (!title) {
+        alert('제목을 입력해주세요.');
+        inputTitle.current.focus();
+      } else if (!content) {
+        alert('내용물을 입력해주세요.');
+        inputContent.current.focus();
+      } else {
+        const formData = new FormData();
+        formData.append('author', JSON.parse(localStorage.getItem('userInfo')).name);
+        formData.append('title', title);
+        formData.append('content', content);
+        const author = JSON.parse(localStorage.getItem('userInfo')).name;
+        dispatch({
+          type: ADD_POST_REQUEST,
+          data: {
+            author,
+            title,
+            content,
+          },
+        });
+        history.push('/board');
+      }
     },
-    [text],
+    [title, content],
   );
 
   return (
@@ -39,12 +63,19 @@ function boardPost() {
         <h1>글작성</h1>
         <input
           type="text"
+          defaultValue={title}
+          name="title"
+          ref={inputTitle}
           placeholder="제목을 입력해주세요. (80자 이내)"
-          maxLength="80"
+          maxLength={80}
+          onChange={onChangeInput}
         />
         <textarea
           placeholder="글 내용을 입력해주세요."
-          onChange={onChangeText}
+          onChange={onChangeInput}
+          defaultValue={content}
+          ref={inputContent}
+          name="content"
         />
 
         <div className="buttons">
@@ -55,4 +86,4 @@ function boardPost() {
   );
 }
 
-export default boardPost;
+export default boardWrite;

@@ -1,43 +1,33 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import useInput from 'hooks/useInput';
 import { ADD_COMMENT_REQUEST } from 'reducers/post';
 import { CommentWriteBox, Button } from './styles';
 
 function CommentWrite({ post }) {
   const dispatch = useDispatch();
-
   const id = useSelector(state => state.userReducer.me?.id);
-  const { addCommentDone, addCommentLoading } = useSelector(
-    state => state.postReducer,
-  );
-  const [commentText, onChangeCommentText, setCommentText] = useInput('');
+  const [comment, setComment] = useState('');
+  const { addCommentLoading } = useSelector(state => state.postReducer);
 
-  useEffect(() => {
-    if (addCommentDone) {
-      setCommentText('');
-    }
-  }, [addCommentDone]);
+  const onSubmit = useCallback(() => {
+    dispatch({
+      type: ADD_COMMENT_REQUEST,
+      data: { comment_writer: post.id, comment_content: comment, c_id: id },
+    });
+  }, [comment, id]);
 
-  const onSubmitComment = useCallback(
-    e => {
-      e.preventDefault();
-      dispatch({
-        type: ADD_COMMENT_REQUEST,
-        data: { comment_content: commentText },
-      });
-    },
-    [commentText, id],
-  );
+  const onChangeContent = useCallback(e => {
+    setComment(e.target.value);
+  }, []);
 
   return (
-    <form onSubmit={onSubmitComment}>
+    <form onSubmit={onSubmit}>
       <CommentWriteBox>
         <textarea
           placeholder="댓글을 입력해 주세요"
-          onChange={onChangeCommentText}
-          value={commentText}
+          onChange={onChangeContent}
+          defaultValue={comment}
         />
 
         <Button type="submit" loading={addCommentLoading}>
@@ -49,13 +39,3 @@ function CommentWrite({ post }) {
 }
 
 export default CommentWrite;
-
-CommentWrite.propTypes = {
-  board: PropTypes.shape({
-    comment_list: PropTypes.arrayOf({
-      c_id: PropTypes.number,
-      comment_content: PropTypes.string,
-      comment_writer: PropTypes.string,
-    }),
-  }).isRequired,
-};

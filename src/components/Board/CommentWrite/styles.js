@@ -7,17 +7,8 @@ export const CommentWriteBox = styled.div`
   height: 80px;
   justify-content: space-between;
   position: relative;
-  margin: 4em auto;
+  margin: 2em auto;
   font-size: 16px;
-  &::before {
-    content: '';
-    display: inline-block;
-    background: #dbdbdb;
-    width: 100%;
-    height: 1px;
-    top: -31px;
-    position: absolute;
-  }
   textarea {
     resize: none;
     background: #fff;
