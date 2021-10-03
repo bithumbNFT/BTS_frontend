@@ -14,18 +14,19 @@ function boardWrite({ history }) {
   const inputTitle = useRef(null);
   const inputContent = useRef(null);
 
-  useEffect(() => {
-    if (addPostDone) {
-      title('');
-      content('');
-      console.log(title, content);
-    }
-  }, [addPostDone]);
+  // 21.10.03 첫번째 게시글 올린 후 두번째 게시글 등록 위해 클릭하면 에러 발생하여 comment out
+  // useEffect(() => {
+  //   if (addPostDone) {
+  //     title('');
+  //     content('');
+  //     console.log(title, content);
+  //   }
+  // }, [addPostDone]);
 
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      alert(`자기소개: ${title}, 기술스택: ${content}`);
+      // alert(`자기소개: ${title}, 기술스택: ${content}`);
 
       if (!title) {
         alert('제목을 입력해주세요.');

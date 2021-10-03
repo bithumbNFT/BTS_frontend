@@ -10,7 +10,7 @@ export const initialState = {
   loadPostsDone: false,
   loadPostsError: null,
 
-  // 게시물 로드 (여러개)
+  // 게시물 로드 (단일)
   loadPostLoading: false,
   loadPostDone: false,
   loadPostError: null,
@@ -76,15 +76,24 @@ export const addComment = data => ({
   data,
 });
 
+export const loadPosts = () => ({
+  type: LOAD_POSTS_REQUEST,
+});
+
 export const loadPost = data => ({
   type: LOAD_POST_REQUEST,
   data,
 });
 
+export const removeComment = data => ({
+  type: REMOVE_COMMENT_REQUEST,
+  data,
+});
 const postReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOAD_POSTS_REQUEST:
+        console.log('리듀서 전체 커뮤니티 목록');
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
@@ -148,8 +157,8 @@ const postReducer = (state = initialState, action) =>
         draft.addCommentError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        const post = draft.mainPosts.find(v => v.id === action.data.PostId);
-        post.Comments.unshift(action.data);
+        // draft.singlePost.comment_list.unshift(action.data);
+        draft.singlePost.comment_list = [...draft.singlePost.comment_list, action.data];
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
@@ -164,7 +173,7 @@ const postReducer = (state = initialState, action) =>
         draft.removeCommentError = null;
         break;
       case REMOVE_COMMENT_SUCCESS:
-        draft.mainPosts = draft.mainPosts.filter(
+        draft.singlePost.comment_list = draft.singlePost.comment_list.filter(
           v => v.id !== action.data.PostId,
         );
         draft.removeCommentLoading = false;

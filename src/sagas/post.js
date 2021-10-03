@@ -5,7 +5,9 @@ import {
   takeLatest,
   call,
   throttle,
+  delay,
 } from '@redux-saga/core/effects';
+import { redirect, push } from 'utils/historyUtils';
 import axios from 'axios';
 
 import {
@@ -51,7 +53,7 @@ function* loadPost(action) {
   console.log('action in loadPost', action);
   try {
     const result = yield call(loadPostAPI, action.data);
-    console.log('result.data', result.data);
+    // yield delay(300);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -70,11 +72,10 @@ function loadPostsAPI() {
   return axios.get('/board/board');
 }
 
-function* loadPosts(action) {
+function* loadPosts() {
   try {
     console.log('여러 게시물 로드');
-    const result = yield call(loadPostsAPI, action.data);
-    console.log('result.data', result.data);
+    const result = yield call(loadPostsAPI);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -130,6 +131,7 @@ function removePostAPI(id) {
 }
 
 function* removePost(action) {
+  console.log(action);
   try {
     const result = yield call(removePostAPI, action.data);
     console.log(result.data);
@@ -137,10 +139,11 @@ function* removePost(action) {
       type: REMOVE_POST_SUCCESS,
       data: result.data,
     });
-    yield put({
-      type: REMOVE_POST_OF_ME,
-      data: action.data,
-    });
+    // yield put({
+    //   type: REMOVE_POST_OF_ME,
+    //   data: action.data,
+    // });
+    yield call(redirect, '/board');
   } catch (err) {
     console.error(err);
     yield put({
@@ -151,16 +154,23 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post(`/board/post/${data.postId}`, data);
+  console.log('post id조회', data);
+  return axios({
+    url: `/board/post/${data.postId}`,
+    method: 'post',
+    data: {
+      comment_writer: data.comment_writer,
+      comment_content: data.comment_content,
+    },
+  });
 }
 
 function* addComment(action) {
   try {
     const result = yield call(addCommentAPI, action.data);
-    console.log(result.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
-      data: result.data,
+      data: result.data.comment_list[result.data.comment_list.length - 1],
     });
   } catch (err) {
     console.error(err);
@@ -171,11 +181,13 @@ function* addComment(action) {
   }
 }
 
+// [TODO] 댓글 삭제 api 수정 필요
 function removeCommentAPI(data) {
-  return axios.delete(`/board/post/${data.postId}/delete_comment`, data);
+  return axios.put(`/board/post/${data.postId}/delete_comment`, data);
 }
 
 function* removeComment(action) {
+  console.log(action);
   try {
     const result = yield call(removeCommentAPI, action.data);
     console.log(result.data);
@@ -197,7 +209,7 @@ function* removeComment(action) {
 }
 
 function* watchLoadPosts() {
-  yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts);
+  yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
 
 function* watchLoadPost() {
