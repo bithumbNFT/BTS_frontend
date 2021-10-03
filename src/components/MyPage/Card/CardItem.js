@@ -94,7 +94,6 @@ function Card({ post }) {
           ) : (
             <RiHeartLine onClick={onClickLike} />
           )}
-
           <Status>판매중</Status>
         </CardRight>
       </CardDetail>

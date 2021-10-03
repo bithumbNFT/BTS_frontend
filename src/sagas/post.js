@@ -41,7 +41,6 @@ import {
   REMOVE_COMMENT_SUCCESS,
   REMOVE_COMMENT_FAILURE,
 } from '../reducers/post';
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
 // 단일 게시물
 function loadPostAPI(lastId) {
@@ -139,11 +138,6 @@ function* removePost(action) {
       type: REMOVE_POST_SUCCESS,
       data: result.data,
     });
-    // yield put({
-    //   type: REMOVE_POST_OF_ME,
-    //   data: action.data,
-    // });
-    yield call(redirect, '/board');
   } catch (err) {
     console.error(err);
     yield put({

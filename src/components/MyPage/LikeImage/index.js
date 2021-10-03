@@ -1,6 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_LIKE_AUCTION_REQUEST } from 'reducers/auction';
 import CardList from '../Card/CardList';
+
+function LikeImage() {
+  const dispatch = useDispatch();
+  const { auction } = useSelector(state => state.auctionReducer);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_LIKE_AUCTION_REQUEST,
+    });
+  }, [auction]);
+  return (
+    <>
+      <MyUploadText># 좋아요한 작품</MyUploadText>
+      <CardList auctions={auction} />
+    </>
+  );
+}
+
+export default LikeImage;
 
 const MyUploadText = styled.div`
   font-size: 1.5rem;
@@ -9,14 +30,3 @@ const MyUploadText = styled.div`
   width: fit-content;
   margin: 8px 0;
 `;
-
-function LikeImage() {
-  return (
-    <>
-      <MyUploadText># 좋아요한 작품</MyUploadText>
-      <CardList />
-    </>
-  );
-}
-
-export default LikeImage;
