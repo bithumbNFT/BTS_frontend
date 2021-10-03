@@ -3,39 +3,43 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { REMOVE_COMMENT_REQUEST } from 'reducers/post';
+import { REMOVE_COMMENT_REQUEST, removeComment } from 'reducers/post';
 import { CommentForm, BoardBody } from './styles';
 
-function CommentView({ post }) {
+function CommentView({ comment }) {
   const dispatch = useDispatch();
-  const id = useSelector(state => state.userReducer.me?.id);
+  // [TODO] 작성자 어떤걸로 구별할건지 api 확인 후 수정
+  const id = JSON.parse(localStorage.getItem('userInfo')).name;
   const { removeCommentLoading } = useSelector(state => state.postReducer);
 
-  const onRemoveComment = useCallback(() => {
-    dispatch({
-      type: REMOVE_COMMENT_REQUEST,
-      data: post.id,
-    });
-  }, [id]);
+  const handleRemoveComment = useCallback(() => {
+    dispatch(removeComment(comment.c_id));
+  });
+  // const onRemoveComment = useCallback(() => {
+  //   dispatch({
+  //     type: REMOVE_COMMENT_REQUEST,
+  //     data: comment.c_id,
+  //   });
+  // }, [id]);
 
   return (
     <>
       <CommentForm>
         <div className="userTimeNum">
           <div className="left">
-            <span className="name">{post.c_id}</span>
+            <span className="name">{comment.comment_writer}</span>
             <span className="date">
-              {moment(post.createdAt).format('YYYY.MM.DD.')}
+              {moment(comment.createdAt).format('YYYY.MM.DD.')}
             </span>
           </div>
-
+          {/* [TODO] comment user 변경 */}
           <div className="right">
-            {id && post.User.id === id ? (
+            {id && comment.comment_writer === id ? (
               <>
                 <button
                   type="button"
                   loading={removeCommentLoading}
-                  onClick={onRemoveComment}
+                  onClick={() => handleRemoveComment(comment.c_id)}
                 >
                   삭제
                 </button>
@@ -45,15 +49,14 @@ function CommentView({ post }) {
         </div>
 
         <BoardBody>
-          <p>{post.comment_content}</p>
+          <p>{comment.comment_content}</p>
         </BoardBody>
       </CommentForm>
     </>
   );
 }
-
 CommentView.propTypes = {
-  post: PropTypes.object.isRequired,
+  comment: PropTypes.object.isRequired,
 };
 
 export default CommentView;

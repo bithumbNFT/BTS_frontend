@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POSTS_REQUEST } from 'reducers/post';
+import { LOAD_POSTS_REQUEST, loadPosts } from 'reducers/post';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'antd';
 import Item from 'components/Board/Item';
@@ -11,13 +11,13 @@ import { ListView, ListWrap } from './styles';
 
 function board() {
   const dispatch = useDispatch();
+
+  const getPostsData = () => dispatch(loadPosts());
   const { mainPosts } = useSelector(state => state.postReducer);
 
   useEffect(() => {
-    dispatch({
-      type: LOAD_POSTS_REQUEST,
-    });
-  }, []);
+    getPostsData();
+  }, [dispatch]);
 
   return (
     <>
