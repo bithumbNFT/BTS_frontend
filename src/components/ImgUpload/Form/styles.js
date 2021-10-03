@@ -69,7 +69,7 @@ export const InputSection = styled.div`
     margin-bottom: 5px;
   }
 
-  input:nth-of-type(4) {
+  input:nth-of-type(3) {
     border: 1px solid #fe5000;
     background-color: #fe5000;
     color: white;
@@ -97,9 +97,26 @@ export const InputSection = styled.div`
     padding-right: 20px;
   }
   button {
-    border : 1px solid #dee2e6;
+    border: 1px solid #dee2e6;
     padding: 13px 12px;
     border-radius: 4px;
+  }
+
+  .date-info {
+    font-size: 12px;
+    font-weight: 400;
+    text-align: left;
+    padding-left: 5px;
+    padding-bottom: 10px;
+  }
+  .date-input {
+    display: grid;
+    grid-template-columns: 3.5fr 1fr;
+    gap: 15px;
+
+    select {
+      margin-bottom: 24px;
+    }
   }
 `;
 

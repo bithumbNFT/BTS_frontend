@@ -9,6 +9,8 @@ import {
 } from '@redux-saga/core/effects';
 import axios from 'axios';
 import shortId from 'shortid';
+import { instance } from 'utils/axiosUtils';
+import { redirect, push } from 'utils/historyUtils';
 
 import {
   // 경매템 로드
@@ -86,12 +88,22 @@ function* loadOneAuction(action) {
   }
 }
 
+// 경매템 추가
 function addAuctionAPI(data) {
-  return axios.post('/api/auction', data);
+  // const response = instance.post('/NFT/makeNFT', data);
+  const response = instance.post('/test');
+  const dummyData = {
+    transactionHash:
+      '0xa401e4c918d53aecdc89794b2bd3c59a8054a6d669bf1a6af737f37086bb7804',
+    status: 'Submitted',
+  };
+
+  return dummyData;
 }
 
 function* addAuction(action) {
   try {
+    console.log('사가 작품 등록');
     const result = yield call(addAuctionAPI, action.data);
     yield delay(1000);
     const id = shortId.generate();
@@ -99,14 +111,18 @@ function* addAuction(action) {
       type: ADD_AUCTION_SUCCESS,
       data: {
         id,
-        content: action.data,
+        transactionHash: result.transactionHash,
+        status: result.status,
       },
     });
-    yield put({
-      type: ADD_POST_TO_ME,
-      data: id,
-    });
+    // [TODO] ADD_TO_ME 추가
+    // yield put({
+    //   type: ADD_POST_TO_ME,
+    //   data: id,
+    // });
+    yield call(redirect, '/mypage');
   } catch (err) {
+    console.log('사가 작품 등록 실패');
     yield put({
       type: ADD_AUCTION_FAILURE,
       data: err.response.data,
