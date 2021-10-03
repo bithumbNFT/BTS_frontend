@@ -1,7 +1,7 @@
 // import Post from 'components/Board/Post';
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
   LOAD_POSTS_REQUEST,
   REMOVE_POST_REQUEST,
@@ -18,26 +18,34 @@ const nowTime = moment().format('YYYY.MM.DD HH:mm');
 
 function boardPost({ post, match }) {
   const dispatch = useDispatch();
-  const id = useSelector(state => state.userReducer.me?.id);
-  const { removePostLoading, mainPosts, singlePost } = useSelector(
-    state => state.postReducer,
-  );
-
-  console.log('match', match.params.id);
-  console.log('siglePost', singlePost);
+  // const id = useSelector(state => state.userReducer.me?.id);
+  const id = JSON.parse(localStorage.getItem('userInfo')).name;
+  const { loadPostLoading, removePostLoading, singlePost, commentList } = useSelector(state => ({
+      loadPostLoading: state.postReducer.loadPostLoading,
+      removePostLoading: state.postReducer.removePostLoading,
+      singlePost: state.postReducer.singlePost,
+      commentList: state.postReducer.singlePost?.comment_list,
+    }));
 
   const getPostData = () => dispatch(loadPost(match.params.id));
 
+  // match.param.id 가 변할 때 getPostData() 실행
   useEffect(() => {
     getPostData();
-  }, [dispatch]);
+  }, [match.params.id]);
 
-  const onRemovePost = useCallback(() => {
-    dispatch({
-      type: REMOVE_POST_REQUEST,
-    });
+  const onRemovePost = useCallback(postId => {
+    if (window.confirm('정말 삭제하시겠습니까 ?')) {
+      dispatch({
+        type: REMOVE_POST_REQUEST,
+        data: postId,
+      });
+    } else {
+      return null;
+    }
   }, []);
-
+  // [TODO] post 로드 시 끊기는 느낌 존재
+  // if (loadPostLoading) return <div>로딩중...</div>;
   return (
     <>
       <Header />
@@ -58,12 +66,12 @@ function boardPost({ post, match }) {
             </div>
 
             <div className="right">
-              {id && post.User.id === id ? (
+              {id && singlePost.author === id ? (
                 <>
                   <button type="button">수정</button>
                   <button
                     type="button"
-                    onClick={onRemovePost}
+                    onClick={() => onRemovePost(singlePost.p_id)}
                     loading={removePostLoading}
                   >
                     삭제
@@ -81,11 +89,14 @@ function boardPost({ post, match }) {
 
       {/* 댓글 view */}
       <CommentWrap>
-        <CommentWrite post={post} />
+        <CommentWrite postId={match.params.id} />
 
-        {/* {mainPosts.map(item => (
-          <CommentView key={post.item} post={post} />
-        ))} */}
+        {commentList
+          ?.slice(0)
+          .reverse()
+          .map(comment => (
+            <CommentView key={comment.c_id} comment={comment} />
+          ))}
       </CommentWrap>
     </>
   );

@@ -4,30 +4,37 @@ import PropTypes from 'prop-types';
 import { ADD_COMMENT_REQUEST } from 'reducers/post';
 import { CommentWriteBox, Button } from './styles';
 
-function CommentWrite({ post }) {
+function CommentWrite({ postId }) {
   const dispatch = useDispatch();
   const id = useSelector(state => state.userReducer.me?.id);
   const [comment, setComment] = useState('');
   const { addCommentLoading } = useSelector(state => state.postReducer);
+  const user = JSON.parse(localStorage.getItem('userInfo')).name;
 
-  const onSubmit = useCallback(() => {
-    dispatch({
-      type: ADD_COMMENT_REQUEST,
-      data: { comment_writer: post.id, comment_content: comment, c_id: id },
-    });
-  }, [comment, id]);
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      setComment('');
+      dispatch({
+        type: ADD_COMMENT_REQUEST,
+        data: { comment_writer: user, comment_content: comment, postId },
+      });
+    },
+    [comment, id],
+  );
 
   const onChangeContent = useCallback(e => {
     setComment(e.target.value);
   }, []);
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={e => onSubmit(e)}>
       <CommentWriteBox>
         <textarea
           placeholder="댓글을 입력해 주세요"
           onChange={onChangeContent}
           defaultValue={comment}
+          value={comment}
         />
 
         <Button type="submit" loading={addCommentLoading}>

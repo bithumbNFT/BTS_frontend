@@ -13,7 +13,8 @@ console.log(nowTime);
 
 function Post({ post }) {
   const dispatch = useDispatch();
-  const id = useSelector(state => state.userReducer.me?.id);
+  // const id = useSelector(state => state.userReducer.me?.id);
+  const id = JSON.parse(localStorage.getItem('userItem').name);
   const { removePostLoading, mainPosts } = useSelector(
     state => state.postReducer,
   );
