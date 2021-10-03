@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import Header from 'components/Common/Header';
 import CardItem from 'components/MyPage/Card/CardItem';
 import Footer from 'components/Common/Footer';
@@ -13,13 +13,14 @@ function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
   const { auction } = useSelector(stateRedux => stateRedux.auctionReducer);
+
   useEffect(() => {
     dispatch({
       type: LOAD_AUCTION_REQUEST,
     });
   }, [auction]);
 
-  // 버튼 클릭시 경매템 섹션으로 이동
+  // 버튼 클릭시 경매 섹션으로 이동
   const scrollToAuction = useCallback(() => {
     const element = document.getElementById('position');
     const headerOffset = 40;
@@ -48,7 +49,8 @@ function home() {
               <CardItem key={post.id} post={post} />
             ))}
           </CardListBox>
-          <Pagination defaultCurrent={1} total={10} />
+
+          <Pagination total={auction.length} current={1} />
         </CardWrap>
       </BottomMailn>
 
@@ -85,7 +87,7 @@ const CardListBox = styled.article`
 `;
 
 const BottomMailn = styled.section`
-  height: 100vh;
+  height: 100%;
   position: relative;
 
   .ant-pagination {

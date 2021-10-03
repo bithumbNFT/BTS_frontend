@@ -14,6 +14,159 @@ export const initialState = {
       image: faker.image.image(),
       owner: shortId.generate(),
     },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
+    {
+      // 📝 경매 아이템
+      id: shortId.generate(),
+      no: shortId.generate(),
+      name: faker.name.firstName(),
+      description: faker.lorem.paragraph(),
+      image: faker.image.image(),
+      owner: shortId.generate(),
+    },
   ],
 
   mainAuctions: [],

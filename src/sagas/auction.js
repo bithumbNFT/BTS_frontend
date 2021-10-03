@@ -125,8 +125,8 @@ function* loadGetAuction(action) {
 }
 
 // 경매템 view 로드 (단일 게시물)
-function loadOneAuctionAPI(data) {
-  return axios.get(`/posts/${data}`);
+function loadOneAuctionAPI(id) {
+  return axios.get(`NFT/checkNftbyNftid/${id}`);
 }
 
 function* loadOneAuction(action) {
