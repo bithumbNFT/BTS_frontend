@@ -17,7 +17,8 @@ export const initialState = {
   ],
 
   mainAuctions: [],
-  singlePost: null,
+  singlePost: [],
+  me: null,
 
   // 👉 초기상태 정의
   // 경매템 리스트 로드
@@ -97,7 +98,12 @@ const dummyAuction = data => ({
   date: data.date,
 });
 
-const postReducer = (state = initialState, action) =>
+export const myPage = data => ({
+  ...data,
+  LikeList: [],
+});
+
+const auctionReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       // 경매템 로드
@@ -110,7 +116,7 @@ const postReducer = (state = initialState, action) =>
       case LOAD_AUCTION_SUCCESS: {
         draft.loadAuctionLoading = false;
         draft.loadAuctionDone = true;
-        draft.auction = draft.auction.concat(action.data);
+        draft.auction = action.data;
         break;
       }
 
@@ -183,7 +189,7 @@ const postReducer = (state = initialState, action) =>
         break;
       case LIKE_AUCTION_SUCCESS:
         draft.likeAuctionLoading = false;
-        draft.me.Followings.push({ id: action.data.id });
+        draft.me.LikeList.push({ id: action.data.UserId });
         draft.likeAuctionDone = true;
         break;
       case LIKE_AUCTION_FAILURE:
@@ -199,7 +205,7 @@ const postReducer = (state = initialState, action) =>
         break;
       case UNLIKE_AUCTION_SUCCESS:
         draft.unlikeAuctionLoading = false;
-        draft.me.Followings = draft.me.Followings.filter(
+        draft.me.LikeList = draft.me.LikeList.filter(
           v => v.id !== action.data.id,
         );
         draft.unlikeAuctionDone = true;
@@ -214,4 +220,4 @@ const postReducer = (state = initialState, action) =>
     }
   });
 
-export default postReducer;
+export default auctionReducer;
