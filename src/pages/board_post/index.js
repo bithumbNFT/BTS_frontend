@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -9,17 +10,14 @@ import {
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
 import React, { useEffect, useCallback } from 'react';
-import moment from 'moment';
-import 'moment/locale/ko';
 import { PostWrap, Title, CommentWrap } from './styles';
-
-const nowTime = moment().format('YYYY.MM.DD HH:mm');
 
 function boardPost({ post, match }) {
   const dispatch = useDispatch();
   // const id = useSelector(state => state.userReducer.me?.id);
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
-  const { loadPostLoading, removePostLoading, singlePost, commentList } = useSelector(state => ({
+  const { loadPostLoading, removePostLoading, singlePost, commentList } =
+    useSelector(state => ({
       loadPostLoading: state.postReducer.loadPostLoading,
       removePostLoading: state.postReducer.removePostLoading,
       singlePost: state.postReducer.singlePost,
@@ -45,6 +43,7 @@ function boardPost({ post, match }) {
   }, []);
   // [TODO] post 로드 시 끊기는 느낌 존재
   // if (loadPostLoading) return <div>로딩중...</div>;
+
   return (
     <>
       <Header />
@@ -58,9 +57,11 @@ function boardPost({ post, match }) {
           <div className="align">
             <div className="userTimeNum">
               <span className="name">{singlePost.author}</span>
-              <span className="date">{nowTime}</span>
+              <span className="date">
+                {(singlePost.create_post_date || '').split('T').splice(0, 1)}
+              </span>
               <span className="comment">
-                {/* 댓글수 {post.comment_list.length} */}
+                댓글수 {(singlePost.comment_list || '').length}
               </span>
             </div>
 

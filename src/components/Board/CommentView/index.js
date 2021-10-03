@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import 'moment/locale/ko';
 import { REMOVE_COMMENT_REQUEST, removeComment } from 'reducers/post';
 import { CommentForm, BoardBody } from './styles';
 
@@ -28,8 +26,9 @@ function CommentView({ comment }) {
         <div className="userTimeNum">
           <div className="left">
             <span className="name">{comment.comment_writer}</span>
+            {/* 날짜 */}
             <span className="date">
-              {moment(comment.createdAt).format('YYYY.MM.DD.')}
+              {(comment.create_post_date || '').split('T').splice(0, 1)}
             </span>
           </div>
           {/* [TODO] comment user 변경 */}
