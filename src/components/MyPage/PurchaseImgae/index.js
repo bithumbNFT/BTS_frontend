@@ -16,7 +16,7 @@ function PurchaseImage() {
   return (
     <>
       <MyUploadText># 내가 구매한 작품</MyUploadText>
-      <CardList getAuctions={auction} />
+      <CardList auctions={auction} />
     </>
   );
 }

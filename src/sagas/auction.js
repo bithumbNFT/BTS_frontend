@@ -211,7 +211,14 @@ function* removeAuction(action) {
 }
 
 function likeAPI(data) {
-  return axios.patch(`/user/${data}/like`);
+  return axios({
+    url: '/NFT/likeNFT',
+    method: 'post',
+    data: {
+      nftid: data.nftid,
+      user: data.user,
+    },
+  });
 }
 
 function* likeAuction(action) {
@@ -231,7 +238,14 @@ function* likeAuction(action) {
 }
 
 function unLikeAPI(data) {
-  return axios.delete(`/user/${data}/like`);
+  return axios({
+    url: '/NFT/likeNFT',
+    method: 'delete',
+    data: {
+      nftid: data.nftid,
+      user: data.user,
+    },
+  });
 }
 
 function* unLikeAuction(action) {

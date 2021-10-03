@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
+import { LOAD_MY_AUCTION_REQUEST } from 'reducers/auction';
 import CardList from '../Card/CardList';
 import Button from './Button';
 
@@ -11,7 +11,7 @@ function MyUpload() {
 
   useEffect(() => {
     dispatch({
-      type: LOAD_AUCTION_REQUEST,
+      type: LOAD_MY_AUCTION_REQUEST,
     });
   }, [auction]);
   return (
@@ -20,7 +20,7 @@ function MyUpload() {
         <MyUploadText># 내가 등록한 작품</MyUploadText>
         <Button />
       </MyUploadHeader>
-      <CardList myAuctions={auction} />
+      <CardList auctions={auction} />
     </>
   );
 }
