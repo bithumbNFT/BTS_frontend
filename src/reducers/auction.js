@@ -21,10 +21,25 @@ export const initialState = {
   me: null,
 
   // 👉 초기상태 정의
-  // 경매템 리스트 로드
+  // home 경매템 리스트 로드
   loadAuctionLoading: false,
   loadAuctionDone: false,
   loadAuctionError: null,
+
+  // wishlist 좋아요한 경매템 리스트 로드
+  loadLikeAuctionLoading: false,
+  loadLikeAuctionDone: false,
+  loadLikeAuctionError: null,
+
+  // 구매한 경매템 리스트 로드 (api 미완성)
+  // loadGetAuctionLoading: false,
+  // loadGetAuctionDone: false,
+  // loadGetAuctionError: null,
+
+  // 내가 등록한 작품 경매템 로드
+  loadMyAuctionLoading: false,
+  loadMyAuctionDone: false,
+  loadMyAuctionError: null,
 
   // 경매템 view 로드 (단일 게시물)
   loadOneAuctionLoading: false,
@@ -53,10 +68,25 @@ export const initialState = {
 };
 
 // ----------------------------
-// 경매템 로드
+// home 경매템 로드
 export const LOAD_AUCTION_REQUEST = 'LOAD_AUCTION_REQUEST';
 export const LOAD_AUCTION_SUCCESS = 'LOAD_AUCTION_SUCCESS';
 export const LOAD_AUCTION_FAILURE = 'LOAD_AUCTION_FAILURE';
+
+// 좋아요한 작품(wishlist) 경매템 로드
+export const LOAD_LIKE_AUCTION_REQUEST = 'LOAD_LIKE_AUCTION_REQUEST';
+export const LOAD_LIKE_AUCTION_SUCCESS = 'LOAD_LIKE_AUCTION_SUCCESS';
+export const LOAD_LIKE_AUCTION_FAILURE = 'LOAD_LIKE_AUCTION_FAILURE';
+
+// 구매한 작품(wishlist) 경매템 로드 (api 미완성)
+// export const LOAD_GET_AUCTION_REQUEST = 'LOAD_GET_AUCTION_REQUEST';
+// export const LOAD_GET_AUCTION_SUCCESS = 'LOAD_GET_AUCTION_SUCCESS';
+// export const LOAD_GET_AUCTION_FAILURE = 'LOAD_GET_AUCTION_FAILURE';
+
+// 내가 등록한 작품(mypage) 경매템 로드
+export const LOAD_MY_AUCTION_REQUEST = 'LOAD_MY_AUCTION_REQUEST';
+export const LOAD_MY_AUCTION_SUCCESS = 'LOAD_MY_AUCTION_SUCCESS';
+export const LOAD_MY_AUCTION_FAILURE = 'LOAD_MY_AUCTION_FAILURE';
 
 // 경매템 view 로드 (단일 게시물)
 export const LOAD_ONE_AUCTION_REQUEST = 'LOAD_AUCTION_REQUEST';
@@ -106,7 +136,7 @@ export const myPage = data => ({
 const auctionReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      // 경매템 로드
+      // home 경매템 로드
       case LOAD_AUCTION_REQUEST:
         draft.loadAuctionLoading = true;
         draft.loadAuctionDone = false;
@@ -123,6 +153,66 @@ const auctionReducer = (state = initialState, action) =>
       case LOAD_AUCTION_FAILURE: {
         draft.loadAuctionLoading = false;
         draft.loadAuctionError = action.error;
+        break;
+      }
+
+      // wishlist 좋아요한 작품 경매템 로드
+      case LOAD_LIKE_AUCTION_REQUEST:
+        draft.loadLikeAuctionLoading = true;
+        draft.loadLikeAuctionDone = false;
+        draft.loadLikeAuctionError = null;
+        break;
+
+      case LOAD_LIKE_AUCTION_SUCCESS: {
+        draft.loadLikeAuctionLoading = false;
+        draft.loadLikeAuctionDone = true;
+        draft.auction = action.data;
+        break;
+      }
+
+      case LOAD_LIKE_AUCTION_FAILURE: {
+        draft.loadLikeAuctionLoading = false;
+        draft.loadLikeAuctionError = action.error;
+        break;
+      }
+
+      // 구매한 작품 경매템 로드 => API 아직 미완성
+      // case LOAD_GET_AUCTION_REQUEST:
+      //   draft.loadGetAuctionLoading = true;
+      //   draft.loadGetAuctionDone = false;
+      //   draft.loadGetAuctionError = null;
+      //   break;
+
+      // case LOAD_GET_AUCTION_SUCCESS: {
+      //   draft.loadGetAuctionLoading = false;
+      //   draft.loadGetAuctionDone = true;
+      //   draft.auction = action.data;
+      //   break;
+      // }
+
+      // case LOAD_GET_AUCTION_FAILURE: {
+      //   draft.loadGetAuctionLoading = false;
+      //   draft.loadGetAuctionError = action.error;
+      //   break;
+      // }
+
+      // 내가 등록한 작품 경매템 로드
+      case LOAD_MY_AUCTION_REQUEST:
+        draft.loadMyAuctionLoading = true;
+        draft.loadMyAuctionDone = false;
+        draft.loadMyAuctionError = null;
+        break;
+
+      case LOAD_MY_AUCTION_SUCCESS: {
+        draft.loadMyAuctionLoading = false;
+        draft.loadMyAuctionDone = true;
+        draft.auction = action.data;
+        break;
+      }
+
+      case LOAD_MY_AUCTION_FAILURE: {
+        draft.loadMyAuctionLoading = false;
+        draft.loadMyAuctionError = action.error;
         break;
       }
 

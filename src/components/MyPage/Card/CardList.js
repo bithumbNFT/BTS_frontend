@@ -1,24 +1,14 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
 import CardItem from './CardItem';
 
-function CardList() {
-  const dispatch = useDispatch();
-  const { auction } = useSelector(state => state.auctionReducer);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_AUCTION_REQUEST,
-    });
-  }, [auction]);
-
+function CardList({ auctions }) {
+  console.log(auctions);
   return (
     <CardWrap>
       <CardListWrapper>
-        {auction.map(post => (
+        {auctions.map(post => (
           <CardItem key={post.id} post={post} />
         ))}
       </CardListWrapper>
@@ -40,7 +30,7 @@ const CardListWrapper = styled.div`
   place-items: center;
   grid-template-columns: 1fr 1fr;
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     padding: 50px 20px;
   }

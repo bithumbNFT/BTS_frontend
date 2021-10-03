@@ -43,8 +43,8 @@ export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 
-export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
-export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
+export const ADD_AUCTION_TO_ME = 'ADD_AUCTION_TO_ME';
+export const REMOVE_AUCTION_OF_ME = 'REMOVE_AUCTION_OF_ME';
 
 export const CREATE_WALLET_REQUEST = 'CREATE_WALLET_REQUEST';
 export const CREATE_WALLET_SUCCESS = 'CREATE_WALLET_SUCCESS';
@@ -127,11 +127,14 @@ const reducer = (state = initialState, action) =>
         break;
 
       // --------------------------------------------
-      case ADD_POST_TO_ME:
+      case ADD_AUCTION_TO_ME:
         draft.me.auctionPost.unshift({ id: action.data });
         break;
-      case REMOVE_POST_OF_ME:
-        draft.me.auctionPost = draft.me.auctionPost.filter(y => y.id !== action.data);
+
+      case REMOVE_AUCTION_OF_ME:
+        draft.me.auctionPost = draft.me.auctionPost.filter(
+          y => y.id !== action.data,
+        );
         break;
 
       // --------------------------------------------

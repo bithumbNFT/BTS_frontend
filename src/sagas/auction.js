@@ -13,10 +13,25 @@ import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
 
 import {
-  // 경매템 로드
+  // home 경매템 로드
   LOAD_AUCTION_REQUEST,
   LOAD_AUCTION_SUCCESS,
   LOAD_AUCTION_FAILURE,
+
+  // 좋아요한 작품(wishlist) 경매템 로드
+  LOAD_LIKE_AUCTION_REQUEST,
+  LOAD_LIKE_AUCTION_SUCCESS,
+  LOAD_LIKE_AUCTION_FAILURE,
+
+  // 구매한 작품(wishlist) 경매템 로드
+  // LOAD_GET_AUCTION_REQUEST,
+  // LOAD_GET_AUCTION_SUCCESS,
+  // LOAD_GET_AUCTION_FAILURE,
+
+  // 내가 등록한 작품(mypage) 경매템 로드
+  LOAD_MY_AUCTION_REQUEST,
+  LOAD_MY_AUCTION_SUCCESS,
+  LOAD_MY_AUCTION_FAILURE,
 
   // 경매템 view 로드 (단일 게시물)
   LOAD_ONE_AUCTION_REQUEST,
@@ -44,11 +59,11 @@ import {
   UNLIKE_AUCTION_FAILURE,
 } from '../reducers/auction';
 
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
+import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
 
-// 경매템 로드
+// home 모든 경매템 로드
 function loadAuctionAPI(lastId) {
-  return axios.get(`/posts?lastId=${lastId || 0}`);
+  return axios.get('/NFT/allNFT');
 }
 
 function* loadAuction(action) {
@@ -62,6 +77,48 @@ function* loadAuction(action) {
     console.error(err);
     yield put({
       type: LOAD_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+//  좋아요한 작품(wishlist) 경매템 로드
+function loadLikeAuctionAPI(id) {
+  return axios.get(`/NFT/userlikelist/${id}`);
+}
+
+function* loadLikeAuction(action) {
+  try {
+    const result = yield call(loadLikeAuctionAPI, action.lastId);
+    yield put({
+      type: LOAD_LIKE_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_LIKE_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+//  내가 등록한 작품(mypage) 경매템 로드
+function loadGetAuctionAPI(id) {
+  return axios.get(`/NFT/checkNftbyid/${id}`);
+}
+
+function* loadGetAuction(action) {
+  try {
+    const result = yield call(loadGetAuctionAPI, action.lastId);
+    yield put({
+      type: LOAD_MY_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_MY_AUCTION_FAILURE,
       error: err.response.data,
     });
   }
@@ -115,11 +172,10 @@ function* addAuction(action) {
         status: result.status,
       },
     });
-    // [TODO] ADD_TO_ME 추가
-    // yield put({
-    //   type: ADD_POST_TO_ME,
-    //   data: id,
-    // });
+    yield put({
+      type: ADD_AUCTION_TO_ME,
+      data: id,
+    });
     yield call(redirect, '/mypage');
   } catch (err) {
     console.log('사가 작품 등록 실패');
@@ -143,7 +199,7 @@ function* removeAuction(action) {
       data: action.data,
     });
     yield put({
-      type: REMOVE_POST_OF_ME,
+      type: REMOVE_AUCTION_OF_ME,
       data: action.data,
     });
   } catch (err) {
@@ -194,9 +250,19 @@ function* unLikeAuction(action) {
   }
 }
 
-// 경매템 게시물 로드
+// home 경매템 게시물 로드
 function* watchLoadAuction() {
   yield takeLatest(LOAD_AUCTION_REQUEST, loadAuction);
+}
+
+// 좋아요한 작품(wishlist) 경매템 로드
+function* watchLoadLikeAuction() {
+  yield takeLatest(LOAD_LIKE_AUCTION_REQUEST, loadLikeAuction);
+}
+
+// 내가 등록한 작품(mypage) 경매템 로드
+function* watchLoadGetAuction() {
+  yield takeLatest(LOAD_MY_AUCTION_REQUEST, loadGetAuction);
 }
 
 // 경매템 view 로드 (단일 게시물)
@@ -226,6 +292,8 @@ function* watchUnLikeAuctions() {
 export default function* auctionSaga() {
   yield all([
     fork(watchLoadAuction),
+    fork(watchLoadLikeAuction),
+    fork(watchLoadGetAuction),
     fork(watchLoadOneAuction),
     fork(watchAddAuction),
     fork(watchRemoveAuction),
