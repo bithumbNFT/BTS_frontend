@@ -1,20 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addAuction } from 'reducers/auction';
 import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
-
-const Select = ({ label, regiName, register, options, required }) => {
-  return (
-    <>
-      <label>{label}</label>
-      <select {...register(regiName, { required })}>
-        {options.map(value => (
-          <option value={value}>{value}</option>
-        ))}
-      </select>
-    </>
-  );
-};
 
 const Input = ({ label, regiName, register, required }) => (
   <>
@@ -44,10 +33,19 @@ function UploadForm() {
   } = useForm();
 
   const [imgSrc, setImgSrc] = useState(undefined);
+  const [imgData, setImgData] = useState({});
+
   const uploadImageInput = useRef(null);
   const watchPrice = watch('price');
   const currentKLAYPrice = 1542;
-  const onSubmit = data => console.log(data);
+
+  const dispatch = useDispatch();
+  // [TODO] form 제출
+  const onSubmit = data => {
+    data.file = imgData;
+    dispatch(addAuction(data));
+    console.log(data);
+  };
 
   const handlePrice = (price, klay) => {
     const klayToWon = priceToString(price * klay);
@@ -57,16 +55,15 @@ function UploadForm() {
   const onChangeImg = evt => {
     if (evt.target.files.length) {
       const imgTarget = evt.target.files[0];
+      console.log('imgTarget', imgTarget);
+      // 업로드 이미지 미리보기
       const fileReader = new FileReader();
       fileReader.readAsDataURL(imgTarget);
       fileReader.onload = e => {
         setImgSrc(e.target.result);
+        setImgData(imgTarget);
       };
     }
-  };
-
-  const goToPrevPage = () => {
-    history.goBack();
   };
 
   // const onImgChange = async event => {
@@ -74,6 +71,10 @@ function UploadForm() {
   //   formData.append('file', event.target.files[0]);
   //   // const response = await apiClient.post('/brand/logo_image', formData)
   // };
+
+  const goToPrevPage = () => {
+    history.goBack();
+  };
 
   const onImgDivClick = event => {
     event.preventDefault();
@@ -96,6 +97,7 @@ function UploadForm() {
         id="uploadImg"
         accept="image/*"
         name="file"
+        // ref={register}
         onChange={onChangeImg}
       />
       <InputSection>
@@ -118,19 +120,27 @@ function UploadForm() {
           required
         />
         {watchPrice && <span>{handlePrice(watchPrice, currentKLAYPrice)}</span>}
-        <Input
-          label="📅 경매기간"
-          regiName="period"
-          register={register}
-          required
-        />
-        <Select
-          label="단위"
-          regiName="sex"
-          register={register}
-          options={['female', 'male']}
-          required
-        />
+
+        <>
+          <label>📅 경매기간</label>
+          <span className="date-info">
+            &lsquo;경매시작&rsquo; 버튼을 누른 후 입력하신 기간동안 경매가
+            진행됩니다.
+          </span>
+          <div className="date-input">
+            <input
+              {...register('period', { required: true })}
+              autoComplete="off"
+            />
+            <select {...register('unit', { required: true })}>
+              {['d', 'h', 'm', 's'].map(value => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+        </>
         <input type="submit" />
         <button type="button" onClick={goToPrevPage}>
           취소

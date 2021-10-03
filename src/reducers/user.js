@@ -128,10 +128,10 @@ const reducer = (state = initialState, action) =>
 
       // --------------------------------------------
       case ADD_POST_TO_ME:
-        draft.me.Posts.unshift({ id: action.data });
+        draft.me.auctionPost.unshift({ id: action.data });
         break;
       case REMOVE_POST_OF_ME:
-        draft.me.Post = draft.me.Post.filter(y => y.id !== action.data);
+        draft.me.auctionPost = draft.me.auctionPost.filter(y => y.id !== action.data);
         break;
 
       // --------------------------------------------
