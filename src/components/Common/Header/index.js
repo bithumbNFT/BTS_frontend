@@ -20,23 +20,12 @@ function Header() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const openModal = () => {
-    setIsShowing(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setIsShowing(false);
-    document.body.style.overflow = 'unset';
-  };
-
   const handleLogoutClick = useCallback(() => {
     dispatch(logoutRequestAction());
     window.location.href = '/';
   });
 
   const GoToPage = name => {
-    console.log(name);
     history.push(name);
   };
   return (
@@ -78,7 +67,7 @@ function Header() {
             </>
           ) : (
             <li className="user">
-              <button type="button" onClick={openModal}>
+              <button type="button" onClick={() => GoToPage('/login')}>
                 로그인
               </button>
             </li>
@@ -86,7 +75,7 @@ function Header() {
         </User>
       </div>
 
-      <LoginModal onClose={closeModal} open={isShowing} />
+      {/* <LoginModal onClose={closeModal} open={isShowing} /> */}
     </Gnb>
   );
 }
