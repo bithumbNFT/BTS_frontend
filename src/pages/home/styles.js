@@ -41,3 +41,18 @@ export const BottomMailn = styled.section`
     border-color: #fe5000;
   }
 `;
+
+export const EmptyWrap = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 70vh;
+  padding-bottom: 5%;
+  h3 {
+    font-size: 1rem;
+    color: #616568;
+    margin-top: 1rem;
+  }
+`;

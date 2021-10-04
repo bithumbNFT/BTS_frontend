@@ -8,7 +8,6 @@ function CommentView({ comment }) {
   const dispatch = useDispatch();
   // [TODO] 작성자 어떤걸로 구별할건지 api 확인 후 수정
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
-  const { removeCommentLoading } = useSelector(state => state.postReducer);
 
   const handleRemoveComment = useCallback(() => {
     dispatch(removeComment(comment.c_id));
@@ -37,7 +36,6 @@ function CommentView({ comment }) {
               <>
                 <button
                   type="button"
-                  loading={removeCommentLoading}
                   onClick={() => handleRemoveComment(comment.c_id)}
                 >
                   삭제

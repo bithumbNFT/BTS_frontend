@@ -5,6 +5,7 @@ import { GlobalStyles } from 'styles/global-styles';
 import Loader from 'components/Common/Loader';
 import pMinDelay from 'p-min-delay';
 import AuthRoute from 'hooks/useAuthRoute';
+import './styles/font.css';
 
 function App() {
   const Auction = lazy(() => import('./pages/auction'));
@@ -22,8 +23,8 @@ function App() {
 
   return (
     <>
-      {GlobalStyles}
       <Suspense fallback={<Loader />}>
+        {GlobalStyles}
         <CacheSwitch>
           <CacheRoute exact path="/" component={Home} />
           {/* 홈화면 */}

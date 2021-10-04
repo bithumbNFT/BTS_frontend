@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
 import styled from '@emotion/styled';
+import { Empty } from 'antd';
 import CardList from '../Card/CardList';
 
 function PurchaseImage() {
@@ -16,7 +17,14 @@ function PurchaseImage() {
   return (
     <>
       <MyUploadText># 내가 구매한 작품</MyUploadText>
-      <CardList auctions={auction} />
+      {auction ? (
+        <EmptyWrap>
+          <Empty description={false} />
+          <h3>구매 완료된 작품이 없습니다.</h3>
+        </EmptyWrap>
+      ) : (
+        <CardList auctions={auction} />
+      )}
     </>
   );
 }
@@ -29,4 +37,19 @@ const MyUploadText = styled.div`
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
   width: fit-content;
   margin: 8px 0;
+`;
+
+const EmptyWrap = styled.section`
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h3 {
+    font-size: 1rem;
+    color: #616568;
+    margin-top: 1rem;
+    font-weight: 400;
+  }
 `;

@@ -3,11 +3,11 @@ import Header from 'components/Common/Header';
 import CardItem from 'components/MyPage/Card/CardItem';
 import Footer from 'components/Common/Footer';
 import SmallFooter from 'components/Common/SmallFooter';
-import { Pagination } from 'antd';
+import { Pagination, Empty } from 'antd';
 import HomeIntro from 'components/Home/Intro';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
-import { Title, CardWrap, CardListBox, BottomMailn } from './styles';
+import { Title, CardWrap, CardListBox, BottomMailn, EmptyWrap } from './styles';
 
 function home() {
   const dispatch = useDispatch();
@@ -43,15 +43,22 @@ function home() {
           <strong>경매</strong>해보세요 🥰
         </Title>
 
-        <CardWrap>
-          <CardListBox>
-            {auction.map(post => (
-              <CardItem key={post.id} post={post} />
-            ))}
-          </CardListBox>
+        {auction ? (
+          <EmptyWrap>
+            <Empty description={false} />
+            <h3>아직 등록된 경매 게시물이 없습니다.</h3>
+          </EmptyWrap>
+        ) : (
+          <CardWrap>
+            <CardListBox>
+              {auction.map(post => (
+                <CardItem key={post.id} post={post} />
+              ))}
+            </CardListBox>
 
-          <Pagination total={auction.length} current={1} />
-        </CardWrap>
+            <Pagination total={auction.length} current={1} />
+          </CardWrap>
+        )}
       </BottomMailn>
 
       <Footer />

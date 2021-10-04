@@ -2,11 +2,7 @@
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  LOAD_POSTS_REQUEST,
-  REMOVE_POST_REQUEST,
-  loadPost,
-} from 'reducers/post';
+import { REMOVE_POST_REQUEST, loadPost } from 'reducers/post';
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
 import React, { useEffect, useCallback } from 'react';
