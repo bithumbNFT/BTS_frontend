@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { coinRequestAction } from 'reducers/chart';
 import { TableWrapper, TableContainer } from './style';
 
 function CoinHeader() {
   const dispatch = useDispatch();
-
   const getKlaytnData = () => dispatch(coinRequestAction());
 
-  //   setTimeout(() => getKlaytnData(), 0);
-  useEffect(() => getKlaytnData(), [dispatch]);
+  useEffect(() => getKlaytnData(), []);
   const { chartLoading, chartError, coinData, tradingVolume } = useSelector(
     state => ({
       chartLoading: state.chartReducer.loadCoinData,
@@ -22,13 +21,6 @@ function CoinHeader() {
     }),
     shallowEqual,
   );
-  console.log(coinData);
-  console.log(chartLoading);
-  //   console.log(kalytnData);
-  //   setInterval(() => {
-  //     getKlaytnData();
-  //     console.log('클레이튼 데이터 가져오기');
-  //   }, 5000);
 
   const numberWithCommas = x => {
     if (x) {
@@ -62,30 +54,25 @@ function CoinHeader() {
             <tr>
               <td
                 className="pb-0 pt-0"
-                //   key={coin_price.buy_price}
                 key="klay"
                 colSpan="2"
                 style={{ color: 'red' }}
               >
                 <span className="coin-info-price font-weight-bold">
-                  {/* {this.numberWithCommas(coin_price.buy_price)} */}
-                  {numberWithCommas('119736')}
+                  {numberWithCommas(coinData.now_price)}
                 </span>
                 <span className="word-sm ml-1">KRW</span>
               </td>
               <td className="pb-0 pt-0">
                 <span className="word-sm">고가</span>
                 <span className="m-3" style={{ color: '#e12343' }}>
-                  {/* {this.numberWithCommas(coin_price.max_price)} */}
                   {numberWithCommas(coinData.highest_price)}
                 </span>
               </td>
               <td className="pb-0 pt-0">
                 <span className="word-sm mr-3">거래량(24H)</span>
-                {/* {Number(coin_price.units_traded).toFixed(4)} */}
-                {numberWithCommas(tradingVolume)}
+                {numberWithCommas(tradingVolume)} &nbsp;
                 <span className="word-sm ml-1">
-                  {/* {this.props.coin} */}
                   KLAY
                 </span>
               </td>
@@ -97,14 +84,13 @@ function CoinHeader() {
                   {numberWithCommas(coinData.fluctate_24H)}
 
                   <span className="ml-3">
-                    (-{Number(coinData.fluctate_rate_24H).toFixed(2)} %)
+                    ({Number(coinData.fluctate_rate_24H).toFixed(2)} %)
                   </span>
                 </span>
               </td>
               <td className="pt-0">
                 <span className="word-sm">저가</span>{' '}
                 <span className="m-3" style={{ color: '#0966c6' }}>
-                  {/* {this.numberWithCommas(coin_price.min_price)} */}
                   {numberWithCommas(coinData.lowest_price)}
                 </span>
               </td>

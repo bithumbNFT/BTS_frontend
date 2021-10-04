@@ -66,6 +66,9 @@ export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
 export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
 export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
 
+// 게시글 내용 비우기
+export const CLEAR_POST = 'CLEAR_POST';
+
 export const addPost = data => ({
   type: ADD_POST_REQUEST,
   data,
@@ -89,11 +92,16 @@ export const removeComment = data => ({
   type: REMOVE_COMMENT_REQUEST,
   data,
 });
+
+export const clearPost = () => ({
+  type: CLEAR_POST,
+});
+
 const postReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      // 커뮤니티 전체 게시물 목록 로드
       case LOAD_POSTS_REQUEST:
-        console.log('리듀서 전체 커뮤니티 목록');
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
@@ -158,7 +166,10 @@ const postReducer = (state = initialState, action) =>
         break;
       case ADD_COMMENT_SUCCESS: {
         // draft.singlePost.comment_list.unshift(action.data);
-        draft.singlePost.comment_list = [...draft.singlePost.comment_list, action.data];
+        draft.singlePost.comment_list = [
+          ...draft.singlePost.comment_list,
+          action.data,
+        ];
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
@@ -182,6 +193,9 @@ const postReducer = (state = initialState, action) =>
       case REMOVE_COMMENT_FAILURE:
         draft.removeCommentLoading = false;
         draft.removeCommentError = action.error;
+        break;
+      case CLEAR_POST:
+        draft.singlePost = {};
         break;
       default:
         break;

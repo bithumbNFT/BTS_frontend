@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MdEdit, MdContentCopy, MdCheck } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 import { createWalletAction, checkBalanceAction } from 'reducers/user';
@@ -24,7 +24,6 @@ import {
 
 function Profile() {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  console.log('userInfo', userInfo);
   const dispatch = useDispatch();
 
   // ------- 사용자 프로필 관련
@@ -67,8 +66,8 @@ function Profile() {
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const handleWalletInfoClick = () => setIsActive(!isActive);
-  const handleCreateWallet = email => {
-    dispatch(createWalletAction(email));
+  const handleCreateWallet = () => {
+    dispatch(createWalletAction(userInfo.id));
   };
   // ------- ------- 지갑 정보 copy
   const [success, setSuccess] = useState(false);
@@ -86,8 +85,8 @@ function Profile() {
   // --------- 클레이튼 잔고 관련
 
   const getKlayBalance = () => {
-    if (userInfo.coinWallet !== '') {
-      dispatch(checkBalanceAction(userInfo.coinWallet));
+    if (userInfo.coin_wallet) {
+      dispatch(checkBalanceAction(userInfo.coin_wallet));
     } else {
       return 0;
     }
@@ -99,9 +98,7 @@ function Profile() {
 
   useEffect(() => {
     getKlayBalance();
-    JSON.parse(localStorage.getItem('userInfo'));
-    // console.log('userInfo', userInfo);
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -160,13 +157,10 @@ function Profile() {
         </UserEmail>
         <UserEmail>
           <div>- 지갑 정보</div>
-          {userInfo.coinWallet === '' ? (
+          {!userInfo.coin_wallet ? (
             <>
               <span className="warn-msg">등록된 지갑이 없습니다.</span>
-              <SaveButton
-                type="button"
-                onClick={() => handleCreateWallet(userInfo.email)}
-              >
+              <SaveButton type="button" onClick={handleCreateWallet}>
                 🗳지갑 생성하기
               </SaveButton>
             </>
@@ -179,13 +173,11 @@ function Profile() {
                 ref={dropdownRef}
                 className={`menu ${isActive ? 'active' : 'inactive'}`}
               >
-                <div>
-                  👤{userInfo.name}님의 지갑정보
-                </div>
+                <div>👤{userInfo.name}님의 지갑정보</div>
                 <CopyInputBtn>
                   <input
                     type="text"
-                    value={userInfo.coinWallet}
+                    value={userInfo.coin_wallet}
                     ref={textInput}
                     readOnly
                   />
@@ -208,14 +200,16 @@ function Profile() {
             </>
           )}
         </UserEmail>
-        <UserEmail>
-          <div>- 현재 잔액</div>{' '}
-          {checkBalanceLoading ? (
-            <span>로딩중</span>
-          ) : (
-            <span>{balanceData} KLAY</span>
-          )}
-        </UserEmail>
+        {!userInfo.coin_wallet ? null : (
+          <UserEmail>
+            <div>- 현재 잔액</div>{' '}
+            {checkBalanceLoading ? (
+              <span>로딩중</span>
+            ) : (
+              <span>{balanceData} KLAY</span>
+            )}
+          </UserEmail>
+        )}
       </Wrapper>
     </>
   );

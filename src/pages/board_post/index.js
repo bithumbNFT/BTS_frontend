@@ -6,6 +6,7 @@ import {
   LOAD_POSTS_REQUEST,
   REMOVE_POST_REQUEST,
   loadPost,
+  clearPost,
 } from 'reducers/post';
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
@@ -32,7 +33,10 @@ function boardPost({ post, match }) {
   // match.param.id 가 변할 때 getPostData() 실행
   useEffect(() => {
     getPostData();
-  }, [match.params.id]);
+    return () => {
+      dispatch(clearPost());
+    };
+  }, [match.params.id, dispatch]);
 
   const onRemovePost = useCallback(postId => {
     if (window.confirm('정말 삭제하시겠습니까 ?')) {

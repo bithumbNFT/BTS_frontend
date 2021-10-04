@@ -5,9 +5,9 @@ import {
   all,
   fork,
   takeLatest,
-  delay,
   put,
   call,
+  throttle,
 } from '@redux-saga/core/effects';
 import {
   LOG_IN_REQUEST,
@@ -27,34 +27,26 @@ import {
 //------------------------------------------------
 function kakaoLogInAPI(code, state) {
   const response = axios({
-    method: 'GET',
-    url: `/test?code=${code}&state=${state}&type=kakao`,
-  });
-  // [TODO] 실제 response로 바꿔야함 , 토큰 받아서 axios header에 저장
-  const dummyData = {
+    method: 'post',
+    url: 'auth/login',
     data: {
-      id: 1,
-      email: 'qor7111@naver.com',
-      social: 'naver',
-      name: '백인준',
-      picture: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-      coinWallet: '',
-      token: 'accesstoken',
-      refreshToken: 'refreshToken',
+      code,
+      state,
+      social: 'kakao',
     },
-  };
-  return dummyData;
+  });
+  return response;
 }
 
 function* kakaoLogIn(action) {
   try {
-    console.log('사가 로그인');
     const result = yield call(
       kakaoLogInAPI,
       action.data.code,
       action.data.state,
     );
-    const { token, refreshToken, ...userInfo } = result.data;
+    // eslint-disable-next-line camelcase
+    const { token, refresh_token, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield put({
@@ -62,7 +54,6 @@ function* kakaoLogIn(action) {
       data: result.data,
     });
     yield call(redirect, '/');
-    console.log('redirect');
   } catch (err) {
     console.log('사가 로그인 실패');
     yield put({
@@ -76,22 +67,15 @@ function* kakaoLogIn(action) {
 
 function naverLogInAPI(code, state) {
   const response = axios({
-    method: 'GET',
-    url: `/test?code=${code}&state=${state}&type=naver`,
-  });
-  // [TODO] 실제 response로 바꿔야함
-  const dummyData = {
+    method: 'post',
+    url: 'auth/login',
     data: {
-      email: 'qor7111@naver.com',
+      code,
+      state,
       social: 'naver',
-      name: '백인준',
-      picture: 'https://ssl.pstatic.net/static/pwe/address/img_profile.png',
-      coinWallet: '',
-      token: 'accesstoken',
-      refreshToken: 'refreshToken',
     },
-  };
-  return dummyData;
+  });
+  return response;
 }
 
 function* naverLogIn(action) {
@@ -103,14 +87,14 @@ function* naverLogIn(action) {
       action.data.state,
     );
 
-    const { token, refreshToken, ...userInfo } = result.data;
+    // eslint-disable-next-line camelcase
+    const { token, refresh_token, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
     });
-
     yield call(redirect, '/');
     console.log('redirect');
   } catch (err) {
@@ -141,27 +125,16 @@ function* logOut() {
 
 //------------------------------------------------
 function createWalletAPI(user) {
-  const response = instance({
-    method: 'GET',
-    url: '/test',
-    // url: `/Wallet/create?user=${user}`,
-  });
-
-  const dummyData = {
-    address: '0x65D074E30D1443fD66B76780b9F050A396baC46f',
-  };
-
-  return dummyData;
+  const response = instance.get(`/main/Wallet/create/${user}`);
+  return response;
 }
 
 function* createWallet(action) {
   try {
-    console.log('사가 지갑생성');
-    const result = yield call(createWalletAPI, action.data.email);
+    const result = yield call(createWalletAPI, action.data);
     let userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    userInfo = { ...userInfo, coinWallet: result.address };
+    userInfo = { ...userInfo, coin_wallet: result.address };
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    yield delay(2000);
     yield put({
       type: CREATE_WALLET_SUCCESS,
       data: result.address,
@@ -179,26 +152,18 @@ function* createWallet(action) {
 function checkBalanceAPI(wallet) {
   const response = instance({
     method: 'GET',
-    url: `/test?wallet=${wallet}`,
-    // url: `/Wallet/much/`${wallet}`,
+    url: `main/Wallet/much/${wallet}`,
   });
 
-  const dummyData = {
-    klay: 7.990325,
-  };
-
-  return dummyData;
+  return response;
 }
 
 function* checkBalance(action) {
   try {
-    console.log(action);
-    console.log('사가 잔고 조회');
     const result = yield call(checkBalanceAPI, action.payload);
-    yield delay(2000);
     yield put({
       type: CHECK_BALANCE_SUCCESS,
-      data: result.klay,
+      data: result.data.klay,
     });
   } catch (err) {
     console.log('사가 잔고 조회 실패');
@@ -220,7 +185,8 @@ function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 function* watchCreateWallet() {
-  yield takeLatest(CREATE_WALLET_REQUEST, createWallet);
+  console.log('watchCreateWallet in saga');
+  yield throttle(500, CREATE_WALLET_REQUEST, createWallet);
 }
 
 function* watchCheckBalanceWallet() {
