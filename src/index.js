@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
-import axios from 'axios';
-import 'antd/dist/antd.css';
 import logger from 'redux-logger';
-// import { API_SERVER_PATH } from 'utils/config';
+
+import axios from 'axios';
+import { CookiesProvider } from 'react-cookie';
+import 'antd/dist/antd.css';
 
 import { Router } from 'react-router';
 import { browserHistory } from 'utils/historyUtils';
@@ -35,9 +35,11 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
-      <App />
-    </Router>
+    <CookiesProvider>
+      <Router history={browserHistory}>
+        <App />
+      </Router>
+    </CookiesProvider>
   </Provider>,
   document.getElementById('root'),
 );

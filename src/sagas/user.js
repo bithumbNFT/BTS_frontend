@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
+import { setCookie } from 'utils/cookieUtils';
 import {
   all,
   fork,
@@ -24,6 +25,7 @@ import {
   CHECK_BALANCE_FAILURE,
   CHECK_BALANCE_REQUEST,
 } from '../reducers/user';
+
 //------------------------------------------------
 function kakaoLogInAPI(code, state) {
   const response = axios({
@@ -49,6 +51,11 @@ function* kakaoLogIn(action) {
     const { token, refresh_token, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    setCookie('refresh', refresh_token, {
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+    });
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
