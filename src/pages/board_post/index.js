@@ -6,12 +6,14 @@ import { REMOVE_POST_REQUEST, loadPost } from 'reducers/post';
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
 import React, { useEffect, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { PostWrap, Title, CommentWrap } from './styles';
 
 function boardPost({ post, match }) {
   const dispatch = useDispatch();
   // const id = useSelector(state => state.userReducer.me?.id);
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
+  const history = useHistory();
   const { loadPostLoading, removePostLoading, singlePost, commentList } =
     useSelector(state => ({
       loadPostLoading: state.postReducer.loadPostLoading,
@@ -33,6 +35,8 @@ function boardPost({ post, match }) {
         type: REMOVE_POST_REQUEST,
         data: postId,
       });
+      history.push('/board');
+      alert('삭제가 완료 되었습니다.');
     } else {
       return null;
     }
