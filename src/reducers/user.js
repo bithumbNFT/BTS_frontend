@@ -71,8 +71,11 @@ export const naverLoginRequestAction = (code, state) => ({
   },
 });
 
-export const logoutRequestAction = () => ({
+export const logoutRequestAction = social => ({
   type: LOG_OUT_REQUEST,
+  data: {
+    social,
+  },
 });
 
 export const createWalletAction = id => ({

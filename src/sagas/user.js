@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
-import { setCookie } from 'utils/cookieUtils';
+import { setCookie, getCookie } from 'utils/cookieUtils';
 import {
   all,
   fork,
@@ -51,6 +51,7 @@ function* kakaoLogIn(action) {
     const { token, refresh_token, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    localStorage.setItem('social', 'kakao');
     setCookie('refresh', refresh_token, {
       path: '/',
       secure: true,
@@ -98,6 +99,12 @@ function* naverLogIn(action) {
     const { token, refresh_token, ...userInfo } = result.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    localStorage.setItem('social', 'naver');
+    setCookie('refresh', refresh_token, {
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+    });
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,
@@ -113,15 +120,29 @@ function* naverLogIn(action) {
   }
 }
 //------------------------------------------------
+function logoutAPI(social) {
+  const response = instance({
+    method: 'post',
+    url: '/auth/logout',
+    headers: {
+      refresh: getCookie('refresh'),
+    },
+    data: {
+      social,
+    },
+  });
+  return response;
+}
 
-function* logOut() {
+function* logOut(action) {
   try {
-    // 로그아웃 시, localstorage에 저장된 토큰 삭제
-    localStorage.clear();
-    // yield delay(1000);
+    yield call(logoutAPI, action.data.social);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
+    // 로그아웃 시, localstorage에 저장된 토큰 삭제
+    localStorage.clear();
+    yield call(redirect, '/');
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,
