@@ -169,8 +169,16 @@ export const initialState = {
     },
   ],
 
+  // home 경매
   mainAuctions: [],
+  // 단일 경매 페이지
   singlePost: [],
+  // 좋아요한 작품
+  likeAuctions: [],
+  // 구매한 작품
+  getAuctions: [],
+  // 내가 등록한 작품
+  myAuctions: [],
   me: null,
 
   // 👉 초기상태 정의
@@ -319,7 +327,7 @@ const auctionReducer = (state = initialState, action) =>
       case LOAD_LIKE_AUCTION_SUCCESS: {
         draft.loadLikeAuctionLoading = false;
         draft.loadLikeAuctionDone = true;
-        draft.auction = action.data;
+        draft.likeAuctions = action.data;
         break;
       }
 
@@ -339,7 +347,7 @@ const auctionReducer = (state = initialState, action) =>
       // case LOAD_GET_AUCTION_SUCCESS: {
       //   draft.loadGetAuctionLoading = false;
       //   draft.loadGetAuctionDone = true;
-      //   draft.auction = action.data;
+      //   draft.getAuctions = action.data;
       //   break;
       // }
 
@@ -359,7 +367,7 @@ const auctionReducer = (state = initialState, action) =>
       case LOAD_MY_AUCTION_SUCCESS: {
         draft.loadMyAuctionLoading = false;
         draft.loadMyAuctionDone = true;
-        draft.auction = action.data;
+        draft.myAuctions = action.data;
         break;
       }
 

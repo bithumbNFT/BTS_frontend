@@ -41,12 +41,7 @@ function board() {
 
           <ListView>
             {/* {isBoard &&} */}
-            {mainPosts ? (
-              <EmptyWrap>
-                <Empty description={false} />
-                <h3>아직 등록된 게시물이 없습니다.</h3>
-              </EmptyWrap>
-            ) : (
+            {mainPosts.length > 0 ? (
               <>
                 {mainPosts.map(post => (
                   <Item key={post.id} post={post} />
@@ -54,6 +49,11 @@ function board() {
 
                 <Pagination defaultCurrent={1} total={10} />
               </>
+            ) : (
+              <EmptyWrap>
+                <Empty description={false} />
+                <h3>아직 등록된 게시물이 없습니다.</h3>
+              </EmptyWrap>
             )}
           </ListView>
         </ListWrap>

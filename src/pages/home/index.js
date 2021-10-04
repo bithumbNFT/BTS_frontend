@@ -43,12 +43,7 @@ function home() {
           <strong>경매</strong>해보세요 🥰
         </Title>
 
-        {auction ? (
-          <EmptyWrap>
-            <Empty description={false} />
-            <h3>아직 등록된 경매 게시물이 없습니다.</h3>
-          </EmptyWrap>
-        ) : (
+        {auction.length > 0 ? (
           <CardWrap>
             <CardListBox>
               {auction.map(post => (
@@ -58,6 +53,11 @@ function home() {
 
             <Pagination total={auction.length} current={1} />
           </CardWrap>
+        ) : (
+          <EmptyWrap>
+            <Empty description={false} />
+            <h3>아직 등록된 경매 게시물이 없습니다.</h3>
+          </EmptyWrap>
         )}
       </BottomMailn>
 

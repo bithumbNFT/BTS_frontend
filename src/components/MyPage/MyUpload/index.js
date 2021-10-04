@@ -8,13 +8,13 @@ import Button from './Button';
 
 function MyUpload() {
   const dispatch = useDispatch();
-  const { auction } = useSelector(state => state.auctionReducer);
+  const { myAuctions } = useSelector(state => state.auctionReducer);
 
   useEffect(() => {
     dispatch({
       type: LOAD_MY_AUCTION_REQUEST,
     });
-  }, [auction]);
+  }, [myAuctions]);
   return (
     <>
       <MyUploadHeader>
@@ -22,8 +22,8 @@ function MyUpload() {
         <Button />
       </MyUploadHeader>
 
-      {auction ? (
-        <CardList auctions={auction} />
+      {myAuctions.length > 0 ? (
+        <CardList auctions={myAuctions} />
       ) : (
         <EmptyWrap>
           <Empty description={false} />

@@ -17,13 +17,13 @@ function PurchaseImage() {
   return (
     <>
       <MyUploadText># 내가 구매한 작품</MyUploadText>
-      {auction ? (
+      {auction.length > 0 ? (
+        <CardList auctions={auction} />
+      ) : (
         <EmptyWrap>
           <Empty description={false} />
           <h3>구매 완료된 작품이 없습니다.</h3>
         </EmptyWrap>
-      ) : (
-        <CardList auctions={auction} />
       )}
     </>
   );

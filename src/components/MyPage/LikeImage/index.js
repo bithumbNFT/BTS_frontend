@@ -7,24 +7,24 @@ import CardList from '../Card/CardList';
 
 function LikeImage() {
   const dispatch = useDispatch();
-  const { auction } = useSelector(state => state.auctionReducer);
+  const { likeAuctions } = useSelector(state => state.auctionReducer);
 
   useEffect(() => {
     dispatch({
       type: LOAD_LIKE_AUCTION_REQUEST,
     });
-  }, [auction]);
+  }, [likeAuctions]);
   return (
     <>
       <MyUploadText># 좋아요한 작품</MyUploadText>
 
-      {auction ? (
+      {likeAuctions.length > 0 ? (
+        <CardList auctions={likeAuctions} />
+      ) : (
         <EmptyWrap>
           <Empty description={false} />
           <h3>좋아요한 작품이 없습니다.</h3>
         </EmptyWrap>
-      ) : (
-        <CardList auctions={auction} />
       )}
     </>
   );

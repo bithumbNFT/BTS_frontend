@@ -158,7 +158,10 @@ const postReducer = (state = initialState, action) =>
         break;
       case ADD_COMMENT_SUCCESS: {
         // draft.singlePost.comment_list.unshift(action.data);
-        draft.singlePost.comment_list = [...draft.singlePost.comment_list, action.data];
+        draft.singlePost.comment_list = [
+          ...draft.singlePost.comment_list,
+          action.data,
+        ];
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
