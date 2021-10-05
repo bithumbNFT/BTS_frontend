@@ -29,6 +29,7 @@ function CoinHeader() {
   };
 
   const getColor = num => (num > 0 ? '#e12343' : '#0966c6');
+  const color = getColor(Number(coinData.fluctate_rate_24H));
 
   return (
     <TableWrapper>
@@ -56,7 +57,7 @@ function CoinHeader() {
                 className="pb-0 pt-0"
                 key="klay"
                 colSpan="2"
-                style={{ color: 'red' }}
+                style={{ color }}
               >
                 <span className="coin-info-price font-weight-bold">
                   {numberWithCommas(coinData.now_price)}
@@ -72,15 +73,13 @@ function CoinHeader() {
               <td className="pb-0 pt-0">
                 <span className="word-sm mr-3">거래량(24H)</span>
                 {numberWithCommas(tradingVolume)} &nbsp;
-                <span className="word-sm ml-1">
-                  KLAY
-                </span>
+                <span className="word-sm ml-1">KLAY</span>
               </td>
             </tr>
             <tr>
               <td className="pt-0 pb-1" colSpan="2">
                 <span className="word-sm">전일대비</span>{' '}
-                <span style={{ color: 'red' }}>
+                <span style={{ color }}>
                   {numberWithCommas(coinData.fluctate_24H)}
 
                   <span className="ml-3">

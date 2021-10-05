@@ -21,8 +21,7 @@ function Header() {
   const dispatch = useDispatch();
 
   const handleLogoutClick = useCallback(() => {
-    dispatch(logoutRequestAction());
-    window.location.href = '/';
+    dispatch(logoutRequestAction(localStorage.getItem('social')));
   });
 
   const GoToPage = name => {
