@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
-import { setCookie, getCookie } from 'utils/cookieUtils';
+import { setCookie, getCookie, removeCookie } from 'utils/cookieUtils';
 import {
   all,
   fork,
@@ -142,6 +142,7 @@ function* logOut(action) {
     });
     // 로그아웃 시, localstorage에 저장된 토큰 삭제
     localStorage.clear();
+    removeCookie('refresh');
     yield call(redirect, '/');
   } catch (err) {
     yield put({

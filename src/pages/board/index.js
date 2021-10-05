@@ -12,12 +12,13 @@ import { ListView, ListWrap } from './styles';
 function board() {
   const dispatch = useDispatch();
 
-  const getPostsData = () => dispatch(loadPosts());
-  const { mainPosts } = useSelector(state => state.postReducer);
-
+  // const getPostsData = () => dispatch(loadPosts());
   useEffect(() => {
-    getPostsData();
-  }, [dispatch]);
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
+  }, []);
+  const { mainPosts } = useSelector(state => state.postReducer);
 
   return (
     <>

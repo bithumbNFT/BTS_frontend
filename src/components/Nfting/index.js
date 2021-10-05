@@ -9,7 +9,10 @@ function auctionNft({ props }) {
       <Nfting>
         {/* NFT 경매 이미지 */}
         <Images>
-          <img src={props.image} alt={`${props.owner}님의 경매 작품입니다.`} />
+          <img
+            src={props.imagepath}
+            alt={`${props.username}님의 경매 작품입니다.`}
+          />
         </Images>
 
         {/* NFT 경매 아이템 정보 */}
@@ -17,14 +20,14 @@ function auctionNft({ props }) {
           <div className="detail__header">
             <div className="owner">
               <h2>{props.name}</h2>
-              <p>by {props.owner}</p>
+              <p>by {props.username}</p>
             </div>
 
             <div className="like">
               <h3>
                 <FaHeart />
               </h3>
-              <p>100</p>
+              <p>{props.likes}</p>
             </div>
           </div>
 
@@ -83,8 +86,8 @@ function auctionNft({ props }) {
 
 auctionNft.propTypes = {
   props: PropTypes.shape({
-    id: PropTypes.number,
-    no: PropTypes.number,
+    id: PropTypes.string,
+    no: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,

@@ -1,23 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Header from 'components/Common/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import Nfting from 'components/Nfting';
-import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
+import { LOAD_ONE_AUCTION_REQUEST } from 'reducers/auction';
 
-function auctionPost() {
+function auctionPost({ match }) {
   const dispatch = useDispatch();
-  const { auction } = useSelector(state => state.auctionReducer);
+  const { singleAuction } = useSelector(state => state.auctionReducer);
 
-  useCallback(() => {
+  useEffect(() => {
     dispatch({
-      type: LOAD_AUCTION_REQUEST,
+      type: LOAD_ONE_AUCTION_REQUEST,
+      data: match.params.id,
     });
-  }, [auction]);
+  }, [match.params.id]);
 
   return (
     <>
       <Header />
-      <Nfting props={auction} />
+      <Nfting props={singleAuction} />
     </>
   );
 }

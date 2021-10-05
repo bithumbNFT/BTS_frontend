@@ -12,6 +12,7 @@ import {
 import { RiHeartLine, RiHeartFill } from 'react-icons/ri';
 
 function Card({ post }) {
+  // console.log('auction post', post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [deleteShow, setDeleteShow] = useState(true);
@@ -79,13 +80,13 @@ function Card({ post }) {
       </button>
 
       <Link to={`/auction/${post.id}`}>
-        <CardImage src={post.image} />
+        <CardImage src={post.imagepath} />
       </Link>
 
       <CardDetail>
         <CardLeft>
           <CardTitle>{post.name}</CardTitle>
-          <p>by {post.owner}</p>
+          <p>by {post.username}</p>
         </CardLeft>
 
         <CardRight>
@@ -105,8 +106,8 @@ Card.propTypes = {
     image: PropTypes.string,
     owner: PropTypes.string,
     description: PropTypes.string,
-    id: PropTypes.number,
-    no: PropTypes.number,
+    id: PropTypes.string,
+    no: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
 };
