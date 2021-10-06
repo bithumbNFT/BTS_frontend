@@ -192,11 +192,6 @@ export const initialState = {
   loadLikeAuctionDone: false,
   loadLikeAuctionError: null,
 
-  // 구매한 경매템 리스트 로드 (api 미완성)
-  // loadGetAuctionLoading: false,
-  // loadGetAuctionDone: false,
-  // loadGetAuctionError: null,
-
   // 내가 등록한 작품 경매템 로드
   loadMyAuctionLoading: false,
   loadMyAuctionDone: false,
@@ -238,11 +233,6 @@ export const LOAD_AUCTION_FAILURE = 'LOAD_AUCTION_FAILURE';
 export const LOAD_LIKE_AUCTION_REQUEST = 'LOAD_LIKE_AUCTION_REQUEST';
 export const LOAD_LIKE_AUCTION_SUCCESS = 'LOAD_LIKE_AUCTION_SUCCESS';
 export const LOAD_LIKE_AUCTION_FAILURE = 'LOAD_LIKE_AUCTION_FAILURE';
-
-// 구매한 작품(wishlist) 경매템 로드 (api 미완성)
-// export const LOAD_GET_AUCTION_REQUEST = 'LOAD_GET_AUCTION_REQUEST';
-// export const LOAD_GET_AUCTION_SUCCESS = 'LOAD_GET_AUCTION_SUCCESS';
-// export const LOAD_GET_AUCTION_FAILURE = 'LOAD_GET_AUCTION_FAILURE';
 
 // 내가 등록한 작품(mypage) 경매템 로드
 export const LOAD_MY_AUCTION_REQUEST = 'LOAD_MY_AUCTION_REQUEST';
@@ -336,26 +326,6 @@ const auctionReducer = (state = initialState, action) =>
         draft.loadLikeAuctionError = action.error;
         break;
       }
-
-      // 구매한 작품 경매템 로드 => API 아직 미완성
-      // case LOAD_GET_AUCTION_REQUEST:
-      //   draft.loadGetAuctionLoading = true;
-      //   draft.loadGetAuctionDone = false;
-      //   draft.loadGetAuctionError = null;
-      //   break;
-
-      // case LOAD_GET_AUCTION_SUCCESS: {
-      //   draft.loadGetAuctionLoading = false;
-      //   draft.loadGetAuctionDone = true;
-      //   draft.getAuctions = action.data;
-      //   break;
-      // }
-
-      // case LOAD_GET_AUCTION_FAILURE: {
-      //   draft.loadGetAuctionLoading = false;
-      //   draft.loadGetAuctionError = action.error;
-      //   break;
-      // }
 
       // 내가 등록한 작품 경매템 로드
       case LOAD_MY_AUCTION_REQUEST:

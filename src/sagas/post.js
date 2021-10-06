@@ -51,7 +51,7 @@ import {
 // 단일 게시물
 function loadPostAPI(lastId) {
   // return axios.get('/board/board');
-  return axios.get(`board/post/${lastId}`);
+  return instance.get(`board/post/${lastId}`);
 }
 
 function* loadPost(action) {
@@ -81,6 +81,7 @@ function* loadPosts() {
   try {
     console.log('여러 게시물 로드');
     const result = yield call(loadPostsAPI);
+    console.log(result);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -96,7 +97,7 @@ function* loadPosts() {
 
 // 게시물 작성
 function addPostAPI(data) {
-  const response = axios({
+  const response = instance({
     url: '/board/write',
     method: 'post',
     data: {
@@ -132,7 +133,7 @@ function* addPost(action) {
 
 // 게시물 수정
 function updatePostAPI(data) {
-  const response = axios({
+  const response = instance({
     url: `/board/post/${data}`,
     method: 'put',
     data: {
@@ -161,7 +162,7 @@ function* updatePost(action) {
 
 // 게시물 삭제
 function removePostAPI(id) {
-  return axios.delete(`/board/post/${id}`);
+  return instance.delete(`/board/post/${id}`);
 }
 
 function* removePost(action) {
@@ -184,7 +185,7 @@ function* removePost(action) {
 
 function addCommentAPI(data) {
   console.log('post id조회', data);
-  return axios({
+  return instance({
     url: `/board/post/${data.postId}`,
     method: 'post',
     data: {
@@ -213,7 +214,7 @@ function* addComment(action) {
 // [TODO] 댓글 삭제 api 수정 필요
 // ${파라미터값}에 p_id 값이 들어가야한다.
 function removeCommentAPI(data) {
-  return axios({
+  return instance({
     url: `/board/post/${data.postId}/delete_comment`,
     method: 'put',
     data: {

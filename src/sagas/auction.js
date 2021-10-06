@@ -23,11 +23,6 @@ import {
   LOAD_LIKE_AUCTION_SUCCESS,
   LOAD_LIKE_AUCTION_FAILURE,
 
-  // 구매한 작품(wishlist) 경매템 로드
-  // LOAD_GET_AUCTION_REQUEST,
-  // LOAD_GET_AUCTION_SUCCESS,
-  // LOAD_GET_AUCTION_FAILURE,
-
   // 내가 등록한 작품(mypage) 경매템 로드
   LOAD_MY_AUCTION_REQUEST,
   LOAD_MY_AUCTION_SUCCESS,
@@ -215,8 +210,9 @@ function* removeAuction(action) {
 }
 
 function likeAPI(data) {
+  console.log('data', data);
   return axios({
-    url: '/NFT/likeNFT',
+    url: '/main/NFT/likeNFT',
     method: 'post',
     data: {
       nftid: data.nftid,
@@ -243,7 +239,7 @@ function* likeAuction(action) {
 
 function unLikeAPI(data) {
   return axios({
-    url: '/NFT/likeNFT',
+    url: '/main/NFT/likeNFT',
     method: 'delete',
     data: {
       nftid: data.nftid,

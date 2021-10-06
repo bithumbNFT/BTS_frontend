@@ -2,12 +2,7 @@
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {
-  REMOVE_POST_REQUEST,
-  loadPost,
-  UPDATE_POST_REQUEST,
-  clearPost
-} from 'reducers/post';
+import { REMOVE_POST_REQUEST, loadPost, clearPost } from 'reducers/post';
 
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
