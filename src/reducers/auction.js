@@ -172,7 +172,7 @@ export const initialState = {
   // home 경매
   mainAuctions: [],
   // 단일 경매 페이지
-  singlePost: {},
+  singleAuction: {},
   // 좋아요한 작품
   likeAuctions: [],
   // 구매한 작품
