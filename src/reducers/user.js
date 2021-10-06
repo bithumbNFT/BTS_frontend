@@ -71,14 +71,17 @@ export const naverLoginRequestAction = (code, state) => ({
   },
 });
 
-export const logoutRequestAction = () => ({
+export const logoutRequestAction = social => ({
   type: LOG_OUT_REQUEST,
+  data: {
+    social,
+  },
 });
 
-export const createWalletAction = email => ({
+export const createWalletAction = id => ({
   type: CREATE_WALLET_REQUEST,
-  payload: email,
-  data: email,
+  payload: id,
+  data: id,
 });
 
 export const checkBalanceAction = wallet => ({
@@ -148,7 +151,7 @@ const reducer = (state = initialState, action) =>
         draft.createWalletLoading = false;
         draft.createWalletDone = true;
         // [TODO] 이부분은 확인
-        draft.me.coinWallet = action.data;
+        // draft.me.coinWallet = action.data;
         break;
 
       case CREATE_WALLET_FAILURE:

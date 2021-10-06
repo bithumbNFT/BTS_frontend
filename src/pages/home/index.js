@@ -13,12 +13,12 @@ function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
   const { auction } = useSelector(stateRedux => stateRedux.auctionReducer);
-
+  // [TODO] 주석 풀어야함
   useEffect(() => {
     dispatch({
       type: LOAD_AUCTION_REQUEST,
     });
-  }, [auction]);
+  }, []);
 
   // 버튼 클릭시 경매 섹션으로 이동
   const scrollToAuction = useCallback(() => {

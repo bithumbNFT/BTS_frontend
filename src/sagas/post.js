@@ -9,6 +9,7 @@ import {
 } from '@redux-saga/core/effects';
 import { redirect, push } from 'utils/historyUtils';
 import axios from 'axios';
+import { instance } from 'utils/axiosUtils';
 
 import {
   // 게시물 로드 (여러개)
@@ -73,7 +74,7 @@ function* loadPost(action) {
 
 // 여러 게시물
 function loadPostsAPI() {
-  return axios.get('/board/board');
+  return instance.get('/board/board');
 }
 
 function* loadPosts() {
