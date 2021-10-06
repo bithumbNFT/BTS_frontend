@@ -107,15 +107,6 @@ export const addAuction = data => ({
   data,
 });
 
-const dummyAuction = data => ({
-  name: faker.name.findName(),
-  description: faker.lorem.paragraph(),
-  image: faker.image.image(),
-  owner: faker.name.findName(),
-  no: shortId.generate(),
-  date: data.date,
-});
-
 export const myPage = data => ({
   ...data,
   LikeList: [],
@@ -213,7 +204,7 @@ const auctionReducer = (state = initialState, action) =>
         break;
       }
       case ADD_AUCTION_SUCCESS: {
-        draft.auction.unshift(dummyAuction(action.data.id));
+        draft.mainAuctions.unshift(action.data);
         draft.addAuctionLoading = false;
         draft.addAuctionDone = true;
         break;

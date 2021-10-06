@@ -23,7 +23,7 @@ function mypage({ location: { pathname } }) {
       id: 1,
       path: '/mypage',
       comp: MyUpload,
-      tabName: '🎨 내가 등록한 작품',
+      tabName: '🎨 나의 NFT 작품',
     },
     {
       id: 3,

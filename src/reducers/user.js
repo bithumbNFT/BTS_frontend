@@ -131,7 +131,7 @@ const reducer = (state = initialState, action) =>
 
       // --------------------------------------------
       case ADD_AUCTION_TO_ME:
-        draft.me.auctionPost.unshift({ id: action.data });
+        draft.me?.auctionPost.unshift({ id: action.data });
         break;
 
       case REMOVE_AUCTION_OF_ME:

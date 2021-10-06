@@ -20,7 +20,7 @@ function MyUpload() {
   return (
     <>
       <MyUploadHeader>
-        <MyUploadText># 내가 등록한 작품</MyUploadText>
+        <MyUploadText># 나의 NFT 작품</MyUploadText>
         <Button />
       </MyUploadHeader>
 

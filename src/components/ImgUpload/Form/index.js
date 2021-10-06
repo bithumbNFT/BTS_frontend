@@ -45,17 +45,12 @@ function UploadForm() {
       image: imgData.name,
       owner: String(JSON.parse(localStorage.getItem('userInfo')).id),
     };
-    console.log(NFTInfo);
-    // formData.append('NFTInfo', JSON.stringify(NFTInfo));
     formData.append(
       'NFTInfo',
       new Blob([JSON.stringify(NFTInfo)], { type: 'application/json' }),
     );
     formData.append('image', imgData);
-    // eslint-disable-next-line no-restricted-syntax
-    for (const value of formData.values()) {
-      console.log('value2-----;', value);
-    }
+
     dispatch(addAuction(formData));
   };
 

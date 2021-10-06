@@ -57,13 +57,13 @@ import {
 import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
 
 // home 모든 경매템 로드
-function loadAuctionAPI(lastId) {
+function loadAuctionAPI() {
   return axios.get('main/NFT/allNFT');
 }
 
 function* loadAuction(action) {
   try {
-    const result = yield call(loadAuctionAPI, action.lastId);
+    const result = yield call(loadAuctionAPI);
     yield put({
       type: LOAD_AUCTION_SUCCESS,
       data: result.data,
@@ -150,12 +150,6 @@ function* loadOneAuction(action) {
 function addAuctionAPI(data) {
   console.log(data);
   const response = instance.post('main/NFT/makeNFT', data);
-  // const response = instance.post('/test');
-  // const dummyData = {
-  //   transactionHash:
-  //     '0xa401e4c918d53aecdc89794b2bd3c59a8054a6d669bf1a6af737f37086bb7804',
-  //   status: 'Submitted',
-  // };
 
   return response;
 }
@@ -165,15 +159,11 @@ function* addAuction(action) {
     console.log(action);
     console.log('사가 작품 등록');
     const result = yield call(addAuctionAPI, action.data);
-    yield delay(1000);
-    const id = shortId.generate();
+    // [TODO] 실제 nft id로 변경
+    const id = Math.random().toString(36).substr(2, 11);
     yield put({
       type: ADD_AUCTION_SUCCESS,
-      data: {
-        id,
-        transactionHash: result.transactionHash,
-        status: result.status,
-      },
+      data: id,
     });
     yield put({
       type: ADD_AUCTION_TO_ME,
@@ -191,7 +181,6 @@ function* addAuction(action) {
 
 function removeAuctionAPI(data) {
   console.log('data in remove AuctionAPI', data);
-  // return instance.delete('main/NFT/allNFT', data);
   const response = instance({
     url: 'main/NFT/deleteNFT',
     method: 'delete',
