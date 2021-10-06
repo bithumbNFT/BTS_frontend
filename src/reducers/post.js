@@ -20,6 +20,11 @@ export const initialState = {
   addPostDone: false,
   addPostError: null,
 
+  // 게시물 수정
+  updatePostLoading: false,
+  updatePostDone: false,
+  updatePostError: null,
+
   // 게시물 삭제
   removePostLoading: false,
   removePostDone: false,
@@ -50,6 +55,11 @@ export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+// 게시글 수정
+export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
+export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
 
 // 게시물 삭제
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
@@ -88,9 +98,12 @@ export const loadPost = data => ({
   data,
 });
 
-export const removeComment = data => ({
+export const removeComment = (postId, comment) => ({
   type: REMOVE_COMMENT_REQUEST,
-  data,
+  data: {
+    postId,
+    comment,
+  },
 });
 
 export const clearPost = () => ({
@@ -142,6 +155,21 @@ const postReducer = (state = initialState, action) =>
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;
+        break;
+      case UPDATE_POST_REQUEST:
+        draft.updatePostLoading = true;
+        draft.updatePostDone = false;
+        draft.updatePostError = null;
+        break;
+      case UPDATE_POST_SUCCESS: {
+        draft.updatePostLoading = true;
+        draft.updatePostDone = true;
+        draft.singlePost.find(v => v.id === action.data.PostId).content = action.data.content;
+        break;
+      }
+      case UPDATE_POST_FAILURE:
+        draft.updatePostLoading = false;
+        draft.updatePostError = true;
         break;
       case REMOVE_POST_REQUEST:
         draft.removePostLoading = true;

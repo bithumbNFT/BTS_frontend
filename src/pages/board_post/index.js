@@ -3,29 +3,28 @@ import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
-  LOAD_POSTS_REQUEST,
   REMOVE_POST_REQUEST,
   loadPost,
-  clearPost,
+  UPDATE_POST_REQUEST,
+  clearPost
 } from 'reducers/post';
+
 import CommentWrite from 'components/Board/CommentWrite';
 import CommentView from 'components/Board/CommentView';
 import React, { useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { PostWrap, Title, CommentWrap } from './styles';
 
-function boardPost({ post, match }) {
+function boardPost({ match }) {
   const dispatch = useDispatch();
-  // const id = useSelector(state => state.userReducer.me?.id);
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
   const history = useHistory();
-  const { loadPostLoading, removePostLoading, singlePost, commentList } =
-    useSelector(state => ({
-      loadPostLoading: state.postReducer.loadPostLoading,
-      removePostLoading: state.postReducer.removePostLoading,
-      singlePost: state.postReducer.singlePost,
-      commentList: state.postReducer.singlePost?.comment_list,
-    }));
+  const { removePostLoading, singlePost, commentList } = useSelector(state => ({
+    loadPostLoading: state.postReducer.loadPostLoading,
+    removePostLoading: state.postReducer.removePostLoading,
+    singlePost: state.postReducer.singlePost,
+    commentList: state.postReducer.singlePost?.comment_list,
+  }));
 
   const getPostData = () => dispatch(loadPost(match.params.id));
 
@@ -76,7 +75,12 @@ function boardPost({ post, match }) {
             <div className="right">
               {id && singlePost.author === id ? (
                 <>
-                  <button type="button">수정</button>
+                  <Link
+                    to={`/board_update/${singlePost.p_id}`}
+                    className="update"
+                  >
+                    수정
+                  </Link>
                   <button
                     type="button"
                     onClick={() => onRemovePost(singlePost.p_id)}
@@ -103,7 +107,11 @@ function boardPost({ post, match }) {
           ?.slice(0)
           .reverse()
           .map(comment => (
-            <CommentView key={comment.c_id} comment={comment} />
+            <CommentView
+              key={comment.c_id}
+              comment={comment}
+              postId={match.params.id}
+            />
           ))}
       </CommentWrap>
     </>

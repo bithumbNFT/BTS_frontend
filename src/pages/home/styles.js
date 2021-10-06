@@ -31,6 +31,7 @@ export const BottomMailn = styled.section`
   .ant-pagination {
     text-align: right;
     margin-right: 3%;
+    margin: 70px 35px 140px;
   }
   .ant-pagination-item-active a {
     color: #fe5000;

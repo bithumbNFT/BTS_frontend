@@ -27,6 +27,11 @@ import {
   ADD_POST_SUCCESS,
   ADD_POST_FAILURE,
 
+  // 게시물 수정
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+
   // 게시물 삭제
   REMOVE_POST_REQUEST,
   REMOVE_POST_SUCCESS,
@@ -125,6 +130,35 @@ function* addPost(action) {
   }
 }
 
+// 게시물 수정
+function updatePostAPI(data) {
+  const response = axios({
+    url: `/board/post/${data}`,
+    method: 'put',
+    data: {
+      title: data.title,
+      content: data.content,
+    },
+  });
+  return response;
+}
+
+function* updatePost(action) {
+  try {
+    const result = yield call(updatePostAPI, action.data);
+    yield put({
+      type: UPDATE_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: UPDATE_POST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 // 게시물 삭제
 function removePostAPI(id) {
   return axios.delete(`/board/post/${id}`);
@@ -177,25 +211,26 @@ function* addComment(action) {
 }
 
 // [TODO] 댓글 삭제 api 수정 필요
+// ${파라미터값}에 p_id 값이 들어가야한다.
 function removeCommentAPI(data) {
   return axios({
-    url: `/board/post/${data}/delete_comment`,
+    url: `/board/post/${data.postId}/delete_comment`,
     method: 'put',
     data: {
-      c_id: data.c_id,
-      comment_writer: data.comment_writer,
-      comment_content: data.comment_content,
-      create_post_date: data.create_post_date,
-      modified_post_date: data.modified_post_date,
+      c_id: data.comment.c_id,
+      comment_writer: data.comment.comment_writer,
+      comment_content: data.comment.comment_content,
+      create_post_date: data.comment.create_post_date,
+      modified_post_date: data.comment.modified_post_date,
     },
   });
 }
 
 function* removeComment(action) {
-  console.log('댓글삭제------->', action);
+  console.log('댓글삭제------->', action.data);
   try {
     const result = yield call(removeCommentAPI, action.data);
-    console.log(result.data);
+    console.log('result.data------->', result.data, action.postId);
     yield put({
       type: REMOVE_COMMENT_SUCCESS,
       data: result.data,
@@ -237,6 +272,10 @@ function* watchRemoveComment() {
   yield takeLatest(REMOVE_COMMENT_REQUEST, removeComment);
 }
 
+function* watchUpdatePost() {
+  yield throttle(1000, UPDATE_POST_REQUEST, updatePost);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchAddPost),
@@ -245,5 +284,6 @@ export default function* postSaga() {
     fork(watchLoadPosts),
     fork(watchRemoveComment),
     fork(watchLoadPost),
+    fork(watchUpdatePost),
   ]);
 }
