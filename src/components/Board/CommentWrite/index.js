@@ -30,14 +30,15 @@ function CommentWrite({ postId }) {
   return (
     <form onSubmit={e => onSubmit(e)}>
       <CommentWriteBox>
-        <textarea
+        <input
+          type="text"
           placeholder="댓글을 입력해 주세요"
           onChange={onChangeContent}
           value={comment}
         />
 
         <Button type="submit" onClick={addCommentLoading}>
-          댓글달기
+          입력
         </Button>
       </CommentWriteBox>
     </form>

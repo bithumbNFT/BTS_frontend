@@ -15,6 +15,7 @@ function App() {
   const MyPage = lazy(() => import('./pages/mypage'));
   const Post = lazy(() => import('./pages/board_post'));
   const Write = lazy(() => import('./pages/board_write'));
+  const Update = lazy(() => import('./pages/board_update'));
   const Notice = lazy(() => import('./pages/notice'));
   const NotFound = lazy(() => import('./pages/404page'));
   const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
@@ -51,8 +52,8 @@ function App() {
           {/* 게시글 수정 */}
           <Route
             exact
-            path="/board_write:id"
-            render={props => <Write {...props} />}
+            path="/board_update/:id"
+            render={props => <Update {...props} />}
           />
           {/* 사용자 알람 view */}
           <Route exact path="/notice" component={Notice} />

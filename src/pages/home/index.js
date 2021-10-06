@@ -51,7 +51,7 @@ function home() {
               ))}
             </CardListBox>
 
-            <Pagination total={auction.length} current={1} />
+            <Pagination />
           </CardWrap>
         ) : (
           <EmptyWrap>

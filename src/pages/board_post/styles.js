@@ -17,10 +17,8 @@ export const PostWrap = styled.article`
       .right {
         color: #fe5000;
         font-size: 16px;
-        button {
-          &:nth-of-type(1) {
-            margin-right: 1em;
-          }
+        .update {
+          margin-right: 1em;
         }
       }
     }

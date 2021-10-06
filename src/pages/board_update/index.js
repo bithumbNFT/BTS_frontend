@@ -1,23 +1,32 @@
+/* eslint-disable no-constant-condition */
 import React, { useEffect, useCallback, useRef } from 'react';
 import Header from 'components/Common/Header';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_POST_REQUEST } from 'reducers/post';
+import { UPDATE_POST_REQUEST, loadPost } from 'reducers/post';
 import Intro from 'components/Board/Intro';
 import useInputs from 'hooks/useInput';
 import { Form } from './styles';
 
-function boardWrite({ history }) {
+function boardWrite({ history, match }) {
   const dispatch = useDispatch();
-  const [state, onChangeInput] = useInputs({ title: '', content: '' });
+  const { singlePost } = useSelector(state => state.postReducer);
+  const getPostData = () => dispatch(loadPost(match.params.id));
+  const [state, onChangeInput] = useInputs({
+    title: '' ? getPostData.title : '',
+    content: '' ? getPostData.content : '',
+  });
   const { title, content } = state;
   const inputTitle = useRef(null);
   const inputContent = useRef(null);
 
+  useEffect(() => {
+    getPostData();
+  }, [match.params.id]);
+
+  // 확인 버튼 클릭 시
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      // alert(`자기소개: ${title}, 기술스택: ${content}`);
-
       if (!title) {
         alert('제목을 입력해주세요.');
         inputTitle.current.focus();
@@ -25,23 +34,16 @@ function boardWrite({ history }) {
         alert('내용물을 입력해주세요.');
         inputContent.current.focus();
       } else {
-        const formData = new FormData();
-        formData.append(
-          'author',
-          JSON.parse(localStorage.getItem('userInfo')).name,
-        );
-        formData.append('title', title);
-        formData.append('content', content);
-        const author = JSON.parse(localStorage.getItem('userInfo')).name;
+        getPostData.title = title;
+        getPostData.content = content;
         dispatch({
-          type: ADD_POST_REQUEST,
+          type: UPDATE_POST_REQUEST,
           data: {
-            author,
             title,
             content,
           },
         });
-        history.push('/board');
+        // history.push(`/board_post/${singlePost.p_id}`);
       }
     },
     [title, content],
@@ -57,7 +59,7 @@ function boardWrite({ history }) {
         <h1>글작성</h1>
         <input
           type="text"
-          defaultValue={title}
+          value={title}
           name="title"
           ref={inputTitle}
           placeholder="제목을 입력해주세요. (80자 이내)"
@@ -67,7 +69,7 @@ function boardWrite({ history }) {
         <textarea
           placeholder="글 내용을 입력해주세요."
           onChange={onChangeInput}
-          defaultValue={content}
+          value={content}
           ref={inputContent}
           name="content"
         />
