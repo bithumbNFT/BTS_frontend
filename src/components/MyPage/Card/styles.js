@@ -26,10 +26,10 @@ export const CardContainer = styled.div`
   margin-bottom: 32px;
   transition: all 0.3s;
   opacity: 0.7;
-  height: 380px;
+  height: 400px;
   display: grid;
   overflow: hidden;
-  grid-auto-rows: 2fr 1fr;
+  grid-auto-rows: 70% 30%;
   .delete {
     position: absolute;
     right: 1rem;

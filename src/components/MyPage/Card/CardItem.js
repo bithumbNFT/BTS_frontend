@@ -33,7 +33,10 @@ function Card({ post }) {
         alert('찜 목록에 추가되었습니다.');
         dispatch({
           type: LIKE_AUCTION_REQUEST,
-          data: id,
+          data: {
+            nftid: post.id,
+            user: String(JSON.parse(localStorage.getItem('userInfo')).id),
+          },
         });
       }
     },
@@ -47,7 +50,10 @@ function Card({ post }) {
       alert('찜 목록에 제거되었습니다.');
       dispatch({
         type: UNLIKE_AUCTION_REQUEST,
-        data: id,
+        data: {
+          nftid: post.id,
+          user: post.user,
+        },
       });
     }
   }, []);
