@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { ItemView, Desc, Comment } from './styles';
 
 function Item({ post }) {
+  // 게시글 작성 날짜
+  const writeDate = post.create_post_date.split('T').splice(0, 1);
+
   return (
     <ItemView>
       <Link to={`/board_post/${post.p_id}`}>
@@ -14,7 +17,7 @@ function Item({ post }) {
             <span>{post.author}</span>
 
             {/* 글 게시 날짜 */}
-            <span>{post.create_post_date}</span>
+            <span>{writeDate}</span>
           </div>
         </Desc>
 

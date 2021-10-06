@@ -38,7 +38,6 @@ function CoinHeader() {
       ) : (
         <TableContainer
           className="table table-borderless table-light rounded-top shadow-sm text-left mb-0"
-          // key={this.props.coin}
           key="klay"
         >
           <thead>

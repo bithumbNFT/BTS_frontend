@@ -36,3 +36,18 @@ export const ListView = styled.ul`
     margin-top: 5em;
   }
 `;
+
+export const EmptyWrap = styled.section`
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  h3 {
+    font-size: 1rem;
+    color: #616568;
+    margin-top: 1rem;
+    font-weight: 400;
+  }
+`;

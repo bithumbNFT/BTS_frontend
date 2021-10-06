@@ -1,7 +1,6 @@
 import React from 'react';
 import { AiFillGithub } from 'react-icons/ai';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
 function Member({ koName, major, enName, src, github, name }) {
   return (

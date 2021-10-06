@@ -15,7 +15,6 @@ import { browserHistory } from 'utils/historyUtils';
 import { API_SERVER_PATH } from 'utils/config';
 import rootReducer, { rootSaga } from './utils/modules';
 import App from './App';
-import './styles/font.css';
 
 // axios 설정
 axios.defaults.baseURL = API_SERVER_PATH;

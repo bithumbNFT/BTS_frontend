@@ -5,13 +5,13 @@ import { GlobalStyles } from 'styles/global-styles';
 import Loader from 'components/Common/Loader';
 import pMinDelay from 'p-min-delay';
 import AuthRoute from 'hooks/useAuthRoute';
+import './styles/font.css';
 
 function App() {
   const Auction = lazy(() => import('./pages/auction'));
   const Upload = lazy(() => import('./pages/upload'));
   const Board = lazy(() => import('./pages/board'));
   const Home = lazy(() => pMinDelay(import('./pages/home'), 3000));
-  // const Home = lazy(() => import('./pages/home'));
   const MyPage = lazy(() => import('./pages/mypage'));
   const Post = lazy(() => import('./pages/board_post'));
   const Write = lazy(() => import('./pages/board_write'));
@@ -23,8 +23,8 @@ function App() {
 
   return (
     <>
-      {GlobalStyles}
       <Suspense fallback={<Loader />}>
+        {GlobalStyles}
         <CacheSwitch>
           <CacheRoute exact path="/" component={Home} />
           {/* 홈화면 */}

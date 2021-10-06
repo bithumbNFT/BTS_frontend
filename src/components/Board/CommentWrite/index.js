@@ -33,11 +33,10 @@ function CommentWrite({ postId }) {
         <textarea
           placeholder="댓글을 입력해 주세요"
           onChange={onChangeContent}
-          defaultValue={comment}
           value={comment}
         />
 
-        <Button type="submit" loading={addCommentLoading}>
+        <Button type="submit" onClick={addCommentLoading}>
           댓글달기
         </Button>
       </CommentWriteBox>

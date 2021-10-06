@@ -1,8 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import LoginModal from 'components/LoginModal';
 import { BsBell } from 'react-icons/bs';
 import { logoutRequestAction } from 'reducers/user';
 import { Gnb, Menu, User, Title, UserProfile, NotiIcon } from './styles';
@@ -16,7 +15,6 @@ function Header() {
     me: state.userReducer.me,
   }));
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const [isShowing, setIsShowing] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -27,6 +25,7 @@ function Header() {
   const GoToPage = name => {
     history.push(name);
   };
+
   return (
     <Gnb>
       <div className="navWrap">
@@ -73,8 +72,6 @@ function Header() {
           )}
         </User>
       </div>
-
-      {/* <LoginModal onClose={closeModal} open={isShowing} /> */}
     </Gnb>
   );
 }

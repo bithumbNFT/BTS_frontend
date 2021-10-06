@@ -1,6 +1,5 @@
 import React from 'react';
 import { HiChevronDown } from 'react-icons/hi';
-// import klaytn from '../../../../public/images/klaytn.svg';
 import {
   HomeMain,
   ChartWrap,

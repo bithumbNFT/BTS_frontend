@@ -178,11 +178,21 @@ function* addComment(action) {
 
 // [TODO] 댓글 삭제 api 수정 필요
 function removeCommentAPI(data) {
-  return axios.put(`/board/post/${data.postId}/delete_comment`, data);
+  return axios({
+    url: `/board/post/${data}/delete_comment`,
+    method: 'put',
+    data: {
+      c_id: data.c_id,
+      comment_writer: data.comment_writer,
+      comment_content: data.comment_content,
+      create_post_date: data.create_post_date,
+      modified_post_date: data.modified_post_date,
+    },
+  });
 }
 
 function* removeComment(action) {
-  console.log(action);
+  console.log('댓글삭제------->', action);
   try {
     const result = yield call(removeCommentAPI, action.data);
     console.log(result.data);
