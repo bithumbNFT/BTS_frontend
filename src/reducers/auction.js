@@ -172,7 +172,7 @@ export const initialState = {
   // home 경매
   mainAuctions: [],
   // 단일 경매 페이지
-  singlePost: [],
+  singleAuction: {},
   // 좋아요한 작품
   likeAuctions: [],
   // 구매한 작품
@@ -250,9 +250,9 @@ export const LOAD_MY_AUCTION_SUCCESS = 'LOAD_MY_AUCTION_SUCCESS';
 export const LOAD_MY_AUCTION_FAILURE = 'LOAD_MY_AUCTION_FAILURE';
 
 // 경매템 view 로드 (단일 게시물)
-export const LOAD_ONE_AUCTION_REQUEST = 'LOAD_AUCTION_REQUEST';
-export const LOAD_ONE_AUCTION_SUCCESS = 'LOAD_AUCTION_SUCCESS';
-export const LOAD_ONE_AUCTION_FAILURE = 'LOAD_AUCTION_FAILURE';
+export const LOAD_ONE_AUCTION_REQUEST = 'LOAD_ONE_AUCTION_REQUEST';
+export const LOAD_ONE_AUCTION_SUCCESS = 'LOAD_ONE_AUCTION_SUCCESS';
+export const LOAD_ONE_AUCTION_FAILURE = 'LOAD_ONE_AUCTION_FAILURE';
 
 // 경매템 작성
 export const ADD_AUCTION_REQUEST = 'ADD_AUCTION_REQUEST';
@@ -387,7 +387,8 @@ const auctionReducer = (state = initialState, action) =>
       case LOAD_ONE_AUCTION_SUCCESS: {
         draft.loadOneAuctionLoading = false;
         draft.loadOneAuctionDone = true;
-        draft.singlePost = action.data;
+        draft.singleAuction = action.data.auction;
+        draft.singleAuction.likes = action.data.likes;
         break;
       }
 

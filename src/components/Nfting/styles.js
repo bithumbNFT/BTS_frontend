@@ -30,6 +30,9 @@ export const Detail = styled.article`
         font-weight: 600;
         color: #fe5000;
         text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         h3 {
           font-size: 30px;
           color: #fe5000;

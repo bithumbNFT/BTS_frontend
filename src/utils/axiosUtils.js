@@ -13,7 +13,7 @@ export const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     config.headers['Content-Type'] = 'application/json; charset=utf-8';
-    config.headers.Authorization = ACCESS_TOKEN;
+    config.headers.token = ACCESS_TOKEN;
     return config;
   },
   error => {
@@ -26,9 +26,9 @@ instance.interceptors.request.use(
 // axios response 처리
 instance.interceptors.response.use(
   response => {
-    console.log(response);
+    console.log('axiosUtils response.data', response.data);
 
-    return response.data.data;
+    return response;
   },
   error => {
     console.error(error);

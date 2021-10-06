@@ -63,7 +63,7 @@ import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
 
 // home 모든 경매템 로드
 function loadAuctionAPI(lastId) {
-  return axios.get('/NFT/allNFT');
+  return axios.get('main/NFT/allNFT');
 }
 
 function* loadAuction(action) {
@@ -105,7 +105,7 @@ function* loadLikeAuction(action) {
 
 //  내가 등록한 작품(mypage) 경매템 로드
 function loadGetAuctionAPI(id) {
-  return axios.get(`/NFT/checkNftbyid/${id}`);
+  return axios.get(`main/NFT/checkNftbyid/${id}`);
 }
 
 function* loadGetAuction(action) {
@@ -126,15 +126,19 @@ function* loadGetAuction(action) {
 
 // 경매템 view 로드 (단일 게시물)
 function loadOneAuctionAPI(id) {
-  return axios.get(`NFT/checkNftbyNftid/${id}`);
+  return instance.get(`main/NFT/checkNftbyNftid/${id}`);
 }
 
+function loadAuctionLikeCount(id) {
+  return instance.get(`main/NFT/countlike/${id}`);
+}
 function* loadOneAuction(action) {
   try {
     const result = yield call(loadOneAuctionAPI, action.data);
+    const likeCount = yield call(loadAuctionLikeCount, action.data);
     yield put({
       type: LOAD_ONE_AUCTION_SUCCESS,
-      data: result.data,
+      data: { auction: result.data, likes: likeCount.data.count },
     });
   } catch (err) {
     console.error(err);

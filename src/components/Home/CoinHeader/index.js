@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { coinRequestAction } from 'reducers/chart';
 import { TableWrapper, TableContainer } from './style';
 
 function CoinHeader() {
   const dispatch = useDispatch();
-
   const getKlaytnData = () => dispatch(coinRequestAction());
 
-  //   setTimeout(() => getKlaytnData(), 0);
-  useEffect(() => getKlaytnData(), [dispatch]);
+  useEffect(() => getKlaytnData(), []);
   const { chartLoading, chartError, coinData, tradingVolume } = useSelector(
     state => ({
       chartLoading: state.chartReducer.loadCoinData,
@@ -30,6 +29,7 @@ function CoinHeader() {
   };
 
   const getColor = num => (num > 0 ? '#e12343' : '#0966c6');
+  const color = getColor(Number(coinData.fluctate_rate_24H));
 
   return (
     <TableWrapper>
@@ -56,10 +56,10 @@ function CoinHeader() {
                 className="pb-0 pt-0"
                 key="klay"
                 colSpan="2"
-                style={{ color: 'red' }}
+                style={{ color }}
               >
                 <span className="coin-info-price font-weight-bold">
-                  {numberWithCommas('119736')}
+                  {numberWithCommas(coinData.now_price)}
                 </span>
                 <span className="word-sm ml-1">KRW</span>
               </td>
@@ -71,20 +71,18 @@ function CoinHeader() {
               </td>
               <td className="pb-0 pt-0">
                 <span className="word-sm mr-3">거래량(24H)</span>
-                {numberWithCommas(tradingVolume)}
-                <span className="word-sm ml-1">
-                  KLAY
-                </span>
+                {numberWithCommas(tradingVolume)} &nbsp;
+                <span className="word-sm ml-1">KLAY</span>
               </td>
             </tr>
             <tr>
               <td className="pt-0 pb-1" colSpan="2">
                 <span className="word-sm">전일대비</span>{' '}
-                <span style={{ color: 'red' }}>
+                <span style={{ color }}>
                   {numberWithCommas(coinData.fluctate_24H)}
 
                   <span className="ml-3">
-                    (-{Number(coinData.fluctate_rate_24H).toFixed(2)} %)
+                    ({Number(coinData.fluctate_rate_24H).toFixed(2)} %)
                   </span>
                 </span>
               </td>
