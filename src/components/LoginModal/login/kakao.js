@@ -1,11 +1,7 @@
-// 리다이렉트될 화면
-
+// 리다이렉트 될 화면
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { kakaoLoginRequestAction } from 'reducers/user';
-// import { useHistory, withRouter } from 'react-router-dom';
-// import { actionCreators as userActions } from '../redux/modules/user';
-// import Spinner from './Spinner';
 
 const OAuth2RedirectHandler = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -15,7 +14,6 @@ import { browserHistory } from 'utils/historyUtils';
 import { API_SERVER_PATH } from 'utils/config';
 import rootReducer, { rootSaga } from './utils/modules';
 import App from './App';
-import './styles/font.css';
 
 // axios 설정
 axios.defaults.baseURL = API_SERVER_PATH;

@@ -22,13 +22,6 @@ function CoinHeader() {
     }),
     shallowEqual,
   );
-  console.log(coinData);
-  console.log(chartLoading);
-  //   console.log(kalytnData);
-  //   setInterval(() => {
-  //     getKlaytnData();
-  //     console.log('클레이튼 데이터 가져오기');
-  //   }, 5000);
 
   const numberWithCommas = x => {
     if (x) {
@@ -45,7 +38,6 @@ function CoinHeader() {
       ) : (
         <TableContainer
           className="table table-borderless table-light rounded-top shadow-sm text-left mb-0"
-          // key={this.props.coin}
           key="klay"
         >
           <thead>
@@ -62,13 +54,11 @@ function CoinHeader() {
             <tr>
               <td
                 className="pb-0 pt-0"
-                //   key={coin_price.buy_price}
                 key="klay"
                 colSpan="2"
                 style={{ color: 'red' }}
               >
                 <span className="coin-info-price font-weight-bold">
-                  {/* {this.numberWithCommas(coin_price.buy_price)} */}
                   {numberWithCommas('119736')}
                 </span>
                 <span className="word-sm ml-1">KRW</span>
@@ -76,16 +66,13 @@ function CoinHeader() {
               <td className="pb-0 pt-0">
                 <span className="word-sm">고가</span>
                 <span className="m-3" style={{ color: '#e12343' }}>
-                  {/* {this.numberWithCommas(coin_price.max_price)} */}
                   {numberWithCommas(coinData.highest_price)}
                 </span>
               </td>
               <td className="pb-0 pt-0">
                 <span className="word-sm mr-3">거래량(24H)</span>
-                {/* {Number(coin_price.units_traded).toFixed(4)} */}
                 {numberWithCommas(tradingVolume)}
                 <span className="word-sm ml-1">
-                  {/* {this.props.coin} */}
                   KLAY
                 </span>
               </td>
@@ -104,7 +91,6 @@ function CoinHeader() {
               <td className="pt-0">
                 <span className="word-sm">저가</span>{' '}
                 <span className="m-3" style={{ color: '#0966c6' }}>
-                  {/* {this.numberWithCommas(coin_price.min_price)} */}
                   {numberWithCommas(coinData.lowest_price)}
                 </span>
               </td>

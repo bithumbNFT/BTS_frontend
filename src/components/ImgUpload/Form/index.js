@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addAuction } from 'reducers/auction';
 import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 
@@ -25,12 +25,7 @@ export function priceToString(price) {
 
 function UploadForm() {
   const history = useHistory();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    // formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, watch } = useForm();
 
   const [imgSrc, setImgSrc] = useState(undefined);
   const [imgData, setImgData] = useState({});
@@ -66,12 +61,6 @@ function UploadForm() {
     }
   };
 
-  // const onImgChange = async event => {
-  //   const formData = new FormData();
-  //   formData.append('file', event.target.files[0]);
-  //   // const response = await apiClient.post('/brand/logo_image', formData)
-  // };
-
   const goToPrevPage = () => {
     history.goBack();
   };
@@ -81,7 +70,6 @@ function UploadForm() {
     uploadImageInput.current.click();
   };
 
-  // register -> formControlName 이라고 생각
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <ImgSection onClick={onImgDivClick}>
@@ -97,7 +85,6 @@ function UploadForm() {
         id="uploadImg"
         accept="image/*"
         name="file"
-        // ref={register}
         onChange={onChangeImg}
       />
       <InputSection>
@@ -146,7 +133,6 @@ function UploadForm() {
           취소
         </button>
       </InputSection>
-      {/* {errors.exampleRequired && <span>This field is required</span>} */}
     </Wrapper>
   );
 }

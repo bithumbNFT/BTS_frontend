@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_POSTS_REQUEST, loadPosts } from 'reducers/post';
 import { Link } from 'react-router-dom';
-import { Pagination } from 'antd';
+import { Pagination, Empty } from 'antd';
 import Item from 'components/Board/Item';
 import Intro from 'components/Board/Intro';
 import Header from 'components/Common/Header';
-import { ListView, ListWrap } from './styles';
+import { ListView, ListWrap, EmptyWrap } from './styles';
 
 function board() {
   const dispatch = useDispatch();
-
   const getPostsData = () => dispatch(loadPosts());
   const { mainPosts } = useSelector(state => state.postReducer);
 
@@ -41,11 +40,21 @@ function board() {
           </div>
 
           <ListView>
-            {mainPosts.map(post => (
-              <Item key={post.id} post={post} />
-            ))}
+            {/* {isBoard &&} */}
+            {mainPosts.length > 0 ? (
+              <>
+                {mainPosts.map(post => (
+                  <Item key={post.id} post={post} />
+                ))}
 
-            <Pagination defaultCurrent={1} total={10} />
+                <Pagination defaultCurrent={1} total={10} />
+              </>
+            ) : (
+              <EmptyWrap>
+                <Empty description={false} />
+                <h3>아직 등록된 게시물이 없습니다.</h3>
+              </EmptyWrap>
+            )}
           </ListView>
         </ListWrap>
       </main>

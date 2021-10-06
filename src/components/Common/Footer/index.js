@@ -37,8 +37,9 @@ function Footer() {
           koName="백인준"
           enName="Back Injun"
           major="Backend Engineer"
-          src="/images/leehyunju.png"
+          src="/images/baekinjun.png"
           github="https://github.com/baekinjun"
+          name="baekinjun"
         />
         <Member
           koName="문승재"
@@ -76,6 +77,11 @@ export const FooterBox = styled.footer`
     }
   }
   .wonhe {
+    img {
+      margin-left: 0;
+    }
+  }
+  .baekinjun {
     img {
       margin-left: 0;
     }
