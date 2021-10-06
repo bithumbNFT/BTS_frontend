@@ -162,11 +162,11 @@ function* createWallet(action) {
   try {
     const result = yield call(createWalletAPI, action.data);
     let userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    userInfo = { ...userInfo, coin_wallet: result.address };
+    userInfo = { ...userInfo, coin_wallet: result.data.address };
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
     yield put({
       type: CREATE_WALLET_SUCCESS,
-      data: result.address,
+      data: result.data.address,
     });
   } catch (err) {
     console.log('사가 지갑 실패');

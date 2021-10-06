@@ -6,7 +6,7 @@ import {
   REMOVE_POST_REQUEST,
   loadPost,
   UPDATE_POST_REQUEST,
-  clearPost
+  clearPost,
 } from 'reducers/post';
 
 import CommentWrite from 'components/Board/CommentWrite';

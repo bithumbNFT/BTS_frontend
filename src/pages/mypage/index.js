@@ -26,12 +26,6 @@ function mypage({ location: { pathname } }) {
       tabName: '🎨 내가 등록한 작품',
     },
     {
-      id: 2,
-      path: '/mypage/purchase',
-      comp: PurchaseImage,
-      tabName: '💰 내가 구매한 작품',
-    },
-    {
       id: 3,
       path: '/mypage/wishlist',
       comp: LikeImage,
@@ -64,7 +58,6 @@ function mypage({ location: { pathname } }) {
           <MyPageTab>
             <Switch>
               <Route exact path="/mypage" component={MyUpload} />
-              <Route path="/mypage/purchase" exact component={PurchaseImage} />
               <Route path="/mypage/wishList" exact component={LikeImage} />
             </Switch>
           </MyPageTab>

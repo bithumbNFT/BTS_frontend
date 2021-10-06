@@ -20,7 +20,7 @@ import {
 } from './styles';
 
 function Card({ post }) {
-  // console.log('auction post', post);
+  console.log('auction post', post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [deleteShow, setDeleteShow] = useState(true);
@@ -74,6 +74,10 @@ function Card({ post }) {
     }
     dispatch({
       type: REMOVE_AUCTION_REQUEST,
+      data: {
+        id: post.id,
+        from: String(JSON.parse(localStorage.getItem('userInfo')).id),
+      },
     });
   }, []);
 

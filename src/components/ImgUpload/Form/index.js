@@ -28,18 +28,35 @@ function UploadForm() {
   const { register, handleSubmit, watch } = useForm();
 
   const [imgSrc, setImgSrc] = useState(undefined);
-  const [imgData, setImgData] = useState({});
+  const [imgData, setImgData] = useState();
 
   const uploadImageInput = useRef(null);
   const watchPrice = watch('price');
   const currentKLAYPrice = 1542;
 
+  const formData = new FormData();
+
   const dispatch = useDispatch();
   // [TODO] form 제출
   const onSubmit = data => {
-    data.file = imgData;
-    dispatch(addAuction(data));
-    console.log(data);
+    const NFTInfo = {
+      name: data.title,
+      description: data.description,
+      image: imgData.name,
+      owner: String(JSON.parse(localStorage.getItem('userInfo')).id),
+    };
+    console.log(NFTInfo);
+    // formData.append('NFTInfo', JSON.stringify(NFTInfo));
+    formData.append(
+      'NFTInfo',
+      new Blob([JSON.stringify(NFTInfo)], { type: 'application/json' }),
+    );
+    formData.append('image', imgData);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const value of formData.values()) {
+      console.log('value2-----;', value);
+    }
+    dispatch(addAuction(formData));
   };
 
   const handlePrice = (price, klay) => {
@@ -85,6 +102,7 @@ function UploadForm() {
         id="uploadImg"
         accept="image/*"
         name="file"
+        multiple
         onChange={onChangeImg}
       />
       <InputSection>

@@ -9,12 +9,14 @@ import Button from './Button';
 function MyUpload() {
   const dispatch = useDispatch();
   const { myAuctions } = useSelector(state => state.auctionReducer);
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     dispatch({
       type: LOAD_MY_AUCTION_REQUEST,
+      data: userInfo.id,
     });
-  }, [myAuctions]);
+  }, []);
   return (
     <>
       <MyUploadHeader>

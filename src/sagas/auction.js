@@ -84,7 +84,7 @@ function* loadAuction(action) {
 
 //  좋아요한 작품(wishlist) 경매템 로드
 function loadLikeAuctionAPI(id) {
-  return axios.get(`/NFT/userlikelist/${id}`);
+  return axios.get(`main/NFT/userlikelist/${id}`);
 }
 
 function* loadLikeAuction(action) {
@@ -109,8 +109,10 @@ function loadGetAuctionAPI(id) {
 }
 
 function* loadGetAuction(action) {
+  console.log('action', action);
   try {
-    const result = yield call(loadGetAuctionAPI, action.lastId);
+    const result = yield call(loadGetAuctionAPI, action.data);
+    console.log('loadGetAuction result', result);
     yield put({
       type: LOAD_MY_AUCTION_SUCCESS,
       data: result.data,
@@ -151,19 +153,21 @@ function* loadOneAuction(action) {
 
 // 경매템 추가
 function addAuctionAPI(data) {
-  // const response = instance.post('/NFT/makeNFT', data);
-  const response = instance.post('/test');
-  const dummyData = {
-    transactionHash:
-      '0xa401e4c918d53aecdc89794b2bd3c59a8054a6d669bf1a6af737f37086bb7804',
-    status: 'Submitted',
-  };
+  console.log(data);
+  const response = instance.post('main/NFT/makeNFT', data);
+  // const response = instance.post('/test');
+  // const dummyData = {
+  //   transactionHash:
+  //     '0xa401e4c918d53aecdc89794b2bd3c59a8054a6d669bf1a6af737f37086bb7804',
+  //   status: 'Submitted',
+  // };
 
-  return dummyData;
+  return response;
 }
 
 function* addAuction(action) {
   try {
+    console.log(action);
     console.log('사가 작품 등록');
     const result = yield call(addAuctionAPI, action.data);
     yield delay(1000);
@@ -191,12 +195,21 @@ function* addAuction(action) {
 }
 
 function removeAuctionAPI(data) {
-  return axios.delete('/NFT/allNFT', data);
+  console.log('data in remove AuctionAPI', data);
+  // return instance.delete('main/NFT/allNFT', data);
+  const response = instance({
+    url: 'main/NFT/deleteNFT',
+    method: 'delete',
+    data,
+  });
+  return response;
 }
 
 function* removeAuction(action) {
   try {
+    console.log('action in remove', action);
     const result = yield call(removeAuctionAPI, action.data);
+    console.log('result', result);
     yield delay(1000);
     yield put({
       type: REMOVE_AUCTION_SUCCESS,
