@@ -7,8 +7,6 @@ import {
   throttle,
   delay,
 } from '@redux-saga/core/effects';
-import { redirect, push } from 'utils/historyUtils';
-import axios from 'axios';
 import { instance } from 'utils/axiosUtils';
 
 import {
@@ -134,7 +132,7 @@ function* addPost(action) {
 // 게시물 수정
 function updatePostAPI(data) {
   const response = instance({
-    url: `/board/post/${data}`,
+    url: `/board/post/${data.postId}`,
     method: 'put',
     data: {
       title: data.title,
@@ -145,6 +143,7 @@ function updatePostAPI(data) {
 }
 
 function* updatePost(action) {
+  console.log('action------->', action.data);
   try {
     const result = yield call(updatePostAPI, action.data);
     yield put({

@@ -1,9 +1,11 @@
+/* eslint-disable operator-linebreak */
 import produce from 'immer';
 
 // 👉 초기상태 정의
 export const initialState = {
   mainPosts: [],
   singlePost: {},
+  updatePost: {},
 
   // 게시물 로드 (여러개)
   loadPostsLoading: false,
@@ -106,6 +108,15 @@ export const removeComment = (postId, comment) => ({
   },
 });
 
+export const updatePost = (postId, title, content) => ({
+  type: UPDATE_POST_REQUEST,
+  data: {
+    postId,
+    title,
+    content,
+  },
+});
+
 export const clearPost = () => ({
   type: CLEAR_POST,
 });
@@ -165,7 +176,8 @@ const postReducer = (state = initialState, action) =>
       case UPDATE_POST_SUCCESS: {
         draft.updatePostLoading = true;
         draft.updatePostDone = true;
-        draft.singlePost.find(v => v.id === action.data.PostId).content = action.data.content;
+        draft.singlePost.find(v => v.id === action.data.PostId).content =
+          action.data.content;
         break;
       }
       case UPDATE_POST_FAILURE:
