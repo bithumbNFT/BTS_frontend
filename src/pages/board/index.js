@@ -3,7 +3,8 @@ import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_POSTS_REQUEST, loadPosts } from 'reducers/post';
 import { Link } from 'react-router-dom';
-import { Pagination, Empty } from 'antd';
+import { Empty } from 'antd';
+import Pagination from 'components/Common/Pagination';
 import Item from 'components/Board/Item';
 import Intro from 'components/Board/Intro';
 import Header from 'components/Common/Header';
@@ -11,14 +12,35 @@ import { ListView, ListWrap, EmptyWrap } from './styles';
 
 function board() {
   const dispatch = useDispatch();
+  const { mainPosts } = useSelector(state => state.postReducer);
 
   // const getPostsData = () => dispatch(loadPosts());
   useEffect(() => {
-    dispatch({
-      type: LOAD_POSTS_REQUEST,
-    });
+    const fetchPosts = async () => {
+      await dispatch({
+        type: LOAD_POSTS_REQUEST,
+      });
+    };
+    fetchPosts();
   }, []);
-  const { mainPosts } = useSelector(state => state.postReducer);
+
+  // PagingNation
+  // 현재 페이지
+  const [currentPage, setCurrentPage] = useState(1);
+  // 전체 페이지 (게시물 개수)
+  const [postsPerPage] = useState(5);
+
+  // 해당 페이지에서 마지막 post의 index 번호를 가르킵니다.
+  const indexOfLastPost = currentPage * postsPerPage;
+  //  해당 페이지에서 첫번째 post의 index 번호를 가르킵니다.
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // 각 페이지에서 보여질 포스트 배열입니다.
+  const currentPosts = mainPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+  console.log('currentPosts: ', currentPosts);
 
   return (
     <>
@@ -49,7 +71,11 @@ function board() {
                   <Item key={post.id} post={post} />
                 ))}
 
-                <Pagination defaultCurrent={1} total={10} />
+                <Pagination
+                  postsPerPage={postsPerPage}
+                  totalPosts={mainPosts.length}
+                  paginate={paginate}
+                />
               </>
             ) : (
               <EmptyWrap>

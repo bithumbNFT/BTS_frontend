@@ -13,12 +13,31 @@ function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
   const { mainAuctions } = useSelector(stateRedux => stateRedux.auctionReducer);
+
+  // 페이징네이션 작업
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+
   // [TODO] 주석 풀어야함
   useEffect(() => {
-    dispatch({
-      type: LOAD_AUCTION_REQUEST,
-    });
+    const response = async () => {
+      const res = await dispatch({
+        type: LOAD_AUCTION_REQUEST,
+      });
+      setPosts(res.data);
+      response();
+    };
   }, []);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+  console.log('currentPosts: ', currentPosts);
 
   // 버튼 클릭시 경매 섹션으로 이동
   const scrollToAuction = useCallback(() => {
