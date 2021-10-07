@@ -16,6 +16,8 @@ export const initialState = {
   getAuctions: [],
   // 내가 등록한 작품
   myAuctions: [],
+  // NFT 경매 아이템 리스트
+  searchNft: [],
   me: null,
 
   // 👉 초기상태 정의
@@ -58,6 +60,11 @@ export const initialState = {
   unlikeAuctionLoading: false,
   unlikeAuctionDone: false,
   unlikeAuctionError: null,
+
+  // NFT 경매 아이템 검색
+  searchNftLoading: false,
+  searchNftSuccess: false,
+  searchNftFailure: null,
 };
 
 // ----------------------------
@@ -102,8 +109,18 @@ export const UNLIKE_AUCTION_REQUEST = 'UNLIKE_AUCTION_REQUEST';
 export const UNLIKE_AUCTION_SUCCESS = 'UNLIKE_AUCTION_SUCCESS';
 export const UNLIKE_AUCTION_FAILURE = 'UNLIKE_AUCTION_FAILURE';
 
+// NFT 경매 아이템 검색
+export const SEARCH_NFT_REQUEST = 'SEARCH_NFT_REQUEST';
+export const SEARCH_NFT_SUCCESS = 'SEARCH_NFT_SUCCESS';
+export const SEARCH_NFT_FAILURE = 'SEARCH_NFT_FAILURE';
+
 export const addAuction = data => ({
   type: ADD_AUCTION_REQUEST,
+  data,
+});
+
+export const searchNftResult = data => ({
+  type: SEARCH_NFT_REQUEST,
   data,
 });
 
@@ -224,7 +241,9 @@ const auctionReducer = (state = initialState, action) =>
         break;
       }
       case REMOVE_AUCTION_SUCCESS: {
-        draft.mainAuctions = draft.mainAuctions.filter(v => v.id !== action.data);
+        draft.mainAuctions = draft.mainAuctions.filter(
+          v => v.id !== action.data,
+        );
         draft.myAuctions = draft.myAuctions.filter(v => v.id !== action.data);
         draft.removeAuctionLoading = false;
         draft.removeAuctionDone = true;
@@ -271,6 +290,24 @@ const auctionReducer = (state = initialState, action) =>
         draft.unlikeAuctionLoading = false;
         draft.unlikeAuctionError = action.error;
         break;
+
+      // 검색
+      case SEARCH_NFT_REQUEST: {
+        draft.searchNftLoading = true;
+        draft.searchNftSuccess = false;
+        break;
+      }
+      case SEARCH_NFT_SUCCESS: {
+        draft.searchNftLoading = false;
+        draft.searchNftSuccess = true;
+        draft.searchNft = draft.searchNft.concat(action.data);
+        break;
+      }
+      case SEARCH_NFT_FAILURE: {
+        draft.searchNftSuccess = false;
+        draft.searchNftFailure = action.error;
+        break;
+      }
 
       default:
         break;

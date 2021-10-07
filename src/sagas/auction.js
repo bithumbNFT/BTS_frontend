@@ -51,6 +51,11 @@ import {
   UNLIKE_AUCTION_REQUEST,
   UNLIKE_AUCTION_SUCCESS,
   UNLIKE_AUCTION_FAILURE,
+
+  // NFT 경매 아이템 검색
+  SEARCH_NFT_REQUEST,
+  SEARCH_NFT_SUCCESS,
+  SEARCH_NFT_FAILURE,
 } from '../reducers/auction';
 
 import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
@@ -266,6 +271,31 @@ function* unLikeAuction(action) {
   }
 }
 
+function searchNftAPI(data) {
+  try {
+    const result = axios.get(`/main/NFT/findNFT/${data}`);
+    return result.data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function* searchNft(action) {
+  try {
+    const result = yield call(searchNftAPI, action.data);
+    yield put({
+      type: SEARCH_NFT_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: SEARCH_NFT_FAILURE,
+      data: err,
+    });
+  }
+}
+
 // home 경매템 게시물 로드
 function* watchLoadAuction() {
   yield takeLatest(LOAD_AUCTION_REQUEST, loadAuction);
@@ -305,6 +335,11 @@ function* watchUnLikeAuctions() {
   yield throttle(2000, UNLIKE_AUCTION_REQUEST, unLikeAuction);
 }
 
+// NFT 검색
+function* watchSearchNFT() {
+  yield throttle(SEARCH_NFT_REQUEST, searchNft);
+}
+
 export default function* auctionSaga() {
   yield all([
     fork(watchLoadAuction),
@@ -315,5 +350,6 @@ export default function* auctionSaga() {
     fork(watchRemoveAuction),
     fork(watchLikeAuctions),
     fork(watchUnLikeAuctions),
+    fork(watchSearchNFT),
   ]);
 }

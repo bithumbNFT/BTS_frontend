@@ -1,33 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Header from 'components/Common/Header';
 import { FiSearch } from 'react-icons/fi';
 import { Empty } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { SEARCH_NFT_REQUEST } from 'reducers/auction';
 import styled from '@emotion/styled';
+import CardList from 'components/MyPage/Card/CardList';
 
 const Search = ({ match }) => {
-  const { username } = match.params;
+  const { searchNft } = useSelector(state => state.auctionReducer);
+  const dispatch = useDispatch();
 
-  // const [keyWords, setKeyWords] = useState([]);
-
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const result = localStorage.getItem('keywords') || [];
-  //     setKeyWords(JSON.parse(result));
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('ketwords', JSON.stringify(keyWords));
-  // }, [keyWords]);
-
-  // 검색어 추가
-  // const handleAddKeyword = text => {
-  //   const newKeyword = {
-  //     id: Date.now(),
-  //     text,
-  //   };
-  //   setKeyWords([newKeyword, ...keyWords]);
-  // };
+  useEffect(() => {
+    dispatch({
+      type: SEARCH_NFT_REQUEST,
+      data: match,
+    });
+  }, [dispatch]);
 
   return (
     <>
@@ -40,10 +29,14 @@ const Search = ({ match }) => {
           <strong>&quot;{match.params.id}&quot;</strong>
         </h2>
 
-        <NoContent>
-          <Empty description={false} />
-          <h3>해당 검색 결과가 없습니다.</h3>
-        </NoContent>
+        {searchNft.length ? (
+          searchNft.map(item => <CardList key={item.id} />)
+        ) : (
+          <NoContent>
+            <Empty description={false} />
+            <h3>해당 검색 결과가 없습니다.</h3>
+          </NoContent>
+        )}
       </SearchWrap>
     </>
   );
