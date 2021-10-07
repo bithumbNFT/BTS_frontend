@@ -272,15 +272,12 @@ function* unLikeAuction(action) {
 }
 
 function searchNftAPI(data) {
-  try {
-    const result = axios.get(`/main/NFT/findNFT/${data}`);
-    return result.data;
-  } catch (err) {
-    console.error(err);
-  }
+  console.log(`data-------> ${data}`);
+  return instance.get(`main/NFT/findNFT/${data}`);
 }
 
 function* searchNft(action) {
+  console.log(`action-------> ${action}`);
   try {
     const result = yield call(searchNftAPI, action.data);
     yield put({
@@ -294,6 +291,11 @@ function* searchNft(action) {
       data: err,
     });
   }
+}
+
+// NFT 검색
+function* watchSearchNFT() {
+  yield takeLatest(SEARCH_NFT_REQUEST, searchNft);
 }
 
 // home 경매템 게시물 로드
@@ -333,11 +335,6 @@ function* watchLikeAuctions() {
 // 경매템 찜하기 취소 로딩
 function* watchUnLikeAuctions() {
   yield throttle(2000, UNLIKE_AUCTION_REQUEST, unLikeAuction);
-}
-
-// NFT 검색
-function* watchSearchNFT() {
-  yield throttle(SEARCH_NFT_REQUEST, searchNft);
 }
 
 export default function* auctionSaga() {

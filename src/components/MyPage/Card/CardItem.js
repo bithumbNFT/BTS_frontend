@@ -20,6 +20,7 @@ import {
 } from './styles';
 
 function Card({ post }) {
+  console.log('auction post', post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [deleteShow, setDeleteShow] = useState(true);

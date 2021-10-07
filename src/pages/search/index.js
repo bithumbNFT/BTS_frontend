@@ -1,22 +1,23 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import Header from 'components/Common/Header';
 import { FiSearch } from 'react-icons/fi';
 import { Empty } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH_NFT_REQUEST } from 'reducers/auction';
 import styled from '@emotion/styled';
-import CardList from 'components/MyPage/Card/CardList';
+import CardItem from 'components/MyPage/Card/CardItem';
 
 const Search = ({ match }) => {
+  console.log(match);
   const { searchNft } = useSelector(state => state.auctionReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({
       type: SEARCH_NFT_REQUEST,
-      data: match,
+      data: match.params.id,
     });
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -25,12 +26,16 @@ const Search = ({ match }) => {
       <SearchWrap>
         <h2>
           <FiSearch />
-          이것을 찾으셨나요 ? &nbsp;{' '}
+          이것을 찾으셨나요 ? &nbsp;
           <strong>&quot;{match.params.id}&quot;</strong>
         </h2>
 
-        {searchNft.length ? (
-          searchNft.map(item => <CardList key={item.id} />)
+        {searchNft.length > 0 ? (
+          <CardListBox>
+            {searchNft.map(post => (
+              <CardItem key={post.id} post={post} />
+            ))}
+          </CardListBox>
         ) : (
           <NoContent>
             <Empty description={false} />
@@ -43,6 +48,13 @@ const Search = ({ match }) => {
 };
 
 export default Search;
+
+const CardListBox = styled.section`
+  margin-top: 150px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
+`;
 
 const SearchWrap = styled.main`
   width: 1200px;

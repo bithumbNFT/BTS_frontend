@@ -1,6 +1,4 @@
-import shortId from 'shortid';
 import produce from 'immer';
-import faker from 'faker';
 
 export const initialState = {
   // 👉 더미데이터
