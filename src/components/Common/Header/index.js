@@ -30,8 +30,8 @@ function Header() {
     <Gnb>
       <div className="navWrap">
         <Menu>
-          <Title>
-            <Link to="/">BTS</Link>
+          <Title type="button" onClick={() => GoToPage('/')}>
+            BTS
           </Title>
 
           <Link to="/board" className="board">

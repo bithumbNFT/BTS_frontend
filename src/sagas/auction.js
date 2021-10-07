@@ -159,11 +159,11 @@ function* addAuction(action) {
     console.log(action);
     console.log('사가 작품 등록');
     const result = yield call(addAuctionAPI, action.data);
+    console.log(result);
     // [TODO] 실제 nft id로 변경
-    const id = Math.random().toString(36).substr(2, 11);
     yield put({
       type: ADD_AUCTION_SUCCESS,
-      data: id,
+      data: result.data,
     });
     // yield put({
     //   type: ADD_AUCTION_TO_ME,
