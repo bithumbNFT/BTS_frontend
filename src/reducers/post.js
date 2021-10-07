@@ -213,8 +213,8 @@ const postReducer = (state = initialState, action) =>
         draft.removeCommentError = null;
         break;
       case REMOVE_COMMENT_SUCCESS:
-        draft.singlePost.comment_list = draft.singlePost.comment_list.filter(
-          v => v.id !== action.data.PostId,
+        draft.singlePost.comment_list = draft.singlePost.comment_list?.filter(
+          v => v.c_id !== action.data.comment.c_id,
         );
         draft.removeCommentLoading = false;
         draft.removeCommentDone = true;

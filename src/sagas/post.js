@@ -214,6 +214,7 @@ function* addComment(action) {
 // [TODO] 댓글 삭제 api 수정 필요
 // ${파라미터값}에 p_id 값이 들어가야한다.
 function removeCommentAPI(data) {
+  console.log('removeCommentAPI', data);
   return instance({
     url: `/board/post/${data.postId}/delete_comment`,
     method: 'put',
@@ -230,14 +231,10 @@ function removeCommentAPI(data) {
 function* removeComment(action) {
   console.log('댓글삭제------->', action.data);
   try {
-    const result = yield call(removeCommentAPI, action.data);
-    console.log('result.data------->', result.data, action.postId);
+    yield call(removeCommentAPI, action.data);
+    // console.log('result.data------->', result.data, action.data);
     yield put({
       type: REMOVE_COMMENT_SUCCESS,
-      data: result.data,
-    });
-    yield put({
-      type: REMOVE_COMMENT_REQUEST,
       data: action.data,
     });
   } catch (err) {

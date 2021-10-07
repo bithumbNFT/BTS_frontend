@@ -8,7 +8,7 @@ function CommentWrite({ postId }) {
   const dispatch = useDispatch();
   const id = useSelector(state => state.userReducer.me?.id);
   const [comment, setComment] = useState('');
-  const { addCommentLoading } = useSelector(state => state.postReducer);
+  // const { addCommentLoading } = useSelector(state => state.postReducer);
   const user = JSON.parse(localStorage.getItem('userInfo')).name;
 
   const onSubmit = useCallback(
@@ -37,7 +37,7 @@ function CommentWrite({ postId }) {
           value={comment}
         />
 
-        <Button type="submit" onClick={addCommentLoading}>
+        <Button type="submit">
           입력
         </Button>
       </CommentWriteBox>
