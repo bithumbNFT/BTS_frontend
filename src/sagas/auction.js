@@ -51,6 +51,21 @@ import {
   UNLIKE_AUCTION_REQUEST,
   UNLIKE_AUCTION_SUCCESS,
   UNLIKE_AUCTION_FAILURE,
+
+  // 경매시작
+  START_AUCTION_REQUEST,
+  START_AUCTION_SUCCESS,
+  START_AUCTION_FAILURE,
+
+  // 입찰
+  PARTICIPATE_AUCTION_REQUEST,
+  PARTICIPATE_AUCTION_SUCCESS,
+  PARTICIPATE_AUCTION_FAILURE,
+
+  // 구매확정
+  CONFIRM_PURCHASE_REQUEST,
+  CONFIRM_PURCHASE_SUCCESS,
+  CONFIRM_PURCHASE_FAILURE,
 } from '../reducers/auction';
 
 import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
@@ -266,6 +281,80 @@ function* unLikeAuction(action) {
   }
 }
 
+function startAuctionAPI(data) {
+  const response = instance({
+    method: '',
+    url: '',
+  });
+
+  return response;
+}
+
+function* startAuction(action) {
+  try {
+    const result = yield call(startAuctionAPI, action.data);
+    yield put({
+      type: UNLIKE_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: START_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function participateAuctionAPI(data) {
+  const response = instance({
+    method: '',
+    url: '',
+  });
+
+  return response;
+}
+
+function* participateAuction(action) {
+  // api function 생성 후 수정 필요
+  try {
+    const result = yield call(participateAuctionAPI, action.data);
+    yield put({
+      type: UNLIKE_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: PARTICIPATE_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function confirmPurchaseAPI(data) {
+  const response = instance({
+    method: '',
+    url: '',
+  });
+
+  return response;
+}
+
+function* confirmPurchase(action) {
+  // api function 생성 후 수정 필요
+  try {
+    const result = yield call(confirmPurchaseAPI, action.data);
+    yield put({
+      type: UNLIKE_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: CONFIRM_PURCHASE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 // home 경매템 게시물 로드
 function* watchLoadAuction() {
   yield takeLatest(LOAD_AUCTION_REQUEST, loadAuction);
@@ -305,6 +394,21 @@ function* watchUnLikeAuctions() {
   yield throttle(2000, UNLIKE_AUCTION_REQUEST, unLikeAuction);
 }
 
+// 경매 시작 로딩
+function* watchStartAuctions() {
+  yield throttle(2000, START_AUCTION_REQUEST, startAuction);
+}
+
+// 입찰 로딩
+function* watchParticipateAuctions() {
+  yield throttle(1000, PARTICIPATE_AUCTION_REQUEST, participateAuction);
+}
+
+// 구매확정 로딩
+function* watchConfirmPurchase() {
+  yield throttle(2000, CONFIRM_PURCHASE_REQUEST, confirmPurchase);
+}
+
 export default function* auctionSaga() {
   yield all([
     fork(watchLoadAuction),
@@ -315,5 +419,7 @@ export default function* auctionSaga() {
     fork(watchRemoveAuction),
     fork(watchLikeAuctions),
     fork(watchUnLikeAuctions),
+    fork(watchParticipateAuctions),
+    fork(watchConfirmPurchase),
   ]);
 }

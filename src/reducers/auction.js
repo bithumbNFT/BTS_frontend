@@ -58,6 +58,21 @@ export const initialState = {
   unlikeAuctionLoading: false,
   unlikeAuctionDone: false,
   unlikeAuctionError: null,
+
+  // 판매자 - 경매시작
+  startAuctionLoading: false,
+  startAuctionDone: false,
+  startAuctionError: null,
+
+  // 구매자 - 입찰
+  participateAuctionLoading: false,
+  participateAuctionDone: false,
+  participateAuctionError: null,
+
+  // 최종 구매자 - 구매확정
+  confirmPurchaseLoading: false,
+  confirmPurchaseDone: false,
+  confirmPurchaseError: null,
 };
 
 // ----------------------------
@@ -102,6 +117,22 @@ export const UNLIKE_AUCTION_REQUEST = 'UNLIKE_AUCTION_REQUEST';
 export const UNLIKE_AUCTION_SUCCESS = 'UNLIKE_AUCTION_SUCCESS';
 export const UNLIKE_AUCTION_FAILURE = 'UNLIKE_AUCTION_FAILURE';
 
+// 액션 타입 정의
+// 판매자 - 경매시작
+export const START_AUCTION_REQUEST = 'START_AUCTION_REQUEST';
+export const START_AUCTION_SUCCESS = 'START_AUCTION_SUCCESS';
+export const START_AUCTION_FAILURE = 'START_AUCTION_FAILURE';
+
+// 구매자 - 입찰
+export const PARTICIPATE_AUCTION_REQUEST = 'PARTICIPATE_AUCTION_REQUEST';
+export const PARTICIPATE_AUCTION_FAILURE = 'PARTICIPATE_AUCTION_FAILURE';
+export const PARTICIPATE_AUCTION_SUCCESS = 'PARTICIPATE_AUCTION_SUCCESS';
+
+// 최종 구매자 - 구매확정
+export const CONFIRM_PURCHASE_REQUEST = 'CONFIRM_PURCHASE_REQUEST';
+export const CONFIRM_PURCHASE_SUCCESS = 'CONFIRM_PURCHASE_SUCCESS';
+export const CONFIRM_PURCHASE_FAILURE = 'CONFIRM_PURCHASE_FAILURE';
+
 export const addAuction = data => ({
   type: ADD_AUCTION_REQUEST,
   data,
@@ -110,6 +141,23 @@ export const addAuction = data => ({
 export const myPage = data => ({
   ...data,
   LikeList: [],
+});
+
+// 액션함수 생성
+// [TODO] data에 뭐가 들어가는지는 모르겟음
+export const startAuction = data => ({
+  type: START_AUCTION_REQUEST,
+  data, // 예상 - userid, nftid, 현재시간
+});
+
+export const participateAuction = data => ({
+  type: PARTICIPATE_AUCTION_REQUEST,
+  data, // 예상 - userid, nftid, 입찰가격(현재+1klay), 시간
+});
+
+export const confirmPurchase = data => ({
+  type: CONFIRM_PURCHASE_REQUEST,
+  data,
 });
 
 const auctionReducer = (state = initialState, action) =>
@@ -224,7 +272,9 @@ const auctionReducer = (state = initialState, action) =>
         break;
       }
       case REMOVE_AUCTION_SUCCESS: {
-        draft.mainAuctions = draft.mainAuctions.filter(v => v.id !== action.data);
+        draft.mainAuctions = draft.mainAuctions.filter(
+          v => v.id !== action.data,
+        );
         draft.myAuctions = draft.myAuctions.filter(v => v.id !== action.data);
         draft.removeAuctionLoading = false;
         draft.removeAuctionDone = true;
@@ -272,6 +322,53 @@ const auctionReducer = (state = initialState, action) =>
         draft.unlikeAuctionError = action.error;
         break;
 
+      // 경매시작
+      case START_AUCTION_REQUEST:
+        draft.startAuctionLoading = true;
+        draft.startAuctionDone = false;
+        draft.startAuctionError = null;
+        break;
+      case START_AUCTION_SUCCESS:
+        draft.startAuctionLoading = false;
+        draft.startAuctionDone = true;
+        break;
+      case START_AUCTION_FAILURE:
+        draft.startAuctionLoading = false;
+        draft.startAuctionError = action.error;
+        break;
+
+      // 입찰
+      case PARTICIPATE_AUCTION_REQUEST:
+        draft.participateAuctionLoading = true;
+        draft.participateAuctionDone = false;
+        draft.participateAuctionError = null;
+        break;
+      case PARTICIPATE_AUCTION_SUCCESS:
+        draft.participateAuctionLoading = false;
+        draft.participateAuctionDone = true;
+        break;
+      case PARTICIPATE_AUCTION_FAILURE:
+        draft.participateAuctionLoading = false;
+        draft.participateAuctionError = action.error;
+        break;
+
+      // 구매확정
+      case CONFIRM_PURCHASE_REQUEST:
+        draft.confirmPurchaseLoading = true;
+        draft.confirmPurchaseDone = false;
+        draft.confirmPurchaseError = action.error;
+        break;
+      case CONFIRM_PURCHASE_SUCCESS:
+        draft.confirmPurchaseLoading = false;
+        draft.confirmPurchaseDone = true;
+        // 구매한 작품 목록에 추가
+        // [TODO] myAuctions에 들어갈 data 수정
+        draft.myAuctions.unshift({ id: action.data.nftId });
+        break;
+      case CONFIRM_PURCHASE_FAILURE:
+        draft.confirmPurchaseLoading = false;
+        draft.confirmPurchaseError = action.error;
+        break;
       default:
         break;
     }
