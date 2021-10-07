@@ -40,6 +40,7 @@
     "consistent-return": "off",
     "arrow-body-style": "off",
     "indent": "off",
-    "no-alert": "off"
+    "no-alert": "off",
+    "no-nested-ternary": "off"
   }
 }

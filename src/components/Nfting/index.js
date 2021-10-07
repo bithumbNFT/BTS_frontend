@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
 import { Nfting, Images, Detail, Border } from './styles';
 
 function auctionNft({ props }) {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const [btn, setBtn] = useState();
+
+  if (props.auction === 'READY') {
+    if (userInfo.email === props.email) {
+      setBtn(0);
+    } else {
+      setBtn(1);
+    }
+  } else if (props.auction === 'START') {
+    // if (userInfo.email === props.email) {
+    //   setBtn(2);
+    // } else {
+    //   setBtn(3);
+    // }
+    setBtn(2);
+  } else if (props.auction === 'DONE') {
+    // if (userInfo.email === props.email) {
+    //   setBtn(4);
+    // } else {
+    //   setBtn(5);
+    // }
+    setBtn(3);
+  } else {
+    return null;
+  }
+
+  console.log(btn);
+
   return (
     <>
       <Nfting>
@@ -42,10 +71,26 @@ function auctionNft({ props }) {
             <div className="email">
               <p>me@email.com</p>
             </div>
-
-            <div className="detail__button">
-              <button type="button">구매확정</button>
-            </div>
+            {/* 상태 구별 */}
+            {/* 판매자일 때  */}
+            {btn === 0 ? (
+              <div className="detail__button">
+                <button type="button">경매시작</button>
+              </div>
+            ) : btn === 1 ? (
+              <div className="detail__button">
+                {/* <button type="button">구매확정</button> */}
+                아직 경매시작 전 입니다.
+              </div>
+            ) : btn === 2 ? (
+              <div className="detail__button">
+                <button type="button">입찰</button>
+              </div>
+            ) : btn === 3 ? (
+              <div className="detail__button">
+                <button type="button">경매가 종료된 작품입니다.</button>
+              </div>
+            ) : null}
           </Border>
 
           <Border>
@@ -63,13 +108,13 @@ function auctionNft({ props }) {
 
             <table>
               <tbody>
-                <tr>
+                {/* <tr>
                   <th>NFT TX</th>
                   <td className="desc">0x1ad1e2333ad77ad7cc28d</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <th>Token ID</th>
-                  <td className="desc">100000118</td>
+                  <td className="desc">{props.id}</td>
                 </tr>
                 <tr>
                   <th>BlockChain</th>
