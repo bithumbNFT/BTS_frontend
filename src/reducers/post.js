@@ -176,8 +176,7 @@ const postReducer = (state = initialState, action) =>
       case UPDATE_POST_SUCCESS: {
         draft.updatePostLoading = true;
         draft.updatePostDone = true;
-        draft.singlePost.find(v => v.id === action.data.PostId).content =
-          action.data.content;
+        draft.singlePost = action.data;
         break;
       }
       case UPDATE_POST_FAILURE:

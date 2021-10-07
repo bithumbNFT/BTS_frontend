@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_LIKE_AUCTION_REQUEST } from 'reducers/auction';
@@ -8,12 +8,14 @@ import CardList from '../Card/CardList';
 function LikeImage() {
   const dispatch = useDispatch();
   const { likeAuctions } = useSelector(state => state.auctionReducer);
+  const user = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     dispatch({
       type: LOAD_LIKE_AUCTION_REQUEST,
+      data: user.id,
     });
-  }, [likeAuctions]);
+  }, [dispatch]);
   return (
     <>
       <MyUploadText># 좋아요한 작품</MyUploadText>

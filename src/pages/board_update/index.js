@@ -1,22 +1,29 @@
 /* eslint-disable no-constant-condition */
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import Header from 'components/Common/Header';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePost } from 'reducers/post';
+import { updatePost, loadPost } from 'reducers/post';
 import Intro from 'components/Board/Intro';
 import useInputs from 'hooks/useInput';
+
 import { Form } from './styles';
 
 function boardWrite({ history, match }) {
   const dispatch = useDispatch();
   const { singlePost } = useSelector(state => state.postReducer);
+  console.log('singlePost in board update', singlePost);
   const [state, onChangeInput] = useInputs({
-    title: '',
-    content: '',
+    title: singlePost.title,
+    content: singlePost.content,
   });
   const { title, content } = state;
   const inputTitle = useRef(null);
   const inputContent = useRef(null);
+  const getPostData = () => dispatch(loadPost(match.params.id));
+
+  useEffect(() => {
+    getPostData();
+  }, [dispatch]);
 
   // 확인 버튼 클릭 시
   const onSubmit = useCallback(
@@ -49,7 +56,7 @@ function boardWrite({ history, match }) {
       <Intro />
 
       <Form onSubmit={onSubmit}>
-        <h1>글작성</h1>
+        <h1>게시물 수정하기</h1>
         <input
           type="text"
           value={title}

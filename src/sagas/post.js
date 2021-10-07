@@ -146,6 +146,7 @@ function* updatePost(action) {
   console.log('action------->', action.data);
   try {
     const result = yield call(updatePostAPI, action.data);
+    console.log('result', result);
     yield put({
       type: UPDATE_POST_SUCCESS,
       data: result.data,

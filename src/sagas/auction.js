@@ -8,7 +8,6 @@ import {
   throttle,
 } from '@redux-saga/core/effects';
 import axios from 'axios';
-import shortId from 'shortid';
 import { instance } from 'utils/axiosUtils';
 import { redirect, push } from 'utils/historyUtils';
 
@@ -79,12 +78,14 @@ function* loadAuction(action) {
 
 //  좋아요한 작품(wishlist) 경매템 로드
 function loadLikeAuctionAPI(id) {
+  console.log('user 값이 뭘까요 ?? ---->', id);
   return axios.get(`main/NFT/userlikelist/${id}`);
 }
 
 function* loadLikeAuction(action) {
+  console.log('loadLikeAuctionAPI action', action);
   try {
-    const result = yield call(loadLikeAuctionAPI, action.lastId);
+    const result = yield call(loadLikeAuctionAPI, action.data);
     yield put({
       type: LOAD_LIKE_AUCTION_SUCCESS,
       data: result.data,

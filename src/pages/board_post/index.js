@@ -20,6 +20,7 @@ function boardPost({ match }) {
     singlePost: state.postReducer.singlePost,
     commentList: state.postReducer.singlePost?.comment_list,
   }));
+  console.log('singlePost', singlePost);
 
   const getPostData = () => dispatch(loadPost(match.params.id));
 
