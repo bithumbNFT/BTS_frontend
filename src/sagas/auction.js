@@ -104,7 +104,7 @@ function loadGetAuctionAPI(id) {
 }
 
 function* loadGetAuction(action) {
-  console.log('action', action);
+  console.log('loadGetAuction action', action);
   try {
     const result = yield call(loadGetAuctionAPI, action.data);
     console.log('loadGetAuction result', result);
@@ -165,10 +165,10 @@ function* addAuction(action) {
       type: ADD_AUCTION_SUCCESS,
       data: id,
     });
-    yield put({
-      type: ADD_AUCTION_TO_ME,
-      data: id,
-    });
+    // yield put({
+    //   type: ADD_AUCTION_TO_ME,
+    //   data: id,
+    // });
     yield call(redirect, '/mypage');
   } catch (err) {
     console.log('사가 작품 등록 실패');
@@ -194,15 +194,14 @@ function* removeAuction(action) {
     console.log('action in remove', action);
     const result = yield call(removeAuctionAPI, action.data);
     console.log('result', result);
-    yield delay(1000);
     yield put({
       type: REMOVE_AUCTION_SUCCESS,
-      data: action.data,
+      data: action.data.id,
     });
-    yield put({
-      type: REMOVE_AUCTION_OF_ME,
-      data: action.data,
-    });
+    // yield put({
+    //   type: REMOVE_AUCTION_OF_ME,
+    //   data: action.data.id,
+    // });
   } catch (err) {
     yield put({
       type: REMOVE_AUCTION_FAILURE,

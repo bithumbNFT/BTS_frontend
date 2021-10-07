@@ -4,7 +4,7 @@ import faker from 'faker';
 
 export const initialState = {
   // 👉 더미데이터
-  auction: [],
+  // auction: [],
 
   // home 경매
   mainAuctions: [],
@@ -125,7 +125,7 @@ const auctionReducer = (state = initialState, action) =>
       case LOAD_AUCTION_SUCCESS: {
         draft.loadAuctionLoading = false;
         draft.loadAuctionDone = true;
-        draft.auction = action.data;
+        draft.mainAuctions = action.data;
         break;
       }
 
@@ -205,6 +205,7 @@ const auctionReducer = (state = initialState, action) =>
       }
       case ADD_AUCTION_SUCCESS: {
         draft.mainAuctions.unshift(action.data);
+        draft.myAuctions.unshift(action.data);
         draft.addAuctionLoading = false;
         draft.addAuctionDone = true;
         break;
@@ -223,9 +224,15 @@ const auctionReducer = (state = initialState, action) =>
         break;
       }
       case REMOVE_AUCTION_SUCCESS: {
-        draft.auction = draft.auction.filter(v => v.id !== action.data);
+        draft.mainAuctions = draft.mainAuctions.filter(v => v.id !== action.data);
+        draft.myAuctions = draft.myAuctions.filter(v => v.id !== action.data);
         draft.removeAuctionLoading = false;
         draft.removeAuctionDone = true;
+        break;
+      }
+      case REMOVE_AUCTION_FAILURE: {
+        draft.removeAuctionLoading = false;
+        draft.removeAuctionError = action.error;
         break;
       }
 

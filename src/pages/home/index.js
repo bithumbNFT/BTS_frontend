@@ -12,7 +12,7 @@ import { Title, CardWrap, CardListBox, BottomMailn, EmptyWrap } from './styles';
 function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
-  const { auction } = useSelector(stateRedux => stateRedux.auctionReducer);
+  const { mainAuctions } = useSelector(stateRedux => stateRedux.auctionReducer);
   // [TODO] 주석 풀어야함
   useEffect(() => {
     dispatch({
@@ -43,10 +43,10 @@ function home() {
           <strong>경매</strong>해보세요 🥰
         </Title>
 
-        {auction.length > 0 ? (
+        {mainAuctions.length > 0 ? (
           <CardWrap>
             <CardListBox>
-              {auction.map(post => (
+              {mainAuctions.map(post => (
                 <CardItem key={post.id} post={post} />
               ))}
             </CardListBox>
