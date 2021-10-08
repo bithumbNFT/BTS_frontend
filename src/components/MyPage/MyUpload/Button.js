@@ -4,8 +4,13 @@ import styled from '@emotion/styled';
 
 function Button() {
   const history = useHistory();
+  const coinWallet = JSON.parse(localStorage.getItem('userInfo')).coin_wallet;
   const openUploadPage = () => {
-    history.push('/upload');
+    if (coinWallet) {
+      history.push('/upload');
+    } else {
+      window.confirm('지갑을 생성해주세요');
+    }
   };
 
   return (
