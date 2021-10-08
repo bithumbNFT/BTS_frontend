@@ -23,7 +23,7 @@ function Header() {
   });
 
   const GoToPage = name => {
-    history.replace(name);
+    history.push(name);
   };
 
   return (

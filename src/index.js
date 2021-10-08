@@ -14,6 +14,7 @@ import { Router } from 'react-router';
 import { browserHistory } from 'utils/historyUtils';
 import { API_SERVER_PATH } from 'utils/config';
 import rootReducer, { rootSaga } from './utils/modules';
+import ScrollToTop from './utils/scrollToTop';
 import App from './App';
 
 // axios 설정
@@ -36,6 +37,7 @@ ReactDOM.render(
   <Provider store={store}>
     <CookiesProvider>
       <Router history={browserHistory}>
+        <ScrollToTop />
         <App />
       </Router>
     </CookiesProvider>

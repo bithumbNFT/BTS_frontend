@@ -122,4 +122,9 @@ export const Border = styled.div`
     text-align: right;
     line-height: 2;
   }
+  .detail__button {
+    span {
+      font-weight: 600;
+    }
+  }
 `;

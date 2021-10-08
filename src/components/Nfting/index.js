@@ -17,11 +17,31 @@ function auctionNft({ props }) {
     } if (props.auction === 'START') { // 경매 중
       // 입찰
       return 2;
-    } if (props.auction === 'DONE') { // 경매 완료
+    } if (props.auction === 'FINISH') { // 경매 완료
       // "경매가 완료된 작품입니다."
       return 3;
+      // 최고가 사람 === 나 {return 4} : 구매확정표시
     }
       return null;
+  };
+
+  const handleButtonClick = (state) => {
+    console.log(state);
+    switch (state) {
+      case 0:
+        if (window.confirm('경매를 시작하겠습니까?')) {
+          alert('경매가 시작되었습니다.');
+        }
+        break;
+      case 2:
+        if (userInfo.email === props.email) {
+          window.confirm('본인작품에 입찰 하실 수 없습니다');
+        } else if (window.confirm('경매에 참여하시겠습니까?')) {
+          alert('입찰에 성공하셨습니다.');
+        }
+        break;
+      default:
+    }
   };
 
   return (
@@ -71,20 +91,21 @@ function auctionNft({ props }) {
             {/* 판매자일 때  */}
             {auctionStat() === 0 ? (
               <div className="detail__button">
-                <button type="button">경매시작</button>
+                <button type="button" onClick={() => handleButtonClick(0)}>경매시작</button>
               </div>
             ) : auctionStat() === 1 ? (
               <div className="detail__button">
                 {/* <button type="button">구매확정</button> */}
-                아직 경매시작 전 입니다.
+                <span>⚠️ 경매시작 전 입니다.</span>
               </div>
             ) : auctionStat() === 2 ? (
               <div className="detail__button">
-                <button type="button">입찰</button>
+                <button type="button" onClick={() => handleButtonClick(2)}>입찰</button>
               </div>
             ) : auctionStat() === 3 ? (
               <div className="detail__button">
-                <button type="button">경매가 종료된 작품입니다.</button>
+                {/* <button type="button">경매가 종료된 작품입니다.</button> */}
+                <span>경매가 종료된 작품입니다.</span>
               </div>
             ) : null}
           </Border>
