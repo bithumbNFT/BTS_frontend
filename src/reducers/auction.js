@@ -133,6 +133,9 @@ export const CONFIRM_PURCHASE_REQUEST = 'CONFIRM_PURCHASE_REQUEST';
 export const CONFIRM_PURCHASE_SUCCESS = 'CONFIRM_PURCHASE_SUCCESS';
 export const CONFIRM_PURCHASE_FAILURE = 'CONFIRM_PURCHASE_FAILURE';
 
+// 경매 작품 내용 비우기
+export const CLEAR_AUCTION = 'CLEAR_AUCTION';
+
 export const addAuction = data => ({
   type: ADD_AUCTION_REQUEST,
   data,
@@ -158,6 +161,10 @@ export const participateAuction = data => ({
 export const confirmPurchase = data => ({
   type: CONFIRM_PURCHASE_REQUEST,
   data,
+});
+
+export const clearAuction = () => ({
+  type: CLEAR_AUCTION,
 });
 
 const auctionReducer = (state = initialState, action) =>
@@ -368,6 +375,9 @@ const auctionReducer = (state = initialState, action) =>
       case CONFIRM_PURCHASE_FAILURE:
         draft.confirmPurchaseLoading = false;
         draft.confirmPurchaseError = action.error;
+        break;
+      case CLEAR_AUCTION:
+        draft.singleAuction = {};
         break;
       default:
         break;
