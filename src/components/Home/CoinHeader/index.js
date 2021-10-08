@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { coinRequestAction } from 'reducers/chart';
 import { TableWrapper, TableContainer } from './style';

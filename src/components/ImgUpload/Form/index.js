@@ -1,21 +1,22 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addAuction } from 'reducers/auction';
+import { coinRequestAction } from 'reducers/chart';
 import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 
-const Input = ({ label, regiName, register, required }) => (
+const Input = ({ label, regiName, register, ptn }) => (
   <>
     <label>{label}</label>
-    <input {...register(regiName, { required })} autoComplete="off" />
+    <input {...register(regiName, { required: true, pattern: ptn })} autoComplete="off" />
   </>
 );
 
-const Textarea = ({ label, regiName, register, required }) => (
+const Textarea = ({ label, regiName, register }) => (
   <>
     <label>{label}</label>
-    <textarea {...register(regiName, { required })} />
+    <textarea {...register(regiName, { required: true })} />
   </>
 );
 
@@ -24,19 +25,26 @@ export function priceToString(price) {
 }
 
 function UploadForm() {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const watchPrice = watch('price');
 
   const [imgSrc, setImgSrc] = useState(undefined);
   const [imgData, setImgData] = useState();
 
+  const getKlaytnData = () => dispatch(coinRequestAction());
+  const { coinData } = useSelector(state => state.chartReducer);
+
   const uploadImageInput = useRef(null);
-  const watchPrice = watch('price');
-  const currentKLAYPrice = 1542;
+
+  // [TODO] debounce를 걸어야함 + error 처리
+  useEffect(() => getKlaytnData(), [watchPrice]);
+  const currentKLAYPrice = coinData?.now_price;
 
   const formData = new FormData();
+  // console.log('errors', errors);
 
-  const dispatch = useDispatch();
   // [TODO] form 제출
   const onSubmit = data => {
     const NFTInfo = {
@@ -57,6 +65,10 @@ function UploadForm() {
   };
 
   const handlePrice = (price, klay) => {
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(Number(price))) {
+      return '숫자를 입력해주세요';
+    }
     const klayToWon = priceToString(price * klay);
     return `${klayToWon} ₩`;
   };
@@ -107,19 +119,17 @@ function UploadForm() {
           label="🎨 작품제목"
           regiName="title"
           register={register}
-          required
         />
         <Textarea
           label="🎬 작품설명"
           regiName="description"
           register={register}
-          required
         />
         <Input
           label="💰 경매시작가격(KLAY)"
           regiName="price"
           register={register}
-          required
+          ptn={/\d+/}
         />
         {watchPrice && <span>{handlePrice(watchPrice, currentKLAYPrice)}</span>}
 
@@ -131,7 +141,7 @@ function UploadForm() {
           </span>
           <div className="date-input">
             <input
-              {...register('period', { required: true })}
+              {...register('period', { required: true, pattern: /\d+/ })}
               autoComplete="off"
             />
             <select {...register('unit', { required: true })}>
