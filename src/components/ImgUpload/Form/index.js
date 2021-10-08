@@ -44,6 +44,8 @@ function UploadForm() {
       description: data.description,
       image: imgData.name,
       owner: String(JSON.parse(localStorage.getItem('userInfo')).id),
+      auction: 'READY',
+      price: data.price,
     };
     formData.append(
       'NFTInfo',

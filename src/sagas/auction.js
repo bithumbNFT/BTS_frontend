@@ -179,7 +179,7 @@ function* addAuction(action) {
     // [TODO] 실제 nft id로 변경
     yield put({
       type: ADD_AUCTION_SUCCESS,
-      data: result.data,
+      data: { ...result.data, username: JSON.parse(localStorage.getItem('userInfo')).name },
     });
     // yield put({
     //   type: ADD_AUCTION_TO_ME,

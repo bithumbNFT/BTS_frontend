@@ -1,37 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
 import { Nfting, Images, Detail, Border } from './styles';
 
 function auctionNft({ props }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const [btn, setBtn] = useState();
 
-  if (props.auction === 'READY') {
-    if (userInfo.email === props.email) {
-      setBtn(0);
-    } else {
-      setBtn(1);
+  const auctionStat = () => {
+    if (props.auction === 'READY') {
+      if (userInfo.email === props.email) {
+        // 판매자 => 경매시작
+        return 0;
+      }
+        // 구매자 => "아직 경매 전 입니다"
+        return 1;
+    } if (props.auction === 'START') { // 경매 중
+      // 입찰
+      return 2;
+    } if (props.auction === 'DONE') { // 경매 완료
+      // "경매가 완료된 작품입니다."
+      return 3;
     }
-  } else if (props.auction === 'START') {
-    // if (userInfo.email === props.email) {
-    //   setBtn(2);
-    // } else {
-    //   setBtn(3);
-    // }
-    setBtn(2);
-  } else if (props.auction === 'DONE') {
-    // if (userInfo.email === props.email) {
-    //   setBtn(4);
-    // } else {
-    //   setBtn(5);
-    // }
-    setBtn(3);
-  } else {
-    return null;
-  }
-
-  console.log(btn);
+      return null;
+  };
 
   return (
     <>
@@ -61,10 +52,15 @@ function auctionNft({ props }) {
           </div>
 
           <Border>
+            <h3>🎮 경매 시작가격</h3>
+            <div className="price">
+              <p>{props.price} KLAY</p>
+            </div>
+
             <h3>💰 현입찰 가격</h3>
             <div className="price">
-              <p>2000</p>
-              <span>(￦3,179,688)</span>
+              <p>2000 KLAY</p>
+              {/* <span>(￦3,179,688)</span> */}
             </div>
 
             <h3 className="current">👤 현재 매수왕</h3>
@@ -73,20 +69,20 @@ function auctionNft({ props }) {
             </div>
             {/* 상태 구별 */}
             {/* 판매자일 때  */}
-            {btn === 0 ? (
+            {auctionStat() === 0 ? (
               <div className="detail__button">
                 <button type="button">경매시작</button>
               </div>
-            ) : btn === 1 ? (
+            ) : auctionStat() === 1 ? (
               <div className="detail__button">
                 {/* <button type="button">구매확정</button> */}
                 아직 경매시작 전 입니다.
               </div>
-            ) : btn === 2 ? (
+            ) : auctionStat() === 2 ? (
               <div className="detail__button">
                 <button type="button">입찰</button>
               </div>
-            ) : btn === 3 ? (
+            ) : auctionStat() === 3 ? (
               <div className="detail__button">
                 <button type="button">경매가 종료된 작품입니다.</button>
               </div>
