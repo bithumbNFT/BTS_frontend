@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 import { GlobalStyles } from 'styles/global-styles';
@@ -21,6 +21,11 @@ function App() {
   const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
   const Naver = lazy(() => import('./components/LoginModal/login/naver'));
   const Login = lazy(() => import('./pages/login'));
+  useEffect(() => {
+    window.onbeforeunload = function pushRefresh() {
+        window.scrollTo(0, 0);
+      };
+    }, []);
 
   return (
     <>
