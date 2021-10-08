@@ -8,7 +8,10 @@ const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/oauth2/code/kakao';
 // 네이버 로그인 키
 const NAVER_CLIENT_ID = 's5fg6nwUikj7JUgh3nX2';
 // const NAVER_CLIENT_ID = 'dlFlVjjrC_SpcdLnZ9Bv';
-const NAVER_CALLBACK_URL = 'http://localhost:3000/login/oauth2/code/naver';
+// [배포용]
+const NAVER_CALLBACK_URL = 'http://3.35.69.11/login/oauth2/code/naver';
+// [로컬용]
+// const NAVER_CALLBACK_URL = 'http://localhost:3000/login/oauth2/code/naver';
 const STATE_STRING = Math.random().toString(36).substr(2, 11);
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code&state=${STATE_STRING}`;
