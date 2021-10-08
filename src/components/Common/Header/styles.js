@@ -47,7 +47,7 @@ export const User = styled.ul`
   }
   .search {
     position: relative;
-    width: 15rem;
+    width: 17rem;
     background: #f6f6f6;
     color: #5f5f5f;
     border-radius: 3px;
