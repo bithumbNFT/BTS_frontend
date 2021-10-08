@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
@@ -20,7 +20,11 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
     <Paging>
       {pageNumbers.map(number => (
         <li className="page-item" key={number}>
-          <a onClick={e => NextPage(number, e)} href="#" className="page-link">
+          <a
+            onClick={e => NextPage(number, e)}
+            href="#"
+            active={number === paginate}
+          >
             {number}
           </a>
         </li>
@@ -32,26 +36,29 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
 export default Pagination;
 
 const Paging = styled.ul`
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0 7rem 0;
+  margin: 100px 0 20px;
+  padding: 0;
+  list-style: none;
+  text-align: center;
   li {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    display: flex;
+    display: inline-block;
+    margin-right: 5px;
     a {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: #666;
+      padding: 5px 10px;
+      text-decoration: none;
+      border: 1px solid #eee;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px 0px #eee;
       &:active {
-        background: #fe5000;
         color: #fff;
+        background-color: #fe5000;
+        border-color: #fe5000;
+      }
+      &.current {
+        color: #fff;
+        background-color: #fe5000;
+        border-color: #fe5000;
       }
     }
   }

@@ -41,7 +41,7 @@ function home() {
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   // 전체 페이지 (게시물 개수)
-  const [postsPerPage, setPostsPerPage] = useState(6);
+  const [postsPerPage, setPostsPerPage] = useState(9);
   // 해당 페이지에서 마지막 post의 index 번호를 가르킵니다.
   const indexOfLastPost = currentPage * postsPerPage;
   //  해당 페이지에서 첫번째 post의 index 번호를 가르킵니다.

@@ -74,10 +74,11 @@ function Profile() {
         </UserInfo>
 
         <UserEmail>
-          <p>- 이메일</p> <span>{userInfo.email}</span>
+          <p>이메일</p>
+          <strong className="desc">{userInfo.email}</strong>
         </UserEmail>
         <UserEmail>
-          <p>- 지갑 정보</p>
+          <p>지갑 정보</p>
           {!userInfo.coin_wallet ? (
             <>
               <span className="warn-msg">등록된 지갑이 없습니다.</span>
@@ -94,7 +95,7 @@ function Profile() {
                 ref={dropdownRef}
                 className={`menu ${isActive ? 'active' : 'inactive'}`}
               >
-                <div>👤{userInfo.name}님의 지갑정보</div>
+                <div className="me">👤 {userInfo.name}님의 지갑정보</div>
                 <CopyInputBtn>
                   <input
                     type="text"
@@ -123,11 +124,11 @@ function Profile() {
         </UserEmail>
         {!userInfo.coin_wallet ? null : (
           <UserEmail>
-            <div>- 현재 잔액</div>{' '}
+            <p>현재 나의 잔액</p>
             {checkBalanceLoading ? (
               <span>로딩중</span>
             ) : (
-              <span>{balanceData} KLAY</span>
+              <strong>{balanceData} KLAY</strong>
             )}
           </UserEmail>
         )}

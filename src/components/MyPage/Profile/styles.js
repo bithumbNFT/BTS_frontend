@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 export const UserInfo = styled.div`
   display: grid;
   place-items: center;
-  margin: 2rem 0 1.5rem 0;
+  margin: 2rem 0;
 `;
 export const ProfileImage = styled.div`
   width: 160px;
@@ -28,16 +28,16 @@ export const UserName = styled.span`
 `;
 
 export const UserEmail = styled.div`
-  margin: 1rem 2rem 2rem 2rem;
+  margin: 2rem;
   font-weight: 400;
   p {
     font-weight: 700;
-    margin-right: 5px;
     color: #9c9c9c;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    font-size: 16px;
   }
-  span {
-    padding-left: 10px;
+  .desc {
+    font-size: 16px;
   }
   .warn-msg {
     font-size: 16px;
@@ -46,7 +46,6 @@ export const UserEmail = styled.div`
     display: inline-block;
   }
   button {
-    margin: 0 1rem 0 1rem;
     position: relative;
     font-weight: 500;
   }
@@ -54,7 +53,6 @@ export const UserEmail = styled.div`
     vertical-align: middle;
     font-size: 1rem;
   }
-
   .menu {
     margin-top: 10px;
     padding: 20px 20px 0 20px;
@@ -78,6 +76,10 @@ export const UserEmail = styled.div`
   }
 
   nav {
+    .me {
+      font-size: 16px;
+      margin-bottom: 1.5rem;
+    }
     div {
       &:nth-of-type(1) {
         color: #4a4a4a;
@@ -89,14 +91,14 @@ export const UserEmail = styled.div`
 export const CopyInputBtn = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid;
   border-radius: 5px;
-  margin-bottom: 0;
+  margin-bottom: 1.5rem;
+  border: 1px solid #d1d1d1;
   input {
     width: 100%;
     padding: 7px;
     color: #000000;
-    border-right: 1px solid #9c9c9c;
+    border-right: 1px solid #d1d1d1;
     background-color: #f6f6f6;
     border-radius: 5px;
     border-top-right-radius: 0;
@@ -118,7 +120,7 @@ export const EditButton = styled.button`
   background-color: #f6f6f6;
   text-align: center;
   width: 90%;
-  padding: 5px 0;
+  padding: 8px 15px;
   border-radius: 5px;
   margin: 0 1rem 1rem 1.2rem;
 `;
@@ -128,7 +130,6 @@ export const SaveButton = styled.button`
   text-align: center;
   padding: 10px 0;
   border-radius: 5px;
-  margin: 0 0.3rem 1rem 0.3rem;
   color: white;
   font-weight: 600;
   width: 100%;
@@ -141,8 +142,7 @@ export const CancelButton = styled.button`
   text-align: center;
   padding: 5px 0;
   border-radius: 5px;
-  margin: 0 0.3rem 1rem 0.3rem;
-  width: 90%;
+  width: 100%;
 `;
 
 export const ButtonContainer = styled.div`

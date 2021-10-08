@@ -51,13 +51,18 @@ const MemberInfo = styled.div`
   margin-top: 16px;
   text-align: center;
   h3 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.75;
     font-weight: 700;
+    letter-spacing: -0.8px;
   }
   p {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     line-height: 1.75;
     font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  svg {
+    font-size: 1.3rem;
   }
 `;
