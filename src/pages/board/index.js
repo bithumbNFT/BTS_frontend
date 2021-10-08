@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POSTS_REQUEST, loadPosts } from 'reducers/post';
+import { LOAD_POSTS_REQUEST } from 'reducers/post';
 import { Link } from 'react-router-dom';
 import { Empty } from 'antd';
 import Pagination from 'components/Common/Pagination';
@@ -14,14 +14,10 @@ function board() {
   const dispatch = useDispatch();
   const { mainPosts } = useSelector(state => state.postReducer);
 
-  // const getPostsData = () => dispatch(loadPosts());
   useEffect(() => {
-    const fetchPosts = async () => {
-      await dispatch({
-        type: LOAD_POSTS_REQUEST,
-      });
-    };
-    fetchPosts();
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
   }, []);
 
   // PagingNation

@@ -7,14 +7,26 @@ import { Empty } from 'antd';
 import HomeIntro from 'components/Home/Intro';
 import Pagination from 'components/Common/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_AUCTION_REQUEST, LOAD_LIKE_AUCTION_REQUEST } from 'reducers/auction';
-import useScrollFadeIn from 'hooks/useFadeInScroll';
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+import {
+  LOAD_AUCTION_REQUEST,
+  LOAD_LIKE_AUCTION_REQUEST,
+} from 'reducers/auction';
 import { Title, CardWrap, CardListBox, BottomMailn, EmptyWrap } from './styles';
 
 function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
-  const { mainAuctions, likeAuctions } = useSelector(stateRedux => stateRedux.auctionReducer);
+  const { mainAuctions, likeAuctions } = useSelector(
+    stateRedux => stateRedux.auctionReducer,
+  );
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+    });
+  });
 
   useEffect(() => {
     dispatch({

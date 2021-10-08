@@ -4,7 +4,12 @@ import styled from '@emotion/styled';
 
 function Member({ koName, major, enName, src, github, name }) {
   return (
-    <MemberBox className={name}>
+    <MemberBox
+      className={name}
+      data-aos="flip-left"
+      data-aos-easing="ease-out-cubic"
+      data-aos-duration="2500"
+    >
       <MemberPhoto>
         <img src={src} alt={koName} />
       </MemberPhoto>

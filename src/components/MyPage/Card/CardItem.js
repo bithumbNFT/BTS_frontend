@@ -91,7 +91,11 @@ function Card({ post }) {
   });
 
   return (
-    <CardContainer onMouseOver={deleteButton}>
+    <CardContainer
+      onMouseOver={deleteButton}
+      data-aos="zoom-in-down"
+      data-aos-duration="2000"
+    >
       <button
         type="button"
         className={deleteShow ? 'delete' : 'none'}
