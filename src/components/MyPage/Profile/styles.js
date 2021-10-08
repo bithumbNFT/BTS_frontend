@@ -5,40 +5,32 @@ export const Wrapper = styled.div`
   width: 250px;
 `;
 export const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  place-items: center;
   margin: 2rem 0 1.5rem 0;
 `;
 export const ProfileImage = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
-  cursor: pointer;
-  position: relative;
   img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    object-fit: cover;
   }
-`;
-
-export const ImgWithBtn = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-left: 1rem;
 `;
 
 export const UserName = styled.span`
   font-weight: 700;
-  margin-left: 1em;
   font-size: 1.2rem;
+  margin-top: 1.2rem;
 `;
 
 export const UserEmail = styled.div`
   margin: 1rem 2rem 2rem 2rem;
   font-weight: 400;
-  div {
+  p {
     font-weight: 700;
     margin-right: 5px;
     color: #9c9c9c;
@@ -48,17 +40,15 @@ export const UserEmail = styled.div`
     padding-left: 10px;
   }
   .warn-msg {
-    font-size: 0.9rem;
+    font-size: 16px;
     color: #9e9e9e;
     margin-bottom: 1rem;
     display: inline-block;
   }
   button {
     margin: 0 1rem 0 1rem;
-    width: 70%;
     position: relative;
     font-weight: 500;
-    font-size: 13px;
   }
   svg {
     vertical-align: middle;
@@ -134,15 +124,15 @@ export const EditButton = styled.button`
 `;
 
 export const SaveButton = styled.button`
-  border: 1px solid #fe5000;
   background-color: #fe5000;
   text-align: center;
-  padding: 5px 0;
+  padding: 10px 0;
   border-radius: 5px;
   margin: 0 0.3rem 1rem 0.3rem;
   color: white;
   font-weight: 600;
-  width: 90%;
+  width: 100%;
+  font-size: 16px;
 `;
 
 export const CancelButton = styled.button`

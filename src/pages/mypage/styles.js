@@ -16,9 +16,6 @@ export const Content = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  .menutab {
-    width: 30%;
-  }
 `;
 
 export const MyPageLink = styled.div`

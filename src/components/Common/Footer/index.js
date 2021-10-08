@@ -36,7 +36,7 @@ function Footer() {
         <Member
           koName="백인준"
           enName="Back Injun"
-          major="Backend Engineer"
+          major="Backend / DevOps"
           src="/images/baekinjun.png"
           github="https://github.com/baekinjun"
           name="baekinjun"

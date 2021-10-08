@@ -11,13 +11,14 @@ const Search = ({ match }) => {
   console.log(match);
   const { searchNft } = useSelector(state => state.auctionReducer);
   const dispatch = useDispatch();
+  console.log('searchNft--------', searchNft);
 
   useEffect(() => {
     dispatch({
       type: SEARCH_NFT_REQUEST,
       data: match.params.id,
     });
-  }, []);
+  }, [match.params.id]);
 
   return (
     <>

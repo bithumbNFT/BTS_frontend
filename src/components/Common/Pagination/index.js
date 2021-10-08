@@ -5,6 +5,11 @@ import styled from '@emotion/styled';
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumbers = [];
 
+  const NextPage = (number, e) => {
+    e.preventDefault();
+    paginate(number);
+  };
+
   // Math.ceil: 올림
   // eslint-disable-next-line no-plusplus
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -15,7 +20,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
     <Paging>
       {pageNumbers.map(number => (
         <li className="page-item" key={number}>
-          <a onClick={() => paginate(number)} href="#" className="page-link">
+          <a onClick={e => NextPage(number, e)} href="#" className="page-link">
             {number}
           </a>
         </li>
@@ -29,7 +34,7 @@ export default Pagination;
 const Paging = styled.ul`
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  margin: 2rem 0 7rem 0;
   li {
     width: 30px;
     height: 30px;
@@ -38,5 +43,16 @@ const Paging = styled.ul`
     align-items: center;
     font-size: 1rem;
     display: flex;
+    a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:active {
+        background: #fe5000;
+        color: #fff;
+      }
+    }
   }
 `;

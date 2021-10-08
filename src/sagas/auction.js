@@ -91,6 +91,7 @@ function* loadLikeAuction(action) {
   console.log('loadLikeAuctionAPI action', action);
   try {
     const result = yield call(loadLikeAuctionAPI, action.data);
+    console.log('loadLikeAuctionAPI,', result);
     yield put({
       type: LOAD_LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -230,7 +231,10 @@ function likeAPI(data) {
 
 function* likeAuction(action) {
   try {
-    const result = yield call(likeAPI, action.data);
+    yield call(likeAPI, action.data);
+    console.log(action.data);
+    const result = yield call(loadOneAuctionAPI, action.data.nftid);
+    console.log('like in auction', result.data);
     yield put({
       type: LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -258,6 +262,7 @@ function unLikeAPI(data) {
 function* unLikeAuction(action) {
   try {
     const result = yield call(unLikeAPI, action.data);
+    console.log('result in delet', result.data);
     yield put({
       type: UNLIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -282,7 +287,7 @@ function* searchNft(action) {
     const result = yield call(searchNftAPI, action.data);
     yield put({
       type: SEARCH_NFT_SUCCESS,
-      data: result,
+      data: result.data,
     });
   } catch (err) {
     console.error(err);

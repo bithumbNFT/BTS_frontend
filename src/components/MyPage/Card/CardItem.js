@@ -20,7 +20,7 @@ import {
 } from './styles';
 
 function Card({ post }) {
-  console.log('auction post', post);
+  // console.log('auction post', post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [deleteShow, setDeleteShow] = useState(true);
@@ -29,8 +29,8 @@ function Card({ post }) {
   const onClickLike = useCallback(
     id => {
       if (window.confirm('해당 경매 작품을 찜목록에 추가하시겠습니까 ?')) {
-        setLiked(true);
         alert('찜 목록에 추가되었습니다.');
+        setLiked(true);
         dispatch({
           type: LIKE_AUCTION_REQUEST,
           data: {
@@ -60,14 +60,10 @@ function Card({ post }) {
 
   // 카드 아이템 마우스 호버시 삭제버튼 show 여부
   const deleteButton = () => {
-    if (window.location.pathname === '/') {
-      setDeleteShow(false);
-    } else if (window.location.pathname === '/mypage/purchase') {
-      setDeleteShow(false);
-    } else if (window.location.pathname === '/mypage/wishlist') {
-      setDeleteShow(false);
-    } else {
+    if (window.location.pathname === '/mypage') {
       setDeleteShow(true);
+    } else {
+      setDeleteShow(false);
     }
   };
 

@@ -263,7 +263,7 @@ const auctionReducer = (state = initialState, action) =>
         break;
       case LIKE_AUCTION_SUCCESS:
         draft.likeAuctionLoading = false;
-        draft.me.LikeList.push({ id: action.data.UserId });
+        draft.likeAuctions.unshift(action.data);
         draft.likeAuctionDone = true;
         break;
       case LIKE_AUCTION_FAILURE:
@@ -278,8 +278,9 @@ const auctionReducer = (state = initialState, action) =>
         draft.unlikeAuctionDone = false;
         break;
       case UNLIKE_AUCTION_SUCCESS:
+        console.log(action.data);
         draft.unlikeAuctionLoading = false;
-        draft.me.LikeList = draft.me.LikeList.filter(
+        draft.likeAuctions = draft.likeAuctions.filter(
           v => v.id !== action.data.id,
         );
         draft.unlikeAuctionDone = true;
@@ -298,7 +299,7 @@ const auctionReducer = (state = initialState, action) =>
       case SEARCH_NFT_SUCCESS: {
         draft.searchNftLoading = false;
         draft.searchNftSuccess = true;
-        draft.searchNft = draft.searchNft.concat(action.data);
+        draft.searchNft = action.data;
         break;
       }
       case SEARCH_NFT_FAILURE: {

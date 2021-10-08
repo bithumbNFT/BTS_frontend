@@ -28,7 +28,7 @@ function board() {
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   // 전체 페이지 (게시물 개수)
-  const [postsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(5);
 
   // 해당 페이지에서 마지막 post의 index 번호를 가르킵니다.
   const indexOfLastPost = currentPage * postsPerPage;
@@ -36,11 +36,12 @@ function board() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // 각 페이지에서 보여질 포스트 배열입니다.
   const currentPosts = mainPosts.slice(indexOfFirstPost, indexOfLastPost);
+  console.log('currentPosts---------', currentPosts);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
+    console.log('currentPosts: ', currentPosts);
   };
-  console.log('currentPosts: ', currentPosts);
 
   return (
     <>
@@ -67,8 +68,8 @@ function board() {
             {/* {isBoard &&} */}
             {mainPosts.length > 0 ? (
               <>
-                {mainPosts.map(post => (
-                  <Item key={post.id} post={post} />
+                {currentPosts.map(post => (
+                  <Item key={post.id} post={post} mainPosts={currentPosts} />
                 ))}
 
                 <Pagination

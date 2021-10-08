@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeComment, singPosts } from 'reducers/post';
+import { BiX } from 'react-icons/bi';
 import { CommentForm, BoardBody } from './styles';
 
 function CommentView({ comment, postId }) {
@@ -34,7 +35,7 @@ function CommentView({ comment, postId }) {
                   type="button"
                   onClick={() => handleRemoveComment(comment.c_id)}
                 >
-                  삭제
+                  <BiX />
                 </button>
               </>
             ) : null}

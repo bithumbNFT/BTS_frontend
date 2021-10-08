@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 
 export const ItemView = styled.li`
-  padding: 20px 0;
+  padding: 25px 0;
   border-bottom: 1px solid #dee2e6;
   width: 100%;
   transition: all 0.3s;
   position: relative;
-  height: 120px;
+  font-weight: 500;
+  color: #616568;
   .postTitle {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -18,6 +19,7 @@ export const ItemView = styled.li`
   .userTime {
     position: absolute;
     bottom: 26px;
+    font-size: 16px;
   }
   &:nth-of-type(1) {
     border-top: 1px solid #dee2e6;
@@ -53,7 +55,7 @@ export const Desc = styled.div`
     font-size: 15px;
   }
   .userTime {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     color: #858a8d;
     span {
@@ -74,11 +76,12 @@ export const Comment = styled.div`
   overflow: hidden;
   strong {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: 5px;
+    color: #fe5000;
   }
   p {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 300;
   }
 `;
@@ -96,6 +99,7 @@ export const CommentForm = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+
     .left {
       .name {
         color: #fe5000;
