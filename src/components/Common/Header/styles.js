@@ -35,7 +35,7 @@ export const User = styled.ul`
   li {
     color: #4a4a4a;
     line-height: 1.5;
-    font-size: 16px;
+    font-size: 1rem;
     margin-left: 1em;
     &.user {
       border: 1px solid #dbdbdb;
@@ -47,19 +47,20 @@ export const User = styled.ul`
   }
   .search {
     position: relative;
-    width: 12rem;
+    width: 17rem;
     background: #f6f6f6;
     color: #5f5f5f;
     border-radius: 3px;
     span {
       position: absolute;
       font-size: 1.4em;
-      right: 9px;
+      right: 11px;
       top: 6px;
     }
   }
   input {
-    padding: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
   }
   input::-ms-clear,
   input::-ms-reveal {
@@ -101,6 +102,7 @@ export const UserProfile = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 

@@ -13,6 +13,9 @@ function auctionPost({ match }) {
       type: LOAD_ONE_AUCTION_REQUEST,
       data: match.params.id,
     });
+    if (singleAuction.auction === 'START') {
+      console.log('경매시작했어');
+    }
     return () => {
       dispatch(clearAuction());
     };

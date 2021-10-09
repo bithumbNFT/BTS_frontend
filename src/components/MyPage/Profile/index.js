@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { MdEdit, MdContentCopy, MdCheck } from 'react-icons/md';
+import { MdContentCopy, MdCheck } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 import { createWalletAction, checkBalanceAction } from 'reducers/user';
 import { useDetectOutsideClick } from 'hooks/useDetectOutsideClick';
@@ -11,13 +11,8 @@ import {
   ProfileImage,
   UserName,
   UserEmail,
-  ImageInput,
-  EditButton,
   SaveButton,
   CancelButton,
-  ButtonContainer,
-  EditImgIcon,
-  ImgWithBtn,
   CopyInputBtn,
   CopySuccess,
 } from './styles';
@@ -27,40 +22,8 @@ function Profile() {
   const dispatch = useDispatch();
 
   // ------- 사용자 프로필 관련
-  const [isEdit, setIsEdit] = useState(false);
   const [imgSrc, setImgSrc] = useState(userInfo.picture);
   const profileImgInput = useRef();
-
-  const handleEditMode = () => {
-    setIsEdit(true);
-  };
-
-  const handleSubmitUserInfo = () => {
-    console.log('imgSrc', imgSrc);
-    // [TODO] imgSrc를 서버에 넘기고 localstorage 수정
-    setIsEdit(false);
-  };
-
-  const handleCancel = () => {
-    setIsEdit(false);
-    setImgSrc(userInfo.picture);
-  };
-
-  const handleChangeImg = evt => {
-    if (evt.target.files.length) {
-      const imgTarget = evt.target.files[0];
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(imgTarget);
-      fileReader.onload = e => {
-        setImgSrc(e.target.result);
-      };
-    }
-  };
-
-  const handleImgDivClick = event => {
-    event.preventDefault();
-    profileImgInput.current.click();
-  };
 
   // ------- 지갑 정보 관련
   const dropdownRef = useRef(null);
@@ -103,65 +66,24 @@ function Profile() {
   return (
     <>
       <Wrapper>
-        {isEdit ? (
-          <ImgWithBtn>
-            <UserInfo>
-              <UserName>{userInfo.name}</UserName>
-              <ProfileImage onClick={handleImgDivClick}>
-                {imgSrc ? (
-                  <img src={imgSrc} alt="profileImg" />
-                ) : (
-                  <img src="/images/defaultProfile.svg" alt="default" />
-                )}
-                <EditImgIcon>
-                  <MdEdit />
-                </EditImgIcon>
-              </ProfileImage>
-              <ImageInput
-                ref={profileImgInput}
-                type="file"
-                id="uploadImg"
-                accept="image/*"
-                name="file"
-                onChange={handleChangeImg}
-              />
-            </UserInfo>
-            <ButtonContainer>
-              <SaveButton type="submit" onClick={handleSubmitUserInfo}>
-                저장
-              </SaveButton>
-              <CancelButton type="button" onClick={handleCancel}>
-                취소
-              </CancelButton>
-            </ButtonContainer>
-          </ImgWithBtn>
-        ) : (
-          <ImgWithBtn>
-            <UserInfo>
-              <UserName>{userInfo.name}</UserName>
-              <ProfileImage>
-                {imgSrc ? (
-                  <img src={imgSrc} alt="profileImg" />
-                ) : (
-                  <img src="images/defaultProfile.svg" alt="default" />
-                )}
-              </ProfileImage>
-            </UserInfo>
-            <EditButton type="button" onClick={handleEditMode}>
-              프로필 편집
-            </EditButton>
-          </ImgWithBtn>
-        )}
+        <UserInfo>
+          <ProfileImage>
+            <img src={imgSrc} alt="profileImg" />
+          </ProfileImage>
+          <UserName>{userInfo.name}</UserName>
+        </UserInfo>
+
         <UserEmail>
-          <div>- 이메일</div> <span>{userInfo.email}</span>
+          <p>이메일</p>
+          <strong className="desc">{userInfo.email}</strong>
         </UserEmail>
         <UserEmail>
-          <div>- 지갑 정보</div>
+          <p>지갑 정보</p>
           {!userInfo.coin_wallet ? (
             <>
               <span className="warn-msg">등록된 지갑이 없습니다.</span>
               <SaveButton type="button" onClick={handleCreateWallet}>
-                🗳지갑 생성하기
+                지갑 생성하기
               </SaveButton>
             </>
           ) : (
@@ -173,7 +95,7 @@ function Profile() {
                 ref={dropdownRef}
                 className={`menu ${isActive ? 'active' : 'inactive'}`}
               >
-                <div>👤{userInfo.name}님의 지갑정보</div>
+                <div className="me">👤 {userInfo.name}님의 지갑정보</div>
                 <CopyInputBtn>
                   <input
                     type="text"
@@ -202,11 +124,11 @@ function Profile() {
         </UserEmail>
         {!userInfo.coin_wallet ? null : (
           <UserEmail>
-            <div>- 현재 잔액</div>{' '}
+            <p>현재 나의 잔액</p>
             {checkBalanceLoading ? (
               <span>로딩중</span>
             ) : (
-              <span>{balanceData} KLAY</span>
+              <strong>{balanceData} KLAY</strong>
             )}
           </UserEmail>
         )}

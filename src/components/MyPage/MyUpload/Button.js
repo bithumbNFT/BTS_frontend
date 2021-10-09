@@ -4,8 +4,14 @@ import styled from '@emotion/styled';
 
 function Button() {
   const history = useHistory();
+
   const openUploadPage = () => {
-    history.push('/upload');
+    const coinWallet = JSON.parse(localStorage.getItem('userInfo')).coin_wallet;
+    if (coinWallet) {
+      history.push('/upload');
+    } else {
+      window.confirm('지갑을 생성해주세요');
+    }
   };
 
   return (
@@ -25,4 +31,5 @@ const ButtonContainer = styled.button`
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   font-size: 16px;
+  font-weight: 500;
 `;

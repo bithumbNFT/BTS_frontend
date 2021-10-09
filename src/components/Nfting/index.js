@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import {
+  startAuction,
+  participateAuction,
+  checkAuction,
+} from 'reducers/auction';
+import useInterval from 'hooks/useInterval';
 import { Nfting, Images, Detail, Border } from './styles';
 
 function auctionNft({ props }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const dispatch = useDispatch();
+  console.log('=======props', props);
 
   const auctionStat = () => {
     if (props.auction === 'READY') {
@@ -12,37 +21,49 @@ function auctionNft({ props }) {
         // 판매자 => 경매시작
         return 0;
       }
-        // 구매자 => "아직 경매 전 입니다"
-        return 1;
-    } if (props.auction === 'START') { // 경매 중
+      // 구매자 => "아직 경매 전 입니다"
+      return 1;
+    }
+    if (props.auction === 'START') {
+      // 경매 중
       // 입찰
       return 2;
-    } if (props.auction === 'FINISH') { // 경매 완료
+    }
+    if (props.auction === 'FINISH') {
+      // 경매 완료
       // "경매가 완료된 작품입니다."
       return 3;
       // 최고가 사람 === 나 {return 4} : 구매확정표시
     }
-      return null;
+    return null;
   };
 
-  const handleButtonClick = (state) => {
+  const handleButtonClick = state => {
     console.log(state);
     switch (state) {
       case 0:
         if (window.confirm('경매를 시작하겠습니까?')) {
-          alert('경매가 시작되었습니다.');
+          // [TODO] period 1로 고정해서 박아놓음ㅁ.ㅎ.ㅎ
+          dispatch(startAuction(props.id, parseInt(props.term, 10)));
         }
         break;
       case 2:
         if (userInfo.email === props.email) {
           window.confirm('본인작품에 입찰 하실 수 없습니다');
         } else if (window.confirm('경매에 참여하시겠습니까?')) {
-          alert('입찰에 성공하셨습니다.');
+          dispatch(participateAuction(props.price + 1, props.email, props.id));
         }
         break;
       default:
     }
   };
+
+  if (props.auction === 'START') {
+    useInterval(() => {
+      dispatch(checkAuction(props.id, props.email));
+      console.log('확인 중');
+    }, 3000);
+  }
 
   return (
     <>
@@ -79,19 +100,22 @@ function auctionNft({ props }) {
 
             <h3>💰 현입찰 가격</h3>
             <div className="price">
-              <p>2000 KLAY</p>
-              {/* <span>(￦3,179,688)</span> */}
+              {props.curStatus ? (
+                <p>{props.curStatus?.auction_price} KLAY</p>
+              ) : <p />}
             </div>
 
             <h3 className="current">👤 현재 매수왕</h3>
             <div className="email">
-              <p>me@email.com</p>
+              {props.curStatus ? <p>{props.curStatus?.email}</p> : <p />}
             </div>
             {/* 상태 구별 */}
             {/* 판매자일 때  */}
             {auctionStat() === 0 ? (
               <div className="detail__button">
-                <button type="button" onClick={() => handleButtonClick(0)}>경매시작</button>
+                <button type="button" onClick={() => handleButtonClick(0)}>
+                  경매시작
+                </button>
               </div>
             ) : auctionStat() === 1 ? (
               <div className="detail__button">
@@ -100,7 +124,9 @@ function auctionNft({ props }) {
               </div>
             ) : auctionStat() === 2 ? (
               <div className="detail__button">
-                <button type="button" onClick={() => handleButtonClick(2)}>입찰</button>
+                <button type="button" onClick={() => handleButtonClick(2)}>
+                  입찰
+                </button>
               </div>
             ) : auctionStat() === 3 ? (
               <div className="detail__button">

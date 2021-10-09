@@ -27,20 +27,7 @@ export const CardListBox = styled.article`
 export const BottomMailn = styled.section`
   height: 100%;
   position: relative;
-
-  .ant-pagination {
-    text-align: right;
-    margin-right: 3%;
-    margin: 70px 35px 140px;
-  }
-  .ant-pagination-item-active a {
-    color: #fe5000;
-  }
-  .ant-pagination-item-active {
-    font-weight: 500;
-    background: #fff;
-    border-color: #fe5000;
-  }
+  padding-bottom: 200px;
 `;
 
 export const EmptyWrap = styled.section`

@@ -1,11 +1,5 @@
 import axios from 'axios';
-import {
-  all,
-  fork,
-  takeLatest,
-  put,
-  call,
-} from '@redux-saga/core/effects';
+import { all, fork, takeLatest, put, call } from '@redux-saga/core/effects';
 import {
   LOAD_COIN_REQUEST,
   LOAD_COIN_SUCCESS,

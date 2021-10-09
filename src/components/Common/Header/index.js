@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { BsBell } from 'react-icons/bs';
 import { logoutRequestAction } from 'reducers/user';
-import { Gnb, Menu, User, Title, UserProfile, NotiIcon } from './styles';
+import { Gnb, Menu, User, Title, UserProfile } from './styles';
 
 function Header() {
   // [TODO] logInLoading, logInError 일 때 상태 처리하기
@@ -14,6 +13,9 @@ function Header() {
     logInError: state.userReducer.logInError,
     me: state.userReducer.me,
   }));
+  // 검색
+  const [searchValue, setSearchValue] = useState('');
+
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const history = useHistory();
   const dispatch = useDispatch();
@@ -22,10 +24,23 @@ function Header() {
     dispatch(logoutRequestAction(localStorage.getItem('social')));
   });
 
+  const onChangeSearch = useCallback(e => {
+    setSearchValue(e.target.value);
+  }, []);
+
   const GoToPage = name => {
     history.push(name);
   };
 
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      // 로컬 스토리지에 해당 searchValue를 저장해야 한다
+      history.push(`/search/${searchValue}`);
+      setSearchValue('');
+    },
+    [searchValue, history],
+  );
   return (
     <Gnb>
       <div className="navWrap">
@@ -41,7 +56,15 @@ function Header() {
 
         <User>
           <li className="search">
-            <input type="search" />
+            <form onSubmit={onSubmit}>
+              <input
+                type="search"
+                value={searchValue}
+                onChange={onChangeSearch}
+                placeholder="NFT 경매품을 입력하세요."
+              />
+            </form>
+
             <span>
               <i>
                 <AiOutlineSearch />
@@ -51,9 +74,6 @@ function Header() {
 
           {userInfo ? (
             <>
-              <NotiIcon onClick={() => GoToPage('/notice')}>
-                <BsBell />
-              </NotiIcon>
               <UserProfile onClick={() => GoToPage('/mypage')}>
                 <img src={userInfo.picture} alt="profileImage" />
               </UserProfile>
