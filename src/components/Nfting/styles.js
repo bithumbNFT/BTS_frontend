@@ -70,6 +70,7 @@ export const Border = styled.div`
       font-size: 1.3em;
       font-weight: 500;
       display: inline-block;
+      padding-left: 0.5rem;
     }
     span {
       font-size: 1em;
@@ -77,6 +78,7 @@ export const Border = styled.div`
       display: inline-block;
       margin-left: 0.3rem;
     }
+    margin-bottom: 20px;
   }
   .email {
     p {
@@ -84,9 +86,7 @@ export const Border = styled.div`
       font-weight: 500;
     }
   }
-  .current {
-    margin-top: 20px;
-  }
+  
   h3 {
     color: #8a939b;
     font-size: 1.2rem;
@@ -121,5 +121,10 @@ export const Border = styled.div`
   .desc {
     text-align: right;
     line-height: 2;
+  }
+  .detail__button {
+    span {
+      font-weight: 600;
+    }
   }
 `;

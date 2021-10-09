@@ -56,6 +56,29 @@ import {
   SEARCH_NFT_REQUEST,
   SEARCH_NFT_SUCCESS,
   SEARCH_NFT_FAILURE,
+  
+  // 경매시작
+  START_AUCTION_REQUEST,
+  START_AUCTION_SUCCESS,
+  START_AUCTION_FAILURE,
+
+  // 입찰
+  PARTICIPATE_AUCTION_REQUEST,
+  PARTICIPATE_AUCTION_SUCCESS,
+  PARTICIPATE_AUCTION_FAILURE,
+
+  // 구매확정
+  CONFIRM_PURCHASE_REQUEST,
+  CONFIRM_PURCHASE_SUCCESS,
+  CONFIRM_PURCHASE_FAILURE,
+  
+  CHECK_AUCTION_REQUEST,
+  CHECK_AUCTION_SUCCESS,
+  CHECK_AUCTION_FAILURE,
+  
+  TERMINATE_AUCTION_FAILURE,
+  TERMINATE_AUCTION_SUCCESS,
+  TERMINATE_AUCTION_REQUEST,
 } from '../reducers/auction';
 
 import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
@@ -107,7 +130,7 @@ function* loadLikeAuction(action) {
 
 //  내가 등록한 작품(mypage) 경매템 로드
 function loadGetAuctionAPI(id) {
-  return axios.get(`main/NFT/checkNftbyid/${id}`);
+  return instance.get(`main/NFT/checkNftbyid/${id}`);
 }
 
 function* loadGetAuction(action) {
@@ -144,6 +167,15 @@ function* loadOneAuction(action) {
       type: LOAD_ONE_AUCTION_SUCCESS,
       data: { auction: result.data, likes: likeCount.data.count },
     });
+    console.log(result);
+    // [TODO] START일 때로 변경
+    if (result.data.auction === 'START') {
+      yield put({
+        type: CHECK_AUCTION_REQUEST,
+        data: result.data.id,
+        owner: result.data.email,
+      });
+    }
   } catch (err) {
     console.error(err);
     yield put({
@@ -170,7 +202,10 @@ function* addAuction(action) {
     // [TODO] 실제 nft id로 변경
     yield put({
       type: ADD_AUCTION_SUCCESS,
-      data: result.data,
+      data: {
+        ...result.data,
+        username: JSON.parse(localStorage.getItem('userInfo')).name,
+      },
     });
     // yield put({
     //   type: ADD_AUCTION_TO_ME,
@@ -298,9 +333,177 @@ function* searchNft(action) {
   }
 }
 
-// NFT 검색
-function* watchSearchNFT() {
-  yield takeLatest(SEARCH_NFT_REQUEST, searchNft);
+// [main server에 보낼 API]
+function startAuctionAPI(data) {
+  console.log('startAuctionapi', data);
+  // const response = instance({
+  //   method: 'post',
+  //   url: 'main/NFT/auction/${data}',
+  // });
+
+  return 1;
+}
+// [kafka server에 보낼 API]
+function startAuctionKafkaAPI(data) {
+  // const response = instance({
+  //   method: 'post',
+  //   url: '/auction/start',
+  //   data: {
+  //     nft: data.id,
+  //     time: data.period,
+  //   },
+  // });
+
+  return 1;
+}
+
+function* startAuction(action) {
+  try {
+    console.log('action in startAuction', action);
+    const resultFromMain = yield call(startAuctionAPI, action.data.id);
+    yield call(startAuctionKafkaAPI, action.data);
+    yield put({
+      type: START_AUCTION_SUCCESS,
+      data: resultFromMain,
+    });
+    alert('경매가 시작되었습니다');
+  } catch (err) {
+    yield put({
+      type: START_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function participateAuctionAPI(data) {
+  console.log('participateAict data', data);
+  // const response = instance({
+  //   method: 'post',
+  //   url: '/action/publish',
+  //   data: {
+  //     auctionPrice: data.price,
+  //     email: data.attendee,
+  //     nft_id: data.nftId,
+  //   },
+  // });
+
+  return 1;
+}
+
+function* participateAuction(action) {
+  // api function 생성 후 수정 필요
+  try {
+    const result = yield call(participateAuctionAPI, action.data);
+    yield put({
+      type: PARTICIPATE_AUCTION_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: PARTICIPATE_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function confirmPurchaseAPI(data) {
+  //  const response = instance({
+  //   method: '',
+  //   url: '',
+  // });
+
+  return 1;
+}
+
+function* confirmPurchase(action) {
+  // api function 생성 후 수정 필요
+  try {
+    const result = yield call(confirmPurchaseAPI, action.data);
+    yield put({
+      type: CONFIRM_PURCHASE_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: CONFIRM_PURCHASE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function checkAuctionAPI(nftId) {
+  // const response = instance({
+  //   method: 'get',
+  //   url: `consumer/auction/${nftId}`,
+  // });
+  const dummy = {
+    data: {
+      a_id: '616181622d9f193142fe344a',
+      nft_id: 'check',
+      email: 'yrseo1216@gmail.com',
+      auction_price: parseInt(Math.random() * 100, 10),
+      time: '11:57:36',
+      price: 20,
+    },
+  };
+  return dummy;
+}
+
+function* checkAuction(action) {
+  try {
+    console.log('action in checkAuction', action);
+    const result = yield call(checkAuctionAPI, action.data);
+    yield put({
+      type: CHECK_AUCTION_SUCCESS,
+      data: result.data,
+    });
+    // [TODO] time vs 현재시간 비교
+    if (!result.data.time) {
+      yield put({
+        type: TERMINATE_AUCTION_REQUEST,
+        data: {
+          id: result.data.nft_id,
+          value: result.data.auction_price,
+          owner: action.owner,
+          user: result.data.email,
+          action: 'FINISH',
+        },
+      });
+    }
+  } catch (err) {
+    yield put({
+      type: CHECK_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function terminateAuctionAPI(data) {
+  // const response = instance({
+  //   method: 'post',
+  //   url: 'main/NFT/auction/finish',
+  //   data
+  // });
+  const dummy = {
+    data: {
+      status: 'complete',
+    },
+  };
+  return dummy;
+}
+
+function* terminateAuction(action) {
+  try {
+    console.log('action in terminate Auction', action);
+    yield call(terminateAuctionAPI, action.data);
+    yield put({
+      type: TERMINATE_AUCTION_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: TERMINATE_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
 }
 
 // home 경매템 게시물 로드
@@ -341,6 +544,36 @@ function* watchLikeAuctions() {
 function* watchUnLikeAuctions() {
   yield throttle(2000, UNLIKE_AUCTION_REQUEST, unLikeAuction);
 }
+  
+// NFT 검색
+function* watchSearchNFT() {
+  yield takeLatest(SEARCH_NFT_REQUEST, searchNft);
+}
+ 
+// 경매 시작 로딩
+function* watchStartAuctions() {
+  yield throttle(2000, START_AUCTION_REQUEST, startAuction);
+}
+
+// 입찰 로딩
+function* watchParticipateAuctions() {
+  yield throttle(1000, PARTICIPATE_AUCTION_REQUEST, participateAuction);
+}
+
+// 구매확정 로딩
+function* watchConfirmPurchase() {
+  yield throttle(2000, CONFIRM_PURCHASE_REQUEST, confirmPurchase);
+}
+  
+// 실시간 경매 상태 로딩
+function* watchCheckAuction() {
+  yield takeLatest(CHECK_AUCTION_REQUEST, checkAuction);
+}
+
+// 경매 종료 로딩
+function* watchTerminateAuction() {
+  yield takeLatest(TERMINATE_AUCTION_REQUEST, terminateAuction);
+}
 
 export default function* auctionSaga() {
   yield all([
@@ -353,5 +586,10 @@ export default function* auctionSaga() {
     fork(watchLikeAuctions),
     fork(watchUnLikeAuctions),
     fork(watchSearchNFT),
+    fork(watchStartAuctions),
+    fork(watchParticipateAuctions),
+    fork(watchConfirmPurchase),
+    fork(watchCheckAuction),
+    fork(watchTerminateAuction),
   ]);
 }

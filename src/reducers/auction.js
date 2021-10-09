@@ -58,11 +58,37 @@ export const initialState = {
   unlikeAuctionLoading: false,
   unlikeAuctionDone: false,
   unlikeAuctionError: null,
-
+  
   // NFT 경매 아이템 검색
   searchNftLoading: false,
   searchNftSuccess: false,
   searchNftFailure: null,
+  
+  // 판매자 - 경매시작
+  startAuctionLoading: false,
+  startAuctionDone: false,
+  startAuctionError: null,
+
+  // 구매자 - 입찰
+  participateAuctionLoading: false,
+  participateAuctionDone: false,
+  participateAuctionError: null,
+
+  // 최종 구매자 - 구매확정
+  confirmPurchaseLoading: false,
+  confirmPurchaseDone: false,
+  confirmPurchaseError: null,
+
+  // 실시간 경매 진행 상황
+  checkAuctionLoading: false,
+  checkAuctionDone: false,
+  checkAuctionError: null,
+
+  // 경매 종료
+  terminateAuctionLoading: false,
+  terminateAuctionDone: false,
+  terminateAuctionError: null,
+
 };
 
 // ----------------------------
@@ -112,6 +138,35 @@ export const SEARCH_NFT_REQUEST = 'SEARCH_NFT_REQUEST';
 export const SEARCH_NFT_SUCCESS = 'SEARCH_NFT_SUCCESS';
 export const SEARCH_NFT_FAILURE = 'SEARCH_NFT_FAILURE';
 
+// 액션 타입 정의
+// 판매자 - 경매시작
+export const START_AUCTION_REQUEST = 'START_AUCTION_REQUEST';
+export const START_AUCTION_SUCCESS = 'START_AUCTION_SUCCESS';
+export const START_AUCTION_FAILURE = 'START_AUCTION_FAILURE';
+
+// 구매자 - 입찰
+export const PARTICIPATE_AUCTION_REQUEST = 'PARTICIPATE_AUCTION_REQUEST';
+export const PARTICIPATE_AUCTION_FAILURE = 'PARTICIPATE_AUCTION_FAILURE';
+export const PARTICIPATE_AUCTION_SUCCESS = 'PARTICIPATE_AUCTION_SUCCESS';
+
+// 최종 구매자 - 구매확정
+export const CONFIRM_PURCHASE_REQUEST = 'CONFIRM_PURCHASE_REQUEST';
+export const CONFIRM_PURCHASE_SUCCESS = 'CONFIRM_PURCHASE_SUCCESS';
+export const CONFIRM_PURCHASE_FAILURE = 'CONFIRM_PURCHASE_FAILURE';
+
+// 경매 진행 상황 확인
+export const CHECK_AUCTION_REQUEST = 'CHECK_AUCTION_REQUEST';
+export const CHECK_AUCTION_SUCCESS = 'CHECK_AUCTION_SUCCESS';
+export const CHECK_AUCTION_FAILURE = 'CHECK_AUCTION_FAILURE';
+
+// 경매종료
+export const TERMINATE_AUCTION_REQUEST = 'TERMINATE_AUCTION_REQUEST';
+export const TERMINATE_AUCTION_SUCCESS = 'TERMINATE_AUCTION_SUCCESS';
+export const TERMINATE_AUCTION_FAILURE = 'TERMINATE_AUCTION_FAILURE';
+
+// 경매 작품 내용 비우기
+export const CLEAR_AUCTION = 'CLEAR_AUCTION';
+
 export const addAuction = data => ({
   type: ADD_AUCTION_REQUEST,
   data,
@@ -125,6 +180,45 @@ export const searchNftResult = data => ({
 export const myPage = data => ({
   ...data,
   LikeList: [],
+});
+
+// 액션함수 생성
+// [TODO] data에 뭐가 들어가는지는 모르겟음
+export const startAuction = (id, period) => ({
+  type: START_AUCTION_REQUEST,
+  data: {
+    id,
+    period,
+  }, // 예상 - userid, nftid, 현재시간
+});
+
+export const participateAuction = (price, attendee, nftId) => ({
+  type: PARTICIPATE_AUCTION_REQUEST,
+  data: {
+    price,
+    attendee,
+    nftId,
+  }, // 예상 - userid, nftid, 입찰가격(현재+1klay), 시간
+});
+
+export const confirmPurchase = data => ({
+  type: CONFIRM_PURCHASE_REQUEST,
+  data,
+});
+
+export const clearAuction = () => ({
+  type: CLEAR_AUCTION,
+});
+
+export const checkAuction = (data, owner) => ({
+  type: CHECK_AUCTION_REQUEST,
+  data,
+  owner,
+});
+
+export const terminateAuction = data => ({
+  type: TERMINATE_AUCTION_REQUEST,
+  data,
 });
 
 const auctionReducer = (state = initialState, action) =>
@@ -307,6 +401,88 @@ const auctionReducer = (state = initialState, action) =>
         draft.searchNftFailure = action.error;
         break;
       }
+        
+      // 경매시작
+      case START_AUCTION_REQUEST:
+        draft.startAuctionLoading = true;
+        draft.startAuctionDone = false;
+        draft.startAuctionError = null;
+        break;
+      case START_AUCTION_SUCCESS:
+        draft.startAuctionLoading = false;
+        draft.startAuctionDone = true;
+        draft.singleAuction.auction = 'START';
+        break;
+      case START_AUCTION_FAILURE:
+        draft.startAuctionLoading = false;
+        draft.startAuctionError = action.error;
+        break;
+
+      // 입찰
+      case PARTICIPATE_AUCTION_REQUEST:
+        draft.participateAuctionLoading = true;
+        draft.participateAuctionDone = false;
+        draft.participateAuctionError = null;
+        break;
+      case PARTICIPATE_AUCTION_SUCCESS:
+        draft.participateAuctionLoading = false;
+        draft.participateAuctionDone = true;
+        break;
+      case PARTICIPATE_AUCTION_FAILURE:
+        draft.participateAuctionLoading = false;
+        draft.participateAuctionError = action.error;
+        break;
+
+      // 구매확정
+      case CONFIRM_PURCHASE_REQUEST:
+        draft.confirmPurchaseLoading = true;
+        draft.confirmPurchaseDone = false;
+        draft.confirmPurchaseError = action.error;
+        break;
+      case CONFIRM_PURCHASE_SUCCESS:
+        draft.confirmPurchaseLoading = false;
+        draft.confirmPurchaseDone = true;
+        // 구매한 작품 목록에 추가
+        // [TODO] myAuctions에 들어갈 data 수정
+        draft.myAuctions.unshift({ id: action.data.nftId });
+        break;
+      case CONFIRM_PURCHASE_FAILURE:
+        draft.confirmPurchaseLoading = false;
+        draft.confirmPurchaseError = action.error;
+        break;
+        
+      case CLEAR_AUCTION:
+        draft.singleAuction = {};
+        break;
+        
+      case CHECK_AUCTION_REQUEST:
+        draft.checkAuctionLoading = true;
+        draft.checkAuctionDone = false;
+        draft.checkAuctionError = action.error;
+        break;
+      case CHECK_AUCTION_SUCCESS:
+        draft.checkAuctionLoading = false;
+        draft.checkAuctionDone = true;
+        draft.singleAuction.curStatus = action.data;
+        break;
+      case CHECK_AUCTION_FAILURE:
+        draft.checkAuctionLoading = false;
+        draft.checkAuctionError = action.error;
+        break;
+      case TERMINATE_AUCTION_REQUEST:
+        draft.terminateAuctionLoading = true;
+        draft.terminateAuctionDone = false;
+        draft.terminateAuctionError = action.error;
+        break;
+      case TERMINATE_AUCTION_SUCCESS:
+        draft.terminateAuctionLoading = false;
+        draft.terminateAuctionDone = true;
+        draft.singleAuction.auction = 'FINISH';
+        break;
+      case TERMINATE_AUCTION_FAILURE:
+        draft.terminateAuctionLoading = false;
+        draft.terminateAuctionError = action.error;
+        break;
 
       default:
         break;
