@@ -3,41 +3,58 @@ import Header from 'components/Common/Header';
 import CardItem from 'components/MyPage/Card/CardItem';
 import Footer from 'components/Common/Footer';
 import SmallFooter from 'components/Common/SmallFooter';
-import { Pagination, Empty } from 'antd';
+import { Empty } from 'antd';
 import HomeIntro from 'components/Home/Intro';
+import Pagination from 'components/Common/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_AUCTION_REQUEST } from 'reducers/auction';
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+import {
+  LOAD_AUCTION_REQUEST,
+  LOAD_LIKE_AUCTION_REQUEST,
+} from 'reducers/auction';
 import { Title, CardWrap, CardListBox, BottomMailn, EmptyWrap } from './styles';
 
 function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
-  const { mainAuctions } = useSelector(stateRedux => stateRedux.auctionReducer);
+  const { mainAuctions, likeAuctions } = useSelector(
+    stateRedux => stateRedux.auctionReducer,
+  );
 
-  // 페이징네이션 작업
-  const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
-
-  // [TODO] 주석 풀어야함
   useEffect(() => {
-    const response = async () => {
-      const res = await dispatch({
-        type: LOAD_AUCTION_REQUEST,
-      });
-      setPosts(res.data);
-      response();
-    };
+    AOS.init({
+      duration: 1200,
+    });
+  });
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_AUCTION_REQUEST,
+    });
+    dispatch({
+      type: LOAD_LIKE_AUCTION_REQUEST,
+    });
   }, []);
 
+  // PagingNation
+  // 현재 페이지
+  const [currentPage, setCurrentPage] = useState(1);
+  // 전체 페이지 (게시물 개수)
+  const [postsPerPage, setPostsPerPage] = useState(9);
+  // 해당 페이지에서 마지막 post의 index 번호를 가르킵니다.
   const indexOfLastPost = currentPage * postsPerPage;
+  //  해당 페이지에서 첫번째 post의 index 번호를 가르킵니다.
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  // 각 페이지에서 보여질 포스트 배열입니다.
+  const currentAuctions = mainAuctions.slice(indexOfFirstPost, indexOfLastPost);
+  console.log('currentAuctions---------', currentAuctions);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
+    console.log('currentAuctions', currentAuctions);
   };
-  console.log('currentPosts: ', currentPosts);
+  console.log('currentAuctions: ', currentAuctions);
 
   // 버튼 클릭시 경매 섹션으로 이동
   const scrollToAuction = useCallback(() => {
@@ -65,12 +82,16 @@ function home() {
         {mainAuctions.length > 0 ? (
           <CardWrap>
             <CardListBox>
-              {mainAuctions.map(post => (
+              {currentAuctions.map(post => (
                 <CardItem key={post.id} post={post} />
               ))}
             </CardListBox>
 
-            <Pagination />
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={mainAuctions.length}
+              paginate={paginate}
+            />
           </CardWrap>
         ) : (
           <EmptyWrap>

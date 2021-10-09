@@ -9,6 +9,7 @@ function LikeImage() {
   const dispatch = useDispatch();
   const { likeAuctions } = useSelector(state => state.auctionReducer);
   const user = JSON.parse(localStorage.getItem('userInfo'));
+  console.log('likeAuctions-----', likeAuctions);
 
   useEffect(() => {
     dispatch({

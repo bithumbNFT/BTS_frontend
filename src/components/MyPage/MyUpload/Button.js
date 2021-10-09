@@ -25,4 +25,5 @@ const ButtonContainer = styled.button`
   padding: 0.5rem 0.6rem;
   border-radius: 5px;
   font-size: 16px;
+  font-weight: 500;
 `;

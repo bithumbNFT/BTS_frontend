@@ -51,6 +51,11 @@ import {
   UNLIKE_AUCTION_REQUEST,
   UNLIKE_AUCTION_SUCCESS,
   UNLIKE_AUCTION_FAILURE,
+
+  // NFT 경매 아이템 검색
+  SEARCH_NFT_REQUEST,
+  SEARCH_NFT_SUCCESS,
+  SEARCH_NFT_FAILURE,
 } from '../reducers/auction';
 
 import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
@@ -86,6 +91,7 @@ function* loadLikeAuction(action) {
   console.log('loadLikeAuctionAPI action', action);
   try {
     const result = yield call(loadLikeAuctionAPI, action.data);
+    console.log('loadLikeAuctionAPI,', result);
     yield put({
       type: LOAD_LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -225,7 +231,10 @@ function likeAPI(data) {
 
 function* likeAuction(action) {
   try {
-    const result = yield call(likeAPI, action.data);
+    yield call(likeAPI, action.data);
+    console.log(action.data);
+    const result = yield call(loadOneAuctionAPI, action.data.nftid);
+    console.log('like in auction', result.data);
     yield put({
       type: LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -253,6 +262,7 @@ function unLikeAPI(data) {
 function* unLikeAuction(action) {
   try {
     const result = yield call(unLikeAPI, action.data);
+    console.log('result in delet', result.data);
     yield put({
       type: UNLIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -264,6 +274,33 @@ function* unLikeAuction(action) {
       error: err.response.data,
     });
   }
+}
+
+function searchNftAPI(data) {
+  console.log(`data-------> ${data}`);
+  return instance.get(`main/NFT/findNFT/${data}`);
+}
+
+function* searchNft(action) {
+  console.log(`action-------> ${action}`);
+  try {
+    const result = yield call(searchNftAPI, action.data);
+    yield put({
+      type: SEARCH_NFT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: SEARCH_NFT_FAILURE,
+      data: err,
+    });
+  }
+}
+
+// NFT 검색
+function* watchSearchNFT() {
+  yield takeLatest(SEARCH_NFT_REQUEST, searchNft);
 }
 
 // home 경매템 게시물 로드
@@ -315,5 +352,6 @@ export default function* auctionSaga() {
     fork(watchRemoveAuction),
     fork(watchLikeAuctions),
     fork(watchUnLikeAuctions),
+    fork(watchSearchNFT),
   ]);
 }

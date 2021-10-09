@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_POSTS_REQUEST, loadPosts } from 'reducers/post';
+import { LOAD_POSTS_REQUEST } from 'reducers/post';
 import { Link } from 'react-router-dom';
 import { Empty } from 'antd';
 import Pagination from 'components/Common/Pagination';
@@ -14,21 +14,17 @@ function board() {
   const dispatch = useDispatch();
   const { mainPosts } = useSelector(state => state.postReducer);
 
-  // const getPostsData = () => dispatch(loadPosts());
   useEffect(() => {
-    const fetchPosts = async () => {
-      await dispatch({
-        type: LOAD_POSTS_REQUEST,
-      });
-    };
-    fetchPosts();
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
   }, []);
 
   // PagingNation
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   // 전체 페이지 (게시물 개수)
-  const [postsPerPage] = useState(5);
+  const [postsPerPage, setPostsPerPage] = useState(5);
 
   // 해당 페이지에서 마지막 post의 index 번호를 가르킵니다.
   const indexOfLastPost = currentPage * postsPerPage;
@@ -36,11 +32,12 @@ function board() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // 각 페이지에서 보여질 포스트 배열입니다.
   const currentPosts = mainPosts.slice(indexOfFirstPost, indexOfLastPost);
+  console.log('currentPosts---------', currentPosts);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
+    console.log('currentPosts: ', currentPosts);
   };
-  console.log('currentPosts: ', currentPosts);
 
   return (
     <>
@@ -67,8 +64,8 @@ function board() {
             {/* {isBoard &&} */}
             {mainPosts.length > 0 ? (
               <>
-                {mainPosts.map(post => (
-                  <Item key={post.id} post={post} />
+                {currentPosts.map(post => (
+                  <Item key={post.id} post={post} mainPosts={currentPosts} />
                 ))}
 
                 <Pagination

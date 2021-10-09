@@ -85,7 +85,7 @@ export const Status = styled.div`
   padding: 5px;
   border-radius: 10%;
   background-color: #f5e6ca;
-  font-size: 12px;
+  font-size: 14px;
   color: #343f56;
   margin-top: 3em;
 `;

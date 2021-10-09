@@ -21,6 +21,7 @@ function App() {
   const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
   const Naver = lazy(() => import('./components/LoginModal/login/naver'));
   const Login = lazy(() => import('./pages/login'));
+  const Search = lazy(() => import('./pages/search'));
 
   return (
     <>
@@ -31,6 +32,7 @@ function App() {
           {/* 홈화면 */}
           <Route exact path="/" component={Home} />
           {/* 경매 페이지 */}
+          <Route exact path="/search/:id" component={Search} />
           <AuthRoute
             path="/auction/:id"
             render={props => <Auction {...props} />}

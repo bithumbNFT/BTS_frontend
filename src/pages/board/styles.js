@@ -7,6 +7,9 @@ export const ListWrap = styled.section`
   max-width: 1000px;
   overflow: hidden;
   box-sizing: border-box;
+  h2 {
+    font-size: 24px;
+  }
   .postButton {
     background: #fe5000;
     border-radius: 5px;
@@ -14,7 +17,7 @@ export const ListWrap = styled.section`
     padding: 10px 12px;
     height: 40px;
     line-height: 1.43;
-    font-size: 15px;
+    font-size: 16px;
     letter-spacing: -0.3px;
     i {
       margin-right: 0.3em;
@@ -28,9 +31,6 @@ export const ListWrap = styled.section`
 `;
 
 export const ListView = styled.ul`
-  font-size: 12px;
-  font-weight: 500;
-  color: #616568;
   .ant-pagination {
     text-align: center;
     margin-top: 5em;
