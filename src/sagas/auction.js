@@ -52,6 +52,11 @@ import {
   UNLIKE_AUCTION_SUCCESS,
   UNLIKE_AUCTION_FAILURE,
 
+  // NFT 경매 아이템 검색
+  SEARCH_NFT_REQUEST,
+  SEARCH_NFT_SUCCESS,
+  SEARCH_NFT_FAILURE,
+  
   // 경매시작
   START_AUCTION_REQUEST,
   START_AUCTION_SUCCESS,
@@ -66,9 +71,11 @@ import {
   CONFIRM_PURCHASE_REQUEST,
   CONFIRM_PURCHASE_SUCCESS,
   CONFIRM_PURCHASE_FAILURE,
+  
   CHECK_AUCTION_REQUEST,
   CHECK_AUCTION_SUCCESS,
   CHECK_AUCTION_FAILURE,
+  
   TERMINATE_AUCTION_FAILURE,
   TERMINATE_AUCTION_SUCCESS,
   TERMINATE_AUCTION_REQUEST,
@@ -107,6 +114,7 @@ function* loadLikeAuction(action) {
   console.log('loadLikeAuctionAPI action', action);
   try {
     const result = yield call(loadLikeAuctionAPI, action.data);
+    console.log('loadLikeAuctionAPI,', result);
     yield put({
       type: LOAD_LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -258,7 +266,10 @@ function likeAPI(data) {
 
 function* likeAuction(action) {
   try {
-    const result = yield call(likeAPI, action.data);
+    yield call(likeAPI, action.data);
+    console.log(action.data);
+    const result = yield call(loadOneAuctionAPI, action.data.nftid);
+    console.log('like in auction', result.data);
     yield put({
       type: LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -286,6 +297,7 @@ function unLikeAPI(data) {
 function* unLikeAuction(action) {
   try {
     const result = yield call(unLikeAPI, action.data);
+    console.log('result in delet', result.data);
     yield put({
       type: UNLIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -295,6 +307,28 @@ function* unLikeAuction(action) {
     yield put({
       type: UNLIKE_AUCTION_FAILURE,
       error: err.response.data,
+    });
+  }
+}
+
+function searchNftAPI(data) {
+  console.log(`data-------> ${data}`);
+  return instance.get(`main/NFT/findNFT/${data}`);
+}
+
+function* searchNft(action) {
+  console.log(`action-------> ${action}`);
+  try {
+    const result = yield call(searchNftAPI, action.data);
+    yield put({
+      type: SEARCH_NFT_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: SEARCH_NFT_FAILURE,
+      data: err,
     });
   }
 }
@@ -456,6 +490,7 @@ function terminateAuctionAPI(data) {
   };
   return dummy;
 }
+
 function* terminateAuction(action) {
   try {
     console.log('action in terminate Auction', action);
@@ -509,7 +544,12 @@ function* watchLikeAuctions() {
 function* watchUnLikeAuctions() {
   yield throttle(2000, UNLIKE_AUCTION_REQUEST, unLikeAuction);
 }
-
+  
+// NFT 검색
+function* watchSearchNFT() {
+  yield takeLatest(SEARCH_NFT_REQUEST, searchNft);
+}
+ 
 // 경매 시작 로딩
 function* watchStartAuctions() {
   yield throttle(2000, START_AUCTION_REQUEST, startAuction);
@@ -524,6 +564,7 @@ function* watchParticipateAuctions() {
 function* watchConfirmPurchase() {
   yield throttle(2000, CONFIRM_PURCHASE_REQUEST, confirmPurchase);
 }
+  
 // 실시간 경매 상태 로딩
 function* watchCheckAuction() {
   yield takeLatest(CHECK_AUCTION_REQUEST, checkAuction);
@@ -544,6 +585,7 @@ export default function* auctionSaga() {
     fork(watchRemoveAuction),
     fork(watchLikeAuctions),
     fork(watchUnLikeAuctions),
+    fork(watchSearchNFT),
     fork(watchStartAuctions),
     fork(watchParticipateAuctions),
     fork(watchConfirmPurchase),

@@ -3,7 +3,7 @@ import CardItem from './CardItem';
 import { CardWrap, CardListWrapper } from './styles';
 
 function CardList({ auctions }) {
-  console.log(auctions);
+  console.log('auctions------------+', auctions);
   return (
     <CardWrap>
       <CardListWrapper>

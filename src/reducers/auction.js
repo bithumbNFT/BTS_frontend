@@ -1,6 +1,4 @@
-import shortId from 'shortid';
 import produce from 'immer';
-import faker from 'faker';
 
 export const initialState = {
   // 👉 더미데이터
@@ -16,6 +14,8 @@ export const initialState = {
   getAuctions: [],
   // 내가 등록한 작품
   myAuctions: [],
+  // NFT 경매 아이템 리스트
+  searchNft: [],
   me: null,
 
   // 👉 초기상태 정의
@@ -58,7 +58,12 @@ export const initialState = {
   unlikeAuctionLoading: false,
   unlikeAuctionDone: false,
   unlikeAuctionError: null,
-
+  
+  // NFT 경매 아이템 검색
+  searchNftLoading: false,
+  searchNftSuccess: false,
+  searchNftFailure: null,
+  
   // 판매자 - 경매시작
   startAuctionLoading: false,
   startAuctionDone: false,
@@ -83,6 +88,7 @@ export const initialState = {
   terminateAuctionLoading: false,
   terminateAuctionDone: false,
   terminateAuctionError: null,
+
 };
 
 // ----------------------------
@@ -127,6 +133,11 @@ export const UNLIKE_AUCTION_REQUEST = 'UNLIKE_AUCTION_REQUEST';
 export const UNLIKE_AUCTION_SUCCESS = 'UNLIKE_AUCTION_SUCCESS';
 export const UNLIKE_AUCTION_FAILURE = 'UNLIKE_AUCTION_FAILURE';
 
+// NFT 경매 아이템 검색
+export const SEARCH_NFT_REQUEST = 'SEARCH_NFT_REQUEST';
+export const SEARCH_NFT_SUCCESS = 'SEARCH_NFT_SUCCESS';
+export const SEARCH_NFT_FAILURE = 'SEARCH_NFT_FAILURE';
+
 // 액션 타입 정의
 // 판매자 - 경매시작
 export const START_AUCTION_REQUEST = 'START_AUCTION_REQUEST';
@@ -158,6 +169,11 @@ export const CLEAR_AUCTION = 'CLEAR_AUCTION';
 
 export const addAuction = data => ({
   type: ADD_AUCTION_REQUEST,
+  data,
+});
+
+export const searchNftResult = data => ({
+  type: SEARCH_NFT_REQUEST,
   data,
 });
 
@@ -341,7 +357,7 @@ const auctionReducer = (state = initialState, action) =>
         break;
       case LIKE_AUCTION_SUCCESS:
         draft.likeAuctionLoading = false;
-        draft.me.LikeList.push({ id: action.data.UserId });
+        draft.likeAuctions.unshift(action.data);
         draft.likeAuctionDone = true;
         break;
       case LIKE_AUCTION_FAILURE:
@@ -356,8 +372,9 @@ const auctionReducer = (state = initialState, action) =>
         draft.unlikeAuctionDone = false;
         break;
       case UNLIKE_AUCTION_SUCCESS:
+        console.log(action.data);
         draft.unlikeAuctionLoading = false;
-        draft.me.LikeList = draft.me.LikeList.filter(
+        draft.likeAuctions = draft.likeAuctions.filter(
           v => v.id !== action.data.id,
         );
         draft.unlikeAuctionDone = true;
@@ -367,6 +384,24 @@ const auctionReducer = (state = initialState, action) =>
         draft.unlikeAuctionError = action.error;
         break;
 
+      // 검색
+      case SEARCH_NFT_REQUEST: {
+        draft.searchNftLoading = true;
+        draft.searchNftSuccess = false;
+        break;
+      }
+      case SEARCH_NFT_SUCCESS: {
+        draft.searchNftLoading = false;
+        draft.searchNftSuccess = true;
+        draft.searchNft = action.data;
+        break;
+      }
+      case SEARCH_NFT_FAILURE: {
+        draft.searchNftSuccess = false;
+        draft.searchNftFailure = action.error;
+        break;
+      }
+        
       // 경매시작
       case START_AUCTION_REQUEST:
         draft.startAuctionLoading = true;
@@ -415,9 +450,11 @@ const auctionReducer = (state = initialState, action) =>
         draft.confirmPurchaseLoading = false;
         draft.confirmPurchaseError = action.error;
         break;
+        
       case CLEAR_AUCTION:
         draft.singleAuction = {};
         break;
+        
       case CHECK_AUCTION_REQUEST:
         draft.checkAuctionLoading = true;
         draft.checkAuctionDone = false;
@@ -446,6 +483,7 @@ const auctionReducer = (state = initialState, action) =>
         draft.terminateAuctionLoading = false;
         draft.terminateAuctionError = action.error;
         break;
+
       default:
         break;
     }
