@@ -21,6 +21,13 @@ export const Gnb = styled.nav`
     justify-content: space-between;
     padding: 0 2em;
   }
+  // 아이패드 기준
+  @media (max-width: 1024px) {
+    .navWrap {
+      padding: 0;
+      max-width: 900px;
+    }
+  }
 `;
 
 export const Title = styled.button`
@@ -35,13 +42,13 @@ export const User = styled.ul`
   li {
     color: #4a4a4a;
     line-height: 1.5;
-    font-size: 1rem;
     margin-left: 1em;
     &.user {
       border: 1px solid #dbdbdb;
       border-radius: 5px;
       button {
         padding: 5px 8px;
+        font-size: 16px;
       }
     }
   }
@@ -87,6 +94,20 @@ export const Menu = styled.div`
     opacity: 0.8;
     &:hover {
       opacity: 1;
+    }
+  }
+  @media (max-width: 1024px) {
+    .board {
+      font-size: 1.2rem;
+    }
+    input {
+      &::placeholder {
+        font-size: 1.2rem;
+      }
+    }
+
+    li {
+      font-size: 1.2rem;
     }
   }
 `;

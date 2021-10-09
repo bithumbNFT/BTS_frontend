@@ -16,7 +16,13 @@ export const ChartWrap = styled.section`
     font-size: 32px;
     text-align: center;
   }
+  @media (max-width: 1024px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
 `;
+
 export const Chart = styled.article`
   display: flex;
   justify-content: center;
@@ -64,6 +70,9 @@ export const CoinDesc = styled.div`
     font-weight: 400;
     text-align: center;
   }
+  @media (max-width: 1024px) {
+    width: 900px;
+  }
 `;
 
 export const InfoDesc = styled.div`
@@ -84,6 +93,11 @@ export const InfoDesc = styled.div`
   }
   img {
     width: 20px;
+  }
+  @media (max-width: 1024px) {
+    h4 {
+      font-size: 1.5rem;
+    }
   }
 `;
 

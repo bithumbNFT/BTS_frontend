@@ -5,6 +5,9 @@ export const TableWrapper = styled.div`
   border: 1px solid #9e9e9e;
   border-radius: 5px;
   margin-bottom: 10px;
+  @media (max-width: 1024px) {
+    padding: 30px;
+  }
 `;
 export const TableContainer = styled.table`
   font-size: 16px;

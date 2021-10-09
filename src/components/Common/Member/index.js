@@ -40,6 +40,10 @@ const MemberPhoto = styled.div`
     width: 100%;
     margin-left: 18px;
   }
+  @media (max-width: 1024px) {
+    width: 160px;
+    height: 160px;
+  }
 `;
 
 const MemberInfo = styled.div`
