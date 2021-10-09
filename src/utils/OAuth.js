@@ -1,7 +1,8 @@
 // 카카오로그인 키
 const KAKAO_CLIENT_ID = 'ee94979439874c79e3ce9f8545f6712b';
 // [배포용]
-const KAKAO_REDIRECT_URI = 'http://3.35.69.11/login/oauth2/code/kakao';
+// const KAKAO_REDIRECT_URI = 'http://3.35.69.11/login/oauth2/code/kakao';
+const KAKAO_REDIRECT_URI = 'http://bithumb-bts.com/login/oauth2/code/kakao';
 // [로컬용]
 // const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/oauth2/code/kakao';
 
@@ -9,7 +10,8 @@ const KAKAO_REDIRECT_URI = 'http://3.35.69.11/login/oauth2/code/kakao';
 const NAVER_CLIENT_ID = 's5fg6nwUikj7JUgh3nX2';
 // const NAVER_CLIENT_ID = 'dlFlVjjrC_SpcdLnZ9Bv';
 // [배포용]
-const NAVER_CALLBACK_URL = 'http://3.35.69.11/login/oauth2/code/naver';
+// const NAVER_CALLBACK_URL = 'http://3.35.69.11/login/oauth2/code/naver';
+const NAVER_CALLBACK_URL = 'http://bithumb-bts.com/login/oauth2/code/naver';
 // [로컬용]
 // const NAVER_CALLBACK_URL = 'http://localhost:3000/login/oauth2/code/naver';
 const STATE_STRING = Math.random().toString(36).substr(2, 11);
