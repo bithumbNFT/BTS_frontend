@@ -56,7 +56,7 @@ import {
   SEARCH_NFT_REQUEST,
   SEARCH_NFT_SUCCESS,
   SEARCH_NFT_FAILURE,
-  
+
   // 경매시작
   START_AUCTION_REQUEST,
   START_AUCTION_SUCCESS,
@@ -71,11 +71,9 @@ import {
   CONFIRM_PURCHASE_REQUEST,
   CONFIRM_PURCHASE_SUCCESS,
   CONFIRM_PURCHASE_FAILURE,
-  
   CHECK_AUCTION_REQUEST,
   CHECK_AUCTION_SUCCESS,
   CHECK_AUCTION_FAILURE,
-  
   TERMINATE_AUCTION_FAILURE,
   TERMINATE_AUCTION_SUCCESS,
   TERMINATE_AUCTION_REQUEST,
@@ -544,12 +542,12 @@ function* watchLikeAuctions() {
 function* watchUnLikeAuctions() {
   yield throttle(2000, UNLIKE_AUCTION_REQUEST, unLikeAuction);
 }
-  
+
 // NFT 검색
 function* watchSearchNFT() {
   yield takeLatest(SEARCH_NFT_REQUEST, searchNft);
 }
- 
+
 // 경매 시작 로딩
 function* watchStartAuctions() {
   yield throttle(2000, START_AUCTION_REQUEST, startAuction);
@@ -564,7 +562,7 @@ function* watchParticipateAuctions() {
 function* watchConfirmPurchase() {
   yield throttle(2000, CONFIRM_PURCHASE_REQUEST, confirmPurchase);
 }
-  
+
 // 실시간 경매 상태 로딩
 function* watchCheckAuction() {
   yield takeLatest(CHECK_AUCTION_REQUEST, checkAuction);

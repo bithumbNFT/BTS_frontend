@@ -58,12 +58,12 @@ export const initialState = {
   unlikeAuctionLoading: false,
   unlikeAuctionDone: false,
   unlikeAuctionError: null,
-  
+
   // NFT 경매 아이템 검색
   searchNftLoading: false,
   searchNftSuccess: false,
   searchNftFailure: null,
-  
+
   // 판매자 - 경매시작
   startAuctionLoading: false,
   startAuctionDone: false,
@@ -88,7 +88,6 @@ export const initialState = {
   terminateAuctionLoading: false,
   terminateAuctionDone: false,
   terminateAuctionError: null,
-
 };
 
 // ----------------------------
@@ -401,7 +400,7 @@ const auctionReducer = (state = initialState, action) =>
         draft.searchNftFailure = action.error;
         break;
       }
-        
+
       // 경매시작
       case START_AUCTION_REQUEST:
         draft.startAuctionLoading = true;
@@ -450,11 +449,11 @@ const auctionReducer = (state = initialState, action) =>
         draft.confirmPurchaseLoading = false;
         draft.confirmPurchaseError = action.error;
         break;
-        
+
       case CLEAR_AUCTION:
         draft.singleAuction = {};
         break;
-        
+
       case CHECK_AUCTION_REQUEST:
         draft.checkAuctionLoading = true;
         draft.checkAuctionDone = false;
