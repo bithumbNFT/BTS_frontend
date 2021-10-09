@@ -28,6 +28,10 @@ const MemberBox = styled.li`
   display: grid;
   grid-auto-columns: 1fr 1fr;
   place-items: center;
+  margin-bottom: 40px;
+  @media (max-width: 414px) {
+    width: 100%;
+  }
 `;
 
 const MemberPhoto = styled.div`

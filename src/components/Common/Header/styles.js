@@ -28,6 +28,15 @@ export const Gnb = styled.nav`
       max-width: 900px;
     }
   }
+  @media (max-width: 768px) {
+    .navWrap {
+      padding: 0;
+      max-width: 700px;
+    }
+  }
+  @media (max-width: 414px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.button`
@@ -125,6 +134,20 @@ export const UserProfile = styled.div`
     border-radius: 50%;
     object-fit: cover;
   }
+  @media (max-width: 414px) {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 3.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    p {
+      margin-top: 0.5rem;
+      color: #fe5000;
+      font-weight: 500;
+    }
+  }
 `;
 
 export const NotiIcon = styled.div`
@@ -137,6 +160,82 @@ export const NotiIcon = styled.div`
     &:hover {
       color: #fe5000;
       fill: #fe5000;
+    }
+  }
+`;
+
+export const SmallGnb = styled.nav`
+  display: none;
+  @media (max-width: 414px) {
+    display: block;
+    position: sticky;
+    z-index: 50;
+    background-color: #fff;
+    padding: 0.6rem 1rem;
+    width: 100%;
+    .navWrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    svg {
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+    .rightMenu {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      .search {
+        position: relative;
+        width: 10rem;
+        background: #f6f6f6;
+        color: #5f5f5f;
+        border-radius: 3px;
+        margin-right: 0.5rem;
+        span {
+          position: absolute;
+          font-size: 1.4em;
+          right: 11px;
+          top: 6px;
+        }
+      }
+      i {
+        svg {
+          font-size: 1.4rem !important;
+        }
+      }
+      input {
+        padding: 0.3rem;
+        font-size: 1rem;
+      }
+    }
+  }
+`;
+
+export const ListMenu = styled.ul`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  display: block;
+  li {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem;
+    color: #444;
+    &:nth-of-type(1) {
+      margin-top: 12rem;
+      border-top: 1px solid #ddd;
+    }
+  }
+  .close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    svg {
+      font-size: 1.2rem;
     }
   }
 `;

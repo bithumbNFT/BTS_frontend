@@ -21,6 +21,12 @@ export const ChartWrap = styled.section`
       font-size: 2.5rem;
     }
   }
+  @media (max-width: 414px) {
+    h1 {
+      font-size: 1rem;
+      margin: 30px 0 0;
+    }
+  }
 `;
 
 export const Chart = styled.article`
@@ -52,11 +58,21 @@ export const Button = styled.button`
   position: absolute;
   bottom: 3%;
   left: 50%;
+  transform: translateX(-50%);
   svg {
     height: 30px;
     width: 30px;
     min-width: 30px;
     color: #ffffff;
+  }
+  @media (max-width: 414px) {
+    width: 40px;
+    height: 40px;
+    svg {
+      height: 100%;
+      color: #ffffff;
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -72,6 +88,15 @@ export const CoinDesc = styled.div`
   }
   @media (max-width: 1024px) {
     width: 900px;
+  }
+  @media (max-width: 768px) {
+    width: 683px;
+  }
+  @media (max-width: 414px) {
+    width: 110%;
+  }
+  @media (max-width: 375px) {
+    width: 100%;
   }
 `;
 
@@ -97,6 +122,16 @@ export const InfoDesc = styled.div`
   @media (max-width: 1024px) {
     h4 {
       font-size: 1.5rem;
+    }
+  }
+  @media (max-width: 768px) {
+    h4 {
+      font-size: 1.2rem;
+    }
+  }
+  @media (max-width: 414px) {
+    h4 {
+      font-size: 1rem;
     }
   }
 `;

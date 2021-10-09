@@ -8,6 +8,9 @@ export const TableWrapper = styled.div`
   @media (max-width: 1024px) {
     padding: 30px;
   }
+  @media (max-width: 414px) {
+    padding: 5px;
+  }
 `;
 export const TableContainer = styled.table`
   font-size: 16px;
@@ -15,8 +18,10 @@ export const TableContainer = styled.table`
   width: 100%;
 
   thead {
+    .coin-title {
+      margin-bottom: 1rem;
+    }
     td {
-      padding-bottom: 2px;
       display: flex;
       align-items: center;
 
@@ -43,6 +48,28 @@ export const TableContainer = styled.table`
     .word-sm {
       padding-right: 5px;
       color: #d3d3d3;
+    }
+  }
+  @media (max-width: 414px) {
+    font-size: 0.8rem;
+    thead {
+      font-size: 0.9rem;
+    }
+    tbody {
+      .mr-3 {
+        display: block;
+      }
+      .pb-1 {
+        width: 40%;
+      }
+      td {
+        padding: 0;
+        line-height: 1.3;
+      }
+      .coin-info-price {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
     }
   }
 `;

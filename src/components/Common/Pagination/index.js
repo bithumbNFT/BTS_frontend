@@ -62,4 +62,7 @@ const Paging = styled.ul`
       }
     }
   }
+  @media (max-width: 414px) {
+    margin: 20px 0;
+  }
 `;
