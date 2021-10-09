@@ -52,6 +52,9 @@ const MyUploadText = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
+  @media (max-width: 414px) {
+    font-size: 1rem;
+  }
 `;
 
 const EmptyWrap = styled.section`
