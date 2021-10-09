@@ -73,6 +73,16 @@ export const initialState = {
   confirmPurchaseLoading: false,
   confirmPurchaseDone: false,
   confirmPurchaseError: null,
+
+  // 실시간 경매 진행 상황
+  checkAuctionLoading: false,
+  checkAuctionDone: false,
+  checkAuctionError: null,
+
+  // 경매 종료
+  terminateAuctionLoading: false,
+  terminateAuctionDone: false,
+  terminateAuctionError: null,
 };
 
 // ----------------------------
@@ -133,6 +143,16 @@ export const CONFIRM_PURCHASE_REQUEST = 'CONFIRM_PURCHASE_REQUEST';
 export const CONFIRM_PURCHASE_SUCCESS = 'CONFIRM_PURCHASE_SUCCESS';
 export const CONFIRM_PURCHASE_FAILURE = 'CONFIRM_PURCHASE_FAILURE';
 
+// 경매 진행 상황 확인
+export const CHECK_AUCTION_REQUEST = 'CHECK_AUCTION_REQUEST';
+export const CHECK_AUCTION_SUCCESS = 'CHECK_AUCTION_SUCCESS';
+export const CHECK_AUCTION_FAILURE = 'CHECK_AUCTION_FAILURE';
+
+// 경매종료
+export const TERMINATE_AUCTION_REQUEST = 'TERMINATE_AUCTION_REQUEST';
+export const TERMINATE_AUCTION_SUCCESS = 'TERMINATE_AUCTION_SUCCESS';
+export const TERMINATE_AUCTION_FAILURE = 'TERMINATE_AUCTION_FAILURE';
+
 // 경매 작품 내용 비우기
 export const CLEAR_AUCTION = 'CLEAR_AUCTION';
 
@@ -148,14 +168,21 @@ export const myPage = data => ({
 
 // 액션함수 생성
 // [TODO] data에 뭐가 들어가는지는 모르겟음
-export const startAuction = data => ({
+export const startAuction = (id, period) => ({
   type: START_AUCTION_REQUEST,
-  data, // 예상 - userid, nftid, 현재시간
+  data: {
+    id,
+    period,
+  }, // 예상 - userid, nftid, 현재시간
 });
 
-export const participateAuction = data => ({
+export const participateAuction = (price, attendee, nftId) => ({
   type: PARTICIPATE_AUCTION_REQUEST,
-  data, // 예상 - userid, nftid, 입찰가격(현재+1klay), 시간
+  data: {
+    price,
+    attendee,
+    nftId,
+  }, // 예상 - userid, nftid, 입찰가격(현재+1klay), 시간
 });
 
 export const confirmPurchase = data => ({
@@ -165,6 +192,16 @@ export const confirmPurchase = data => ({
 
 export const clearAuction = () => ({
   type: CLEAR_AUCTION,
+});
+
+export const checkAuction = data => ({
+  type: CHECK_AUCTION_REQUEST,
+  data,
+});
+
+export const terminateAuction = data => ({
+  type: TERMINATE_AUCTION_REQUEST,
+  data,
 });
 
 const auctionReducer = (state = initialState, action) =>
@@ -338,6 +375,7 @@ const auctionReducer = (state = initialState, action) =>
       case START_AUCTION_SUCCESS:
         draft.startAuctionLoading = false;
         draft.startAuctionDone = true;
+        draft.singleAuction.auction = 'START';
         break;
       case START_AUCTION_FAILURE:
         draft.startAuctionLoading = false;
@@ -378,6 +416,34 @@ const auctionReducer = (state = initialState, action) =>
         break;
       case CLEAR_AUCTION:
         draft.singleAuction = {};
+        break;
+      case CHECK_AUCTION_REQUEST:
+        draft.checkAuctionLoading = true;
+        draft.checkAuctionDone = false;
+        draft.checkAuctionError = action.error;
+        break;
+      case CHECK_AUCTION_SUCCESS:
+        draft.checkAuctionLoading = false;
+        draft.checkAuctionDone = true;
+        draft.singleAuction.curStatus = action.data;
+        break;
+      case CHECK_AUCTION_FAILURE:
+        draft.checkAuctionLoading = false;
+        draft.checkAuctionError = action.error;
+        break;
+      case TERMINATE_AUCTION_REQUEST:
+        draft.terminateAuctionLoading = true;
+        draft.terminateAuctionDone = false;
+        draft.terminateAuctionError = action.error;
+        break;
+      case TERMINATE_AUCTION_SUCCESS:
+        draft.terminateAuctionLoading = false;
+        draft.terminateAuctionDone = true;
+        draft.singleAuction.auction = 'FINISH';
+        break;
+      case TERMINATE_AUCTION_FAILURE:
+        draft.terminateAuctionLoading = false;
+        draft.terminateAuctionError = action.error;
         break;
       default:
         break;

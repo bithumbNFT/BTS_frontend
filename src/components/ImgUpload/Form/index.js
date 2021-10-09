@@ -9,7 +9,10 @@ import { Wrapper, ImgSection, ImageInput, InputSection } from './styles';
 const Input = ({ label, regiName, register, ptn }) => (
   <>
     <label>{label}</label>
-    <input {...register(regiName, { required: true, pattern: ptn })} autoComplete="off" />
+    <input
+      {...register(regiName, { required: true, pattern: ptn })}
+      autoComplete="off"
+    />
   </>
 );
 
@@ -27,7 +30,12 @@ export function priceToString(price) {
 function UploadForm() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const watchPrice = watch('price');
 
   const [imgSrc, setImgSrc] = useState(undefined);
@@ -54,6 +62,7 @@ function UploadForm() {
       owner: String(JSON.parse(localStorage.getItem('userInfo')).id),
       auction: 'READY',
       price: data.price,
+      term: parseInt(data.period, 10),
     };
     formData.append(
       'NFTInfo',
@@ -115,11 +124,7 @@ function UploadForm() {
         onChange={onChangeImg}
       />
       <InputSection>
-        <Input
-          label="🎨 작품제목"
-          regiName="title"
-          register={register}
-        />
+        <Input label="🎨 작품제목" regiName="title" register={register} />
         <Textarea
           label="🎬 작품설명"
           regiName="description"

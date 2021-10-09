@@ -4,8 +4,9 @@ import styled from '@emotion/styled';
 
 function Button() {
   const history = useHistory();
-  const coinWallet = JSON.parse(localStorage.getItem('userInfo')).coin_wallet;
+
   const openUploadPage = () => {
+    const coinWallet = JSON.parse(localStorage.getItem('userInfo')).coin_wallet;
     if (coinWallet) {
       history.push('/upload');
     } else {
