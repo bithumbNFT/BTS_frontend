@@ -194,9 +194,10 @@ export const clearAuction = () => ({
   type: CLEAR_AUCTION,
 });
 
-export const checkAuction = data => ({
+export const checkAuction = (data, owner) => ({
   type: CHECK_AUCTION_REQUEST,
   data,
+  owner,
 });
 
 export const terminateAuction = data => ({

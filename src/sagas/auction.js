@@ -69,6 +69,9 @@ import {
   CHECK_AUCTION_REQUEST,
   CHECK_AUCTION_SUCCESS,
   CHECK_AUCTION_FAILURE,
+  TERMINATE_AUCTION_FAILURE,
+  TERMINATE_AUCTION_SUCCESS,
+  TERMINATE_AUCTION_REQUEST,
 } from '../reducers/auction';
 
 import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
@@ -158,10 +161,11 @@ function* loadOneAuction(action) {
     });
     console.log(result);
     // [TODO] START일 때로 변경
-    if (result.data.auction === 'READY') {
+    if (result.data.auction === 'START') {
       yield put({
         type: CHECK_AUCTION_REQUEST,
         data: result.data.id,
+        owner: result.data.email,
       });
     }
   } catch (err) {
@@ -401,8 +405,8 @@ function checkAuctionAPI(nftId) {
     data: {
       a_id: '616181622d9f193142fe344a',
       nft_id: 'check',
-      email: 'check',
-      auction_price: Math.random(),
+      email: 'yrseo1216@gmail.com',
+      auction_price: parseInt(Math.random() * 100, 10),
       time: '11:57:36',
       price: 20,
     },
@@ -418,9 +422,50 @@ function* checkAuction(action) {
       type: CHECK_AUCTION_SUCCESS,
       data: result.data,
     });
+    // [TODO] time vs 현재시간 비교
+    if (!result.data.time) {
+      yield put({
+        type: TERMINATE_AUCTION_REQUEST,
+        data: {
+          id: result.data.nft_id,
+          value: result.data.auction_price,
+          owner: action.owner,
+          user: result.data.email,
+          action: 'FINISH',
+        },
+      });
+    }
   } catch (err) {
     yield put({
       type: CHECK_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function terminateAuctionAPI(data) {
+  // const response = instance({
+  //   method: 'post',
+  //   url: 'main/NFT/auction/finish',
+  //   data
+  // });
+  const dummy = {
+    data: {
+      status: 'complete',
+    },
+  };
+  return dummy;
+}
+function* terminateAuction(action) {
+  try {
+    console.log('action in terminate Auction', action);
+    yield call(terminateAuctionAPI, action.data);
+    yield put({
+      type: TERMINATE_AUCTION_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: TERMINATE_AUCTION_FAILURE,
       error: err.response.data,
     });
   }
@@ -479,9 +524,14 @@ function* watchParticipateAuctions() {
 function* watchConfirmPurchase() {
   yield throttle(2000, CONFIRM_PURCHASE_REQUEST, confirmPurchase);
 }
-
+// 실시간 경매 상태 로딩
 function* watchCheckAuction() {
   yield takeLatest(CHECK_AUCTION_REQUEST, checkAuction);
+}
+
+// 경매 종료 로딩
+function* watchTerminateAuction() {
+  yield takeLatest(TERMINATE_AUCTION_REQUEST, terminateAuction);
 }
 
 export default function* auctionSaga() {
@@ -498,5 +548,6 @@ export default function* auctionSaga() {
     fork(watchParticipateAuctions),
     fork(watchConfirmPurchase),
     fork(watchCheckAuction),
+    fork(watchTerminateAuction),
   ]);
 }

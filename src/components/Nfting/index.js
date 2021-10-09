@@ -48,13 +48,10 @@ function auctionNft({ props }) {
         }
         break;
       case 2:
-        // [ TODO ] 주석 풀어야함
-        // if (userInfo.email === props.email) {
-        //   window.confirm('본인작품에 입찰 하실 수 없습니다');
-        // } else
-        if (window.confirm('경매에 참여하시겠습니까?')) {
+        if (userInfo.email === props.email) {
+          window.confirm('본인작품에 입찰 하실 수 없습니다');
+        } else if (window.confirm('경매에 참여하시겠습니까?')) {
           dispatch(participateAuction(props.price + 1, props.email, props.id));
-          // alert('입찰에 성공하셨습니다.');
         }
         break;
       default:
@@ -63,9 +60,9 @@ function auctionNft({ props }) {
 
   if (props.auction === 'START') {
     useInterval(() => {
-      dispatch(checkAuction(props.id));
+      dispatch(checkAuction(props.id, props.email));
       console.log('확인 중');
-    }, 5000);
+    }, 3000);
   }
 
   return (
@@ -110,7 +107,7 @@ function auctionNft({ props }) {
 
             <h3 className="current">👤 현재 매수왕</h3>
             <div className="email">
-              {props.curStatus ? <p>{props.curStatus?.email} KLAY</p> : <p />}
+              {props.curStatus ? <p>{props.curStatus?.email}</p> : <p />}
             </div>
             {/* 상태 구별 */}
             {/* 판매자일 때  */}
