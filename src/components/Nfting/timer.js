@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import useInterval from 'hooks/useInterval';
 
 const Timer = ({ endDate }) => {
-  console.log(endDate);
   const [dateTime, setDateTime] = useState('00:00:60');
 
   const getTime = () => {

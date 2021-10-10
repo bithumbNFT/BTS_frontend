@@ -63,7 +63,6 @@ function* kakaoLogIn(action) {
     });
     yield call(redirect, '/');
   } catch (err) {
-    console.log('사가 로그인 실패');
     yield put({
       type: LOG_IN_FAILURE,
       error: err.response,
@@ -88,7 +87,6 @@ function naverLogInAPI(code, state) {
 
 function* naverLogIn(action) {
   try {
-    console.log('사가 로그인');
     const result = yield call(
       naverLogInAPI,
       action.data.code,
@@ -110,9 +108,7 @@ function* naverLogIn(action) {
       data: result.data,
     });
     yield call(redirect, '/');
-    console.log('redirect');
   } catch (err) {
-    console.log('사가 로그인 실패');
     yield put({
       type: LOG_IN_FAILURE,
       error: err.response,
@@ -121,7 +117,6 @@ function* naverLogIn(action) {
 }
 //------------------------------------------------
 function logoutAPI(social) {
-  console.log('social in logout', social);
   const response = axios({
     method: 'post',
     url: 'auth/logout',
@@ -137,7 +132,6 @@ function logoutAPI(social) {
 }
 
 function* logOut(action) {
-  console.log(action);
   try {
     // 로그아웃 시, localstorage에 저장된 토큰 삭제
     localStorage.clear();
@@ -176,7 +170,6 @@ function* createWallet(action) {
       data: result.data.address,
     });
   } catch (err) {
-    console.log('사가 지갑 실패');
     yield put({
       type: CREATE_WALLET_FAILURE,
       error: err.response,
@@ -202,7 +195,6 @@ function* checkBalance(action) {
       data: result.data.klay,
     });
   } catch (err) {
-    console.log('사가 잔고 조회 실패');
     yield put({
       type: CHECK_BALANCE_FAILURE,
       error: err.response,
@@ -221,7 +213,6 @@ function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 function* watchCreateWallet() {
-  console.log('watchCreateWallet in saga');
   yield throttle(500, CREATE_WALLET_REQUEST, createWallet);
 }
 

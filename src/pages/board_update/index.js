@@ -11,7 +11,6 @@ import { Form } from './styles';
 function boardWrite({ history, match }) {
   const dispatch = useDispatch();
   const { singlePost } = useSelector(state => state.postReducer);
-  console.log('singlePost in board update', singlePost);
   const [state, onChangeInput] = useInputs({
     title: singlePost.title,
     content: singlePost.content,
@@ -41,8 +40,6 @@ function boardWrite({ history, match }) {
   );
 
   const handleUpdateComment = useCallback(() => {
-    console.log(`타이틀과 콘텐츠----> ${title}, ${content}`);
-    console.log(`아이디값 ----> ${match.params.id}`);
     dispatch(updatePost(match.params.id, title, content));
     alert('게시물 수정을 완료하셨습니다.');
 

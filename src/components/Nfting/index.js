@@ -15,25 +15,16 @@ import Timer from './timer';
 function auctionNft({ props, status }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const dispatch = useDispatch();
-  console.log('=======props', props);
-  console.log('=======props', props.auction);
 
-  // if (status === 'FINISH') {
-  //   console.log('hello');
-  //   dispatch(checkAuction(props.id, props.email));
-  // }
   useInterval(
     () => {
       dispatch(checkAuction(props.id, props.email));
-      console.log('확인 중');
     },
     status === 'START' ? 3000 : null,
   );
 
   useEffect(() => {
-    console.log('useEffect 들어옴');
     if (status === 'FINISH') {
-      console.log('hello');
       dispatch(justCheckAuction(props.id));
     }
   }, [status]);
@@ -62,7 +53,6 @@ function auctionNft({ props, status }) {
   };
 
   const handleButtonClick = state => {
-    console.log(state);
     switch (state) {
       case 0:
         if (window.confirm('경매를 시작하겠습니까?')) {
@@ -71,10 +61,9 @@ function auctionNft({ props, status }) {
         }
         break;
       case 2:
-        // if (userInfo.email === props.email) {
-        //   window.confirm('본인작품에 입찰 하실 수 없습니다');
-        // } else
-        if (window.confirm('경매에 참여하시겠습니까?')) {
+        if (userInfo.email === props.email) {
+          window.confirm('본인작품에 입찰 하실 수 없습니다');
+        } else if (window.confirm('경매에 참여하시겠습니까?')) {
           if (props.curStatus?.auction_price) {
             dispatch(
               participateAuction(

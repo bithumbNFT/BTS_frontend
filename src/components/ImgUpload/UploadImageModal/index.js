@@ -3,7 +3,6 @@ import { Wrapper, ModalContainer, ModalHeader, CloseIcon } from './styles';
 
 function UploadImageModal(props) {
   const { isOpen, close } = props;
-  console.log(close);
   return (
     <>
       {isOpen ? (

@@ -3,9 +3,6 @@ import CardItem from './CardItem';
 import { CardWrap, CardListWrapper } from './styles';
 
 function CardList({ auctions, likeAuctions }) {
-  console.log('auctions------------+', auctions);
-  console.log('like auctions------------+', likeAuctions);
-
   return (
     <CardWrap>
       <CardListWrapper>

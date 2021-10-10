@@ -38,10 +38,8 @@ function home() {
         type: LOAD_LIKE_AUCTION_REQUEST,
         data: userInfo.id,
       });
-      console.log('-----------', mainAuctions, likeAuctions);
     }
   }, [localStorage]);
-  console.log('-----------', mainAuctions, likeAuctions);
 
   // const likeAuctionsId = likeAuctions ?.map(like => like.id) || [];
   const likeAuctionsId = likeAuctions ? likeAuctions.map(like => like.id) : [];
@@ -57,13 +55,10 @@ function home() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // 각 페이지에서 보여질 포스트 배열입니다.
   const currentAuctions = mainAuctions.slice(indexOfFirstPost, indexOfLastPost);
-  console.log('currentAuctions---------', currentAuctions);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
-    console.log('currentAuctions', currentAuctions);
   };
-  console.log('currentAuctions: ', currentAuctions);
 
   // 버튼 클릭시 경매 섹션으로 이동
   const scrollToAuction = useCallback(() => {

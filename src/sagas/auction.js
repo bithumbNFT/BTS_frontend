@@ -104,16 +104,12 @@ function* loadAuction(action) {
 
 //  좋아요한 작품(wishlist) 경매템 로드
 function loadLikeAuctionAPI(id) {
-  console.log('user 값이 뭘까요 ?? ---->', id);
   return instance.get(`main/NFT/userlikelist/${id}`);
 }
 
 function* loadLikeAuction(action) {
-  console.log('loadLikeAuctionAPI action', action);
   try {
     const result = yield call(loadLikeAuctionAPI, action.data);
-    // const likeItem = yield call(loadOneAuctionAPI, action.data.nftid);
-    console.log('loadLikeAuctionAPI,', result);
     yield put({
       type: LOAD_LIKE_AUCTION_SUCCESS,
       data: result.data,
@@ -133,10 +129,8 @@ function loadGetAuctionAPI(id) {
 }
 
 function* loadGetAuction(action) {
-  console.log('loadGetAuction action', action);
   try {
     const result = yield call(loadGetAuctionAPI, action.data);
-    console.log('loadGetAuction result', result);
     yield put({
       type: LOAD_MY_AUCTION_SUCCESS,
       data: result.data,
@@ -166,8 +160,6 @@ function* loadOneAuction(action) {
       type: LOAD_ONE_AUCTION_SUCCESS,
       data: { auction: result.data, likes: likeCount.data.count },
     });
-    console.log(result);
-    // [TODO] START일 때로 변경
     if (result.data.auction === 'START') {
       yield put({
         type: CHECK_AUCTION_REQUEST,
@@ -186,7 +178,6 @@ function* loadOneAuction(action) {
 
 // 경매템 추가
 function addAuctionAPI(data) {
-  console.log(data);
   const response = instance.post('main/NFT/makeNFT', data);
 
   return response;
@@ -194,11 +185,7 @@ function addAuctionAPI(data) {
 
 function* addAuction(action) {
   try {
-    console.log(action);
-    console.log('사가 작품 등록');
     const result = yield call(addAuctionAPI, action.data);
-    console.log(result);
-    // [TODO] 실제 nft id로 변경
     yield put({
       type: ADD_AUCTION_SUCCESS,
       data: {
@@ -206,13 +193,8 @@ function* addAuction(action) {
         username: JSON.parse(localStorage.getItem('userInfo')).name,
       },
     });
-    // yield put({
-    //   type: ADD_AUCTION_TO_ME,
-    //   data: id,
-    // });
     yield call(redirect, '/mypage');
   } catch (err) {
-    console.log('사가 작품 등록 실패');
     yield put({
       type: ADD_AUCTION_FAILURE,
       data: err.response.data,
@@ -221,7 +203,6 @@ function* addAuction(action) {
 }
 
 function removeAuctionAPI(data) {
-  console.log('data in remove AuctionAPI', data);
   const response = instance({
     url: 'main/NFT/deleteNFT',
     method: 'delete',
@@ -232,17 +213,11 @@ function removeAuctionAPI(data) {
 
 function* removeAuction(action) {
   try {
-    console.log('action in remove', action);
     const result = yield call(removeAuctionAPI, action.data);
-    console.log('result', result);
     yield put({
       type: REMOVE_AUCTION_SUCCESS,
       data: action.data.id,
     });
-    // yield put({
-    //   type: REMOVE_AUCTION_OF_ME,
-    //   data: action.data.id,
-    // });
   } catch (err) {
     yield put({
       type: REMOVE_AUCTION_FAILURE,
@@ -252,7 +227,6 @@ function* removeAuction(action) {
 }
 
 function likeAPI(data) {
-  console.log('data', data);
   return instance({
     url: '/main/NFT/likeNFT',
     method: 'post',
@@ -266,17 +240,13 @@ function likeAPI(data) {
 function* likeAuction(action) {
   try {
     yield call(likeAPI, action.data);
-    console.log(action.data);
     const result = yield call(loadOneAuctionAPI, action.data.nftid);
-    console.log('like in auction', result.data);
     const likeItem = yield call(loadOneAuctionAPI, action.data.nftid);
-    console.log('like auction', likeItem.data);
     yield put({
       type: LIKE_AUCTION_SUCCESS,
       data: likeItem.data,
     });
   } catch (err) {
-    console.error(err);
     yield put({
       type: LIKE_AUCTION_FAILURE,
       error: err.response.data,
@@ -285,7 +255,6 @@ function* likeAuction(action) {
 }
 
 function unLikeAPI(data) {
-  console.log(data);
   return instance({
     url: '/main/NFT/likeNFT',
     method: 'delete',
@@ -299,7 +268,6 @@ function unLikeAPI(data) {
 function* unLikeAuction(action) {
   try {
     const result = yield call(unLikeAPI, action.data);
-    console.log('result in delet', result.data);
     yield put({
       type: UNLIKE_AUCTION_SUCCESS,
       data: action.data.nftid,
@@ -315,12 +283,10 @@ function* unLikeAuction(action) {
 }
 
 function searchNftAPI(data) {
-  console.log(`data-------> ${data}`);
   return instance.get(`main/NFT/findNFT/${data}`);
 }
 
 function* searchNft(action) {
-  console.log(`action-------> ${action}`);
   try {
     const result = yield call(searchNftAPI, action.data);
     yield put({
@@ -338,7 +304,6 @@ function* searchNft(action) {
 
 // [main server에 보낼 API]
 function startAuctionAPI(data) {
-  console.log('startAuctionapi', data);
   const response = instance({
     method: 'post',
     url: `main/NFT/auction/${data}`,
@@ -362,7 +327,6 @@ function startAuctionKafkaAPI(data) {
 
 function* startAuction(action) {
   try {
-    console.log('action in startAuction', action);
     const resultFromMain = yield call(startAuctionAPI, action.data.id);
     yield call(startAuctionKafkaAPI, action.data);
     yield put({
@@ -379,7 +343,6 @@ function* startAuction(action) {
 }
 
 function participateAuctionAPI(data) {
-  console.log('participateAict data', data);
   const response = instance({
     method: 'post',
     url: 'producer/auction/publish',
@@ -411,7 +374,6 @@ function* participateAuction(action) {
 }
 
 function checkAuctionAPI(nftId) {
-  console.log(nftId);
   const response = instance({
     method: 'get',
     url: `consumer/auction/${nftId}`,
@@ -421,23 +383,12 @@ function checkAuctionAPI(nftId) {
 
 function* checkAuction(action) {
   try {
-    console.log('action in checkAuction', action);
     const result = yield call(checkAuctionAPI, action.data);
-    console.log(result.data);
     const checkResult = yield put({
       type: CHECK_AUCTION_SUCCESS,
       data: result.data,
     });
-    console.log(checkResult);
-    console.log(result.data.time);
-    // [TODO] time vs 현재시간 비교
     if (new Date() > new Date(result.data.time)) {
-      console.log(
-        result.data.nft_id,
-        result.data.auction_price,
-        action.owner,
-        result.data.email,
-      );
       yield put({
         type: TERMINATE_AUCTION_REQUEST,
         data: {
@@ -466,7 +417,6 @@ function* justCheckAuction(action) {
 }
 
 function terminateAuctionAPI(data) {
-  console.log(data);
   const response = instance({
     method: 'post',
     url: 'main/NFT/auction/finish',
@@ -477,7 +427,6 @@ function terminateAuctionAPI(data) {
 
 function* terminateAuction(action) {
   try {
-    console.log('action in terminate Auction', action);
     yield call(terminateAuctionAPI, action.data);
     yield put({
       type: TERMINATE_AUCTION_SUCCESS,

@@ -20,7 +20,6 @@ import {
 } from './styles';
 
 function Card({ post, isLike }) {
-  // console.log('auction post', post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [deleteShow, setDeleteShow] = useState(true);
@@ -91,7 +90,6 @@ function Card({ post, isLike }) {
     if (isLike) {
       setLiked(true);
     }
-    console.log('islike? ', liked);
   });
 
   return (

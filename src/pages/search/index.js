@@ -11,12 +11,10 @@ import styled from '@emotion/styled';
 import CardItem from 'components/MyPage/Card/CardItem';
 
 const Search = ({ match }) => {
-  console.log(match);
   const { searchNft, likeAuctions } = useSelector(
     state => state.auctionReducer,
   );
   const dispatch = useDispatch();
-  console.log('searchNft--------', searchNft);
 
   useEffect(() => {
     dispatch({
