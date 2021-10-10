@@ -10,6 +10,7 @@ import {
 } from 'reducers/auction';
 import useInterval from 'hooks/useInterval';
 import { Nfting, Images, Detail, Border } from './styles';
+import Timer from './timer';
 
 function auctionNft({ props, status }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -172,7 +173,11 @@ function auctionNft({ props, status }) {
 
           <Border>
             <h3>⏱ 남은 경매시간</h3>
-            <p>19:05:19</p>
+            {status === 'START' ? (
+              <Timer endDate={props.curStatus?.time} status={status} />
+            ) : (
+              <p />
+            )}
           </Border>
 
           <Border>
