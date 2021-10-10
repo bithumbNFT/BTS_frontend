@@ -79,8 +79,6 @@ import {
   TERMINATE_AUCTION_REQUEST,
 } from '../reducers/auction';
 
-import { ADD_AUCTION_TO_ME, REMOVE_AUCTION_OF_ME } from '../reducers/user';
-
 // home 모든 경매템 로드
 function loadAuctionAPI() {
   return axios.get('main/NFT/allNFT');
@@ -105,13 +103,14 @@ function* loadAuction(action) {
 //  좋아요한 작품(wishlist) 경매템 로드
 function loadLikeAuctionAPI(id) {
   console.log('user 값이 뭘까요 ?? ---->', id);
-  return axios.get(`main/NFT/userlikelist/${id}`);
+  return instance.get(`main/NFT/userlikelist/${id}`);
 }
 
 function* loadLikeAuction(action) {
   console.log('loadLikeAuctionAPI action', action);
   try {
     const result = yield call(loadLikeAuctionAPI, action.data);
+    // const likeItem = yield call(loadOneAuctionAPI, action.data.nftid);
     console.log('loadLikeAuctionAPI,', result);
     yield put({
       type: LOAD_LIKE_AUCTION_SUCCESS,
@@ -252,7 +251,7 @@ function* removeAuction(action) {
 
 function likeAPI(data) {
   console.log('data', data);
-  return axios({
+  return instance({
     url: '/main/NFT/likeNFT',
     method: 'post',
     data: {
@@ -268,9 +267,11 @@ function* likeAuction(action) {
     console.log(action.data);
     const result = yield call(loadOneAuctionAPI, action.data.nftid);
     console.log('like in auction', result.data);
+    const likeItem = yield call(loadOneAuctionAPI, action.data.nftid);
+    console.log('like auction', likeItem.data);
     yield put({
       type: LIKE_AUCTION_SUCCESS,
-      data: result.data,
+      data: likeItem.data,
     });
   } catch (err) {
     console.error(err);
@@ -282,7 +283,8 @@ function* likeAuction(action) {
 }
 
 function unLikeAPI(data) {
-  return axios({
+  console.log(data);
+  return instance({
     url: '/main/NFT/likeNFT',
     method: 'delete',
     data: {
@@ -298,8 +300,9 @@ function* unLikeAuction(action) {
     console.log('result in delet', result.data);
     yield put({
       type: UNLIKE_AUCTION_SUCCESS,
-      data: result.data,
+      data: action.data.nftid,
     });
+    alert('찜 목록에 제거되었습니다.');
   } catch (err) {
     console.error(err);
     yield put({

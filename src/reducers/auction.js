@@ -374,7 +374,7 @@ const auctionReducer = (state = initialState, action) =>
         console.log(action.data);
         draft.unlikeAuctionLoading = false;
         draft.likeAuctions = draft.likeAuctions.filter(
-          v => v.id !== action.data.id,
+          v => v.id !== action.data,
         );
         draft.unlikeAuctionDone = true;
         break;

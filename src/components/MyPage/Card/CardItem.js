@@ -19,7 +19,7 @@ import {
   Status,
 } from './styles';
 
-function Card({ post }) {
+function Card({ post, isLike }) {
   // console.log('auction post', post);
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
@@ -47,12 +47,11 @@ function Card({ post }) {
   const onClickUnLike = useCallback(id => {
     if (window.confirm('해당 경매 작품을 찜목록에 제거하시겠습니까 ?')) {
       setLiked(false);
-      alert('찜 목록에 제거되었습니다.');
       dispatch({
         type: UNLIKE_AUCTION_REQUEST,
         data: {
           nftid: post.id,
-          user: post.user,
+          user: String(JSON.parse(localStorage.getItem('userInfo')).id),
         },
       });
     }
@@ -85,9 +84,14 @@ function Card({ post }) {
 
   // 마이페이지 좋아요한 작품에는 하트 fill 처리
   useEffect(() => {
+    setLiked(false);
     if (window.location.pathname === '/mypage/wishlist') {
       setLiked(true);
     }
+    if (isLike) {
+      setLiked(true);
+    }
+    console.log('islike? ', liked);
   });
 
   return (

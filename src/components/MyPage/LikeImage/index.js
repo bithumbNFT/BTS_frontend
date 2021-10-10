@@ -22,7 +22,10 @@ function LikeImage() {
       <MyUploadText># 좋아요한 작품</MyUploadText>
 
       {likeAuctions.length > 0 ? (
-        <CardList auctions={likeAuctions} />
+        <CardList
+          auctions={likeAuctions}
+          likeAuctions={likeAuctions.map(item => item.id)}
+        />
       ) : (
         <EmptyWrap>
           <Empty description={false} />

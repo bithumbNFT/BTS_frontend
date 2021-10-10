@@ -32,10 +32,16 @@ function home() {
     dispatch({
       type: LOAD_AUCTION_REQUEST,
     });
-    dispatch({
-      type: LOAD_LIKE_AUCTION_REQUEST,
-    });
+    if (localStorage.getItem('userInfo')) {
+      dispatch({
+        type: LOAD_LIKE_AUCTION_REQUEST,
+        data: JSON.parse(localStorage.getItem('userInfo')).id,
+      });
+    }
   }, []);
+  console.log('-----------', mainAuctions, likeAuctions);
+
+  const likeAuctionsId = likeAuctions?.map(like => like.id);
 
   // PagingNation
   // 현재 페이지
@@ -83,7 +89,11 @@ function home() {
           <CardWrap>
             <CardListBox>
               {currentAuctions.map(post => (
-                <CardItem key={post.id} post={post} />
+                <CardItem
+                  key={post.id}
+                  post={post}
+                  isLike={likeAuctionsId.includes(post.id)}
+                />
               ))}
             </CardListBox>
 
