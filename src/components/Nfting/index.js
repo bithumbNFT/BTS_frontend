@@ -6,6 +6,7 @@ import {
   startAuction,
   participateAuction,
   checkAuction,
+  justCheckAuction,
 } from 'reducers/auction';
 import useInterval from 'hooks/useInterval';
 import { Nfting, Images, Detail, Border } from './styles';
@@ -16,6 +17,10 @@ function auctionNft({ props, status }) {
   console.log('=======props', props);
   console.log('=======props', props.auction);
 
+  // if (status === 'FINISH') {
+  //   console.log('hello');
+  //   dispatch(checkAuction(props.id, props.email));
+  // }
   useInterval(
     () => {
       dispatch(checkAuction(props.id, props.email));
@@ -23,6 +28,14 @@ function auctionNft({ props, status }) {
     },
     status === 'START' ? 3000 : null,
   );
+
+  useEffect(() => {
+    console.log('useEffect 들어옴');
+    if (status === 'FINISH') {
+      console.log('hello');
+      dispatch(justCheckAuction(props.id));
+    }
+  }, [status]);
 
   const auctionStat = () => {
     if (status === 'READY') {

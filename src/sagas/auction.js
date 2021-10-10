@@ -77,6 +77,8 @@ import {
   TERMINATE_AUCTION_FAILURE,
   TERMINATE_AUCTION_SUCCESS,
   TERMINATE_AUCTION_REQUEST,
+  JUST_CHECK_AUCTION_REQUEST,
+  JUST_CHECK_AUCTION_SUCCESS,
 } from '../reducers/auction';
 
 // home 모든 경매템 로드
@@ -455,6 +457,14 @@ function* checkAuction(action) {
   }
 }
 
+function* justCheckAuction(action) {
+  const result = yield call(checkAuctionAPI, action.data);
+  yield put({
+    type: JUST_CHECK_AUCTION_SUCCESS,
+    data: result.data,
+  });
+}
+
 function terminateAuctionAPI(data) {
   console.log(data);
   const response = instance({
@@ -462,11 +472,6 @@ function terminateAuctionAPI(data) {
     url: 'main/NFT/auction/finish',
     data,
   });
-  // const dummy = {
-  //   data: {
-  //     status: 'complete',
-  //   },
-  // };
   return response;
 }
 
@@ -544,6 +549,11 @@ function* watchCheckAuction() {
   yield takeLatest(CHECK_AUCTION_REQUEST, checkAuction);
 }
 
+// 경매 상태 로딩
+function* watchJustCheckAuction() {
+  yield takeLatest(JUST_CHECK_AUCTION_REQUEST, justCheckAuction);
+}
+
 // 경매 종료 로딩
 function* watchTerminateAuction() {
   yield takeLatest(TERMINATE_AUCTION_REQUEST, terminateAuction);
@@ -563,6 +573,7 @@ export default function* auctionSaga() {
     fork(watchStartAuctions),
     fork(watchParticipateAuctions),
     fork(watchCheckAuction),
+    fork(watchJustCheckAuction),
     fork(watchTerminateAuction),
   ]);
 }
