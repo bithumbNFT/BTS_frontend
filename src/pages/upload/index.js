@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from 'components/Common/Header';
-import UploadForm from 'components/ImgUpload/Form';
+import UploadForm from 'components/ImgUpload';
 import { Title, Container } from './styles';
 
 function Upload() {
