@@ -426,6 +426,8 @@ const auctionReducer = (state = initialState, action) =>
       case PARTICIPATE_AUCTION_SUCCESS:
         draft.participateAuctionLoading = false;
         draft.participateAuctionDone = true;
+        draft.singleAuction.curStatus.auction_price = action.data.price;
+        draft.singleAuction.curStatus.email = action.data.email;
         break;
       case PARTICIPATE_AUCTION_FAILURE:
         draft.participateAuctionLoading = false;

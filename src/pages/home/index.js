@@ -21,6 +21,7 @@ function home() {
   const { mainAuctions, likeAuctions } = useSelector(
     stateRedux => stateRedux.auctionReducer,
   );
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     AOS.init({
@@ -32,16 +33,18 @@ function home() {
     dispatch({
       type: LOAD_AUCTION_REQUEST,
     });
-    if (localStorage.getItem('userInfo')) {
+    if (localStorage.getItem('token')) {
       dispatch({
         type: LOAD_LIKE_AUCTION_REQUEST,
-        data: JSON.parse(localStorage.getItem('userInfo')).id,
+        data: userInfo.id,
       });
+      console.log('-----------', mainAuctions, likeAuctions);
     }
-  }, []);
+  }, [localStorage]);
   console.log('-----------', mainAuctions, likeAuctions);
 
-  const likeAuctionsId = likeAuctions?.map(like => like.id);
+  // const likeAuctionsId = likeAuctions ?.map(like => like.id) || [];
+  const likeAuctionsId = likeAuctions ? likeAuctions.map(like => like.id) : [];
 
   // PagingNation
   // 현재 페이지

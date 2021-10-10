@@ -121,10 +121,12 @@ function* naverLogIn(action) {
 }
 //------------------------------------------------
 function logoutAPI(social) {
-  const response = instance({
+  console.log('social in logout', social);
+  const response = axios({
     method: 'post',
-    url: '/auth/logout',
+    url: 'auth/logout',
     headers: {
+      token: localStorage.getItem('token'),
       refresh: getCookie('refresh'),
     },
     data: {
@@ -135,15 +137,20 @@ function logoutAPI(social) {
 }
 
 function* logOut(action) {
+  console.log(action);
   try {
-    yield call(logoutAPI, action.data.social);
-    yield put({
-      type: LOG_OUT_SUCCESS,
-    });
     // 로그아웃 시, localstorage에 저장된 토큰 삭제
     localStorage.clear();
     removeCookie('refresh');
     yield call(redirect, '/');
+    yield call(logoutAPI, action.data.social);
+    yield put({
+      type: LOG_OUT_SUCCESS,
+    });
+    // // 로그아웃 시, localstorage에 저장된 토큰 삭제
+    // localStorage.clear();
+    // removeCookie('refresh');
+    // yield call(redirect, '/');
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,

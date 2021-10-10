@@ -337,25 +337,25 @@ function* searchNft(action) {
 // [main server에 보낼 API]
 function startAuctionAPI(data) {
   console.log('startAuctionapi', data);
-  // const response = instance({
-  //   method: 'post',
-  //   url: 'main/NFT/auction/${data}',
-  // });
+  const response = instance({
+    method: 'post',
+    url: `main/NFT/auction/${data}`,
+  });
 
   return 1;
 }
 // [kafka server에 보낼 API]
 function startAuctionKafkaAPI(data) {
-  // const response = instance({
-  //   method: 'post',
-  //   url: '/auction/start',
-  //   data: {
-  //     nft: data.id,
-  //     time: data.period,
-  //   },
-  // });
+  const response = instance({
+    method: 'post',
+    url: 'producer/auction/start',
+    data: {
+      nft: data.id,
+      time: data.period,
+    },
+  });
 
-  return 1;
+  return response;
 }
 
 function* startAuction(action) {
@@ -378,26 +378,28 @@ function* startAuction(action) {
 
 function participateAuctionAPI(data) {
   console.log('participateAict data', data);
-  // const response = instance({
-  //   method: 'post',
-  //   url: '/action/publish',
-  //   data: {
-  //     auctionPrice: data.price,
-  //     email: data.attendee,
-  //     nft_id: data.nftId,
-  //   },
-  // });
+  const response = instance({
+    method: 'post',
+    url: 'producer/auction/publish',
+    data: {
+      auctionPrice: data.price,
+      email: data.attendee,
+      nft_id: data.nftId,
+    },
+  });
 
-  return 1;
+  return response;
 }
 
 function* participateAuction(action) {
   // api function 생성 후 수정 필요
   try {
-    const result = yield call(participateAuctionAPI, action.data);
+    yield call(participateAuctionAPI, action.data);
     yield put({
       type: PARTICIPATE_AUCTION_SUCCESS,
+      data: action.data,
     });
+    alert(`${action.data.price} klay 입찰 성공`);
   } catch (err) {
     yield put({
       type: PARTICIPATE_AUCTION_FAILURE,
@@ -406,59 +408,34 @@ function* participateAuction(action) {
   }
 }
 
-function confirmPurchaseAPI(data) {
-  //  const response = instance({
-  //   method: '',
-  //   url: '',
-  // });
-
-  return 1;
-}
-
-function* confirmPurchase(action) {
-  // api function 생성 후 수정 필요
-  try {
-    const result = yield call(confirmPurchaseAPI, action.data);
-    yield put({
-      type: CONFIRM_PURCHASE_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: CONFIRM_PURCHASE_FAILURE,
-      error: err.response.data,
-    });
-  }
-}
-
 function checkAuctionAPI(nftId) {
-  // const response = instance({
-  //   method: 'get',
-  //   url: `consumer/auction/${nftId}`,
-  // });
-  const dummy = {
-    data: {
-      a_id: '616181622d9f193142fe344a',
-      nft_id: 'check',
-      email: 'yrseo1216@gmail.com',
-      auction_price: parseInt(Math.random() * 100, 10),
-      time: '11:57:36',
-      price: 20,
-    },
-  };
-  return dummy;
+  console.log(nftId);
+  const response = instance({
+    method: 'get',
+    url: `consumer/auction/${nftId}`,
+  });
+  return response;
 }
 
 function* checkAuction(action) {
   try {
     console.log('action in checkAuction', action);
     const result = yield call(checkAuctionAPI, action.data);
-    yield put({
+    console.log(result.data);
+    const checkResult = yield put({
       type: CHECK_AUCTION_SUCCESS,
       data: result.data,
     });
+    console.log(checkResult);
+    console.log(result.data.time);
     // [TODO] time vs 현재시간 비교
-    if (!result.data.time) {
+    if (new Date() > new Date(result.data.time)) {
+      console.log(
+        result.data.nft_id,
+        result.data.auction_price,
+        action.owner,
+        result.data.email,
+      );
       yield put({
         type: TERMINATE_AUCTION_REQUEST,
         data: {
@@ -466,7 +443,7 @@ function* checkAuction(action) {
           value: result.data.auction_price,
           owner: action.owner,
           user: result.data.email,
-          action: 'FINISH',
+          auction: 'FINISH',
         },
       });
     }
@@ -479,17 +456,18 @@ function* checkAuction(action) {
 }
 
 function terminateAuctionAPI(data) {
-  // const response = instance({
-  //   method: 'post',
-  //   url: 'main/NFT/auction/finish',
-  //   data
-  // });
-  const dummy = {
-    data: {
-      status: 'complete',
-    },
-  };
-  return dummy;
+  console.log(data);
+  const response = instance({
+    method: 'post',
+    url: 'main/NFT/auction/finish',
+    data,
+  });
+  // const dummy = {
+  //   data: {
+  //     status: 'complete',
+  //   },
+  // };
+  return response;
 }
 
 function* terminateAuction(action) {
@@ -561,11 +539,6 @@ function* watchParticipateAuctions() {
   yield throttle(1000, PARTICIPATE_AUCTION_REQUEST, participateAuction);
 }
 
-// 구매확정 로딩
-function* watchConfirmPurchase() {
-  yield throttle(2000, CONFIRM_PURCHASE_REQUEST, confirmPurchase);
-}
-
 // 실시간 경매 상태 로딩
 function* watchCheckAuction() {
   yield takeLatest(CHECK_AUCTION_REQUEST, checkAuction);
@@ -589,7 +562,6 @@ export default function* auctionSaga() {
     fork(watchSearchNFT),
     fork(watchStartAuctions),
     fork(watchParticipateAuctions),
-    fork(watchConfirmPurchase),
     fork(watchCheckAuction),
     fork(watchTerminateAuction),
   ]);
