@@ -34,9 +34,11 @@
 ## 🗂 React 라이브러리
 
 - antd (템플릿)
+- axios (RESTfull API 데이터 통신)
 - immer (불변성 유지)
 - react-icons (아이콘)
 - AOS (모션 동작)
+- react-router-dom
 
 <br>
 
@@ -58,23 +60,27 @@
 
 <br />
 
-### 페이지별 기능 소개
+## 🌟 페이지별 기능 요약
 
 ```
 📦 src
  ┣ 📂 pages
- ┃ ┣ 📜 404page.js 📍(경로 이탈 404 페이지)
- ┃ ┣ 📜 auction.js 📍(경매 View)
- ┃ ┣ 📜 board.js 📍(커뮤니티 게시글 리스트)
- ┃ ┣ 📜 board_post.js 📍(커뮤니티 게시글 View)
+ ┃ ┣ 📜 404page.js 📍(404 에러 경로 이탈 시 메인으로 이동)
+ ┃ ┣ 📜 auction.js 📍(NFT 경매 작품 View)
+ ┃ ┣ 📜 board.js 📍(커뮤니티 업로드 된 게시글 리스트)
+ ┃ ┣ 📜 board_post.js 📍(커뮤니티 게시글 내용물 View)
  ┃ ┣ 📜 board_write.js 📍(커뮤니티 게시글 작성)
  ┃ ┣ 📜 board_update.js 📍(커뮤니티 게시글 수정)
- ┃ ┣ 📜 login.js 📍(로그인 페이지)
- ┃ ┣ 📜 mypage.js 📍(마이페이지)
- ┃ ┣ 📜 search.js 📍(NFT 검색 페이지)
- ┃ ┣ 📜 upload.js 📍(NFT 경매 업로드)
- ┃ ┗ 📜 home.js 📍(NFT 메인페이지)
+ ┃ ┣ 📜 login.js 📍(로그인 페이지 : 네이버 & 카카오 Oauth)
+ ┃ ┣ 📜 mypage.js 📍(마이페이지 : 내가 올린 NFT 작품, 좋아요한 작품, 지갑 정보)
+ ┃ ┣ 📜 search.js 📍(NFT 작품 검색 기능)
+ ┃ ┣ 📜 upload.js 📍(NFT 작품 경매 게시글 업로드)
+ ┃ ┗ 📜 home.js 📍(NFT 메인페이지 : 클레이튼 현재 유동적인 시세가 표, NFT 경매 게시글 카드 (경매전, 경매중, 경매완료로 상태 나눔), Footer 팀 멤버 소개 )
 ```
+
+## 🌟 페이지별 기능 **디테일** 소개
+
+<br />
 
 ## 👉 `로딩화면`
 
