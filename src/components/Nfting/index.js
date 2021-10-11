@@ -71,7 +71,7 @@ function auctionNft({ props, status, balance }) {
               dispatch(
                 participateAuction(
                   parseInt(props.curStatus?.auction_price, 10) + 1,
-                  props.email,
+                  userInfo.email,
                   props.id,
                 ),
               );
@@ -82,7 +82,7 @@ function auctionNft({ props, status, balance }) {
             dispatch(
               participateAuction(
                 parseInt(props.price, 10) + 1,
-                props.email,
+                userInfo.email,
                 props.id,
               ),
             );
