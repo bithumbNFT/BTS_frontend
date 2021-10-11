@@ -5,13 +5,14 @@ import {
   LOAD_MY_AUCTION_REQUEST,
   LOAD_LIKE_AUCTION_REQUEST,
 } from 'reducers/auction';
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import CardList from '../Card/CardList';
 import Button from './Button';
 
 function MyUpload() {
   const dispatch = useDispatch();
-  const { myAuctions, likeAuctions } = useSelector(
+  const { myAuctions, likeAuctions, loadMyAuctionLoading } = useSelector(
     state => state.auctionReducer,
   );
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -26,23 +27,31 @@ function MyUpload() {
       data: JSON.parse(localStorage.getItem('userInfo')).id,
     });
   }, []);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   return (
     <>
-      <MyUploadHeader>
-        <MyUploadText># 나의 NFT 작품</MyUploadText>
-        <Button />
-      </MyUploadHeader>
-
-      {myAuctions.length > 0 ? (
-        <CardList
-          auctions={myAuctions}
-          likeAuctions={likeAuctions.map(item => item.id)}
-        />
+      {loadMyAuctionLoading ? (
+        <Spin indicator={antIcon} />
       ) : (
-        <EmptyWrap>
-          <Empty description={false} />
-          <h3>작가님의 첫 작품을 등록해보세요.</h3>
-        </EmptyWrap>
+        <>
+          <MyUploadHeader>
+            <MyUploadText># 나의 NFT 작품</MyUploadText>
+            <Button />
+          </MyUploadHeader>
+
+          {myAuctions.length > 0 ? (
+            <CardList
+              auctions={myAuctions}
+              likeAuctions={likeAuctions.map(item => item.id)}
+            />
+          ) : (
+            <EmptyWrap>
+              <Empty description={false} />
+              <h3>작가님의 첫 작품을 등록해보세요.</h3>
+            </EmptyWrap>
+          )}
+        </>
       )}
     </>
   );

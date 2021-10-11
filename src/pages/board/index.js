@@ -3,22 +3,28 @@ import { HiPencilAlt } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_POSTS_REQUEST } from 'reducers/post';
 import { Link } from 'react-router-dom';
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import Pagination from 'components/Common/Pagination';
 import Item from 'components/Board/Item';
 import Intro from 'components/Board/Intro';
 import Header from 'components/Common/Header';
+
 import { ListView, ListWrap, EmptyWrap } from './styles';
 
 function board() {
   const dispatch = useDispatch();
-  const { mainPosts } = useSelector(state => state.postReducer);
+  const { loadPostsLoading, mainPosts } = useSelector(
+    state => state.postReducer,
+  );
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   useEffect(() => {
     dispatch({
       type: LOAD_POSTS_REQUEST,
     });
   }, []);
+  console.log('loadPostsLoading', loadPostsLoading);
 
   // PagingNation
   // 현재 페이지
@@ -41,46 +47,50 @@ function board() {
     <>
       {/* 헤더 */}
       <Header />
-      <main>
-        {/* 인트로 view */}
-        <Intro />
+      {loadPostsLoading ? (
+        <Spin indicator={antIcon} />
+      ) : (
+        <main>
+          {/* 인트로 view */}
+          <Intro />
 
-        {/* 게시글 리스트 */}
-        <ListWrap>
-          <div className="write">
-            <Link to="/board_write">
-              <button type="button" className="postButton">
-                <i>
-                  <HiPencilAlt />
-                </i>
-                글쓰기
-              </button>
-            </Link>
-          </div>
+          {/* 게시글 리스트 */}
+          <ListWrap>
+            <div className="write">
+              <Link to="/board_write">
+                <button type="button" className="postButton">
+                  <i>
+                    <HiPencilAlt />
+                  </i>
+                  글쓰기
+                </button>
+              </Link>
+            </div>
 
-          <ListView>
-            {/* {isBoard &&} */}
-            {mainPosts.length > 0 ? (
-              <>
-                {currentPosts.map(post => (
-                  <Item key={post.id} post={post} mainPosts={currentPosts} />
-                ))}
+            <ListView>
+              {/* {isBoard &&} */}
+              {mainPosts.length > 0 ? (
+                <>
+                  {currentPosts.map(post => (
+                    <Item key={post.id} post={post} mainPosts={currentPosts} />
+                  ))}
 
-                <Pagination
-                  postsPerPage={postsPerPage}
-                  totalPosts={mainPosts.length}
-                  paginate={paginate}
-                />
-              </>
-            ) : (
-              <EmptyWrap>
-                <Empty description={false} />
-                <h3>아직 등록된 게시물이 없습니다.</h3>
-              </EmptyWrap>
-            )}
-          </ListView>
-        </ListWrap>
-      </main>
+                  <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={mainPosts.length}
+                    paginate={paginate}
+                  />
+                </>
+              ) : (
+                <EmptyWrap>
+                  <Empty description={false} />
+                  <h3>아직 등록된 게시물이 없습니다.</h3>
+                </EmptyWrap>
+              )}
+            </ListView>
+          </ListWrap>
+        </main>
+      )}
     </>
   );
 }

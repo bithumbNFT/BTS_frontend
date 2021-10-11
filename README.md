@@ -103,7 +103,7 @@
 2. 하락 상승시 색깔로 표시 (상승시 빨간색 / 하락시 파란색)
 3. 아래 화살표 클릭 시 NFT 경매 섹션으로 이동
 
-![](https://images.velog.io/images/leemember/post/68a0cbd5-173c-43da-826d-9c49dc4b117c/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB.gif)
+![](https://images.velog.io/images/leemember/post/a421edc1-0a74-4744-af32-531409a02e63/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB.gif)
 
 ### **NFT 경매 섹션**
 
