@@ -122,7 +122,21 @@ function Card({ post, isLike }) {
           ) : (
             <RiHeartLine onClick={onClickLike} />
           )}
-          <Status>{post.auction === 'READY' ? '경매전' : post.auction === 'START' ? '경매중' : '경매완료'}</Status>
+          <Status
+            className={
+              post.auction === 'READY'
+                ? 'pre'
+                : post.auction === 'START'
+                ? 'ing'
+                : 'completion'
+            }
+          >
+            {post.auction === 'READY'
+              ? '경매전'
+              : post.auction === 'START'
+              ? '경매중'
+              : '경매완료'}
+          </Status>
         </CardRight>
       </CardDetail>
     </CardContainer>

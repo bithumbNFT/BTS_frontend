@@ -15,6 +15,7 @@ function boardWrite({ history, match }) {
     title: singlePost.title,
     content: singlePost.content,
   });
+
   const { title, content } = state;
   const inputTitle = useRef(null);
   const inputContent = useRef(null);
