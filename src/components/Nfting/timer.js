@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useInterval from 'hooks/useInterval';
 
 const Timer = ({ endDate }) => {
-  const [dateTime, setDateTime] = useState('00:00:60');
+  const [dateTime, setDateTime] = useState();
 
   const getTime = () => {
     const endDay = new Date(endDate);
@@ -23,7 +23,13 @@ const Timer = ({ endDate }) => {
     const miniutes = diffMin < 10 ? `0${diffMin}` : diffMin;
     const seconds = diffSec < 10 ? `0${diffSec}` : diffSec;
 
-    return `${hours}:${miniutes}:${seconds}`;
+    const result = `${hours}:${miniutes}:${seconds}`;
+    if (result === 'NaN:NaN:NaN') {
+      return '00:00:60';
+    }
+    return result;
+
+    // return `${hours}:${miniutes}:${seconds}`;
   };
 
   useInterval(

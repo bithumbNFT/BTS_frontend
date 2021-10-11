@@ -12,7 +12,7 @@ import { Form } from './styles';
 
 function boardWrite({ history, match }) {
   const dispatch = useDispatch();
-  const { singlePost, loadPostLoading } = useSelector(
+  const { singlePost, loadPostLoading, loadPostDone } = useSelector(
     state => state.postReducer,
   );
   const [state, onChangeInput] = useInputs({
@@ -57,7 +57,7 @@ function boardWrite({ history, match }) {
     <>
       <Header />
       {/* 인트로 view */}
-      {loadPostLoading ? (
+      {loadPostLoading && !loadPostDone ? (
         <Spin indicator={antIcon} />
       ) : (
         <>
