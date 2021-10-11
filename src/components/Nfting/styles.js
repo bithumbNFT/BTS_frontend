@@ -15,10 +15,13 @@ export const Nfting = styled.main`
 `;
 
 export const Images = styled.div`
-  width: 100%;
+  width: 500px;
+  height: 500px;
   overflow: hidden;
   img {
     width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 `;
 
