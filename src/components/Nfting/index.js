@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   startAuction,
   participateAuction,
@@ -21,6 +21,10 @@ function auctionNft({ props, status, balance }) {
       dispatch(checkAuction(props.id, props.email));
     },
     status === 'START' ? 3000 : null,
+  );
+
+  const { checkAuctionLoading, checkAuctionDone } = useSelector(
+    state => state.auctionReducer,
   );
 
   useEffect(() => {
