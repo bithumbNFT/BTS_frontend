@@ -28,6 +28,13 @@ export const ListWrap = styled.section`
   .write {
     text-align: right;
   }
+
+  @media (max-width: 414px) {
+    padding: 4.5em 0;
+    .write {
+      margin-right: 1rem;
+    }
+  }
 `;
 
 export const ListView = styled.ul`

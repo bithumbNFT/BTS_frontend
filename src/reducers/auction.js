@@ -84,6 +84,11 @@ export const initialState = {
   checkAuctionDone: false,
   checkAuctionError: null,
 
+  // 경매 결과 조회
+  justCheckAuctionLoading: false,
+  justCheckAuctionDone: false,
+  justChekcAuctionError: null,
+
   // 경매 종료
   terminateAuctionLoading: false,
   terminateAuctionDone: false,
@@ -158,6 +163,11 @@ export const CHECK_AUCTION_REQUEST = 'CHECK_AUCTION_REQUEST';
 export const CHECK_AUCTION_SUCCESS = 'CHECK_AUCTION_SUCCESS';
 export const CHECK_AUCTION_FAILURE = 'CHECK_AUCTION_FAILURE';
 
+// 경매 결과 조회
+export const JUST_CHECK_AUCTION_REQUEST = 'JUST_CHECK_AUCTION_REQUEST';
+export const JUST_CHECK_AUCTION_SUCCESS = 'JUST_CHECK_AUCTION_SUCCESS';
+export const JUST_CHECK_AUCTION_FAILURE = 'JUST_CHECK_AUCTION_FAILURE';
+
 // 경매종료
 export const TERMINATE_AUCTION_REQUEST = 'TERMINATE_AUCTION_REQUEST';
 export const TERMINATE_AUCTION_SUCCESS = 'TERMINATE_AUCTION_SUCCESS';
@@ -213,6 +223,11 @@ export const checkAuction = (data, owner) => ({
   type: CHECK_AUCTION_REQUEST,
   data,
   owner,
+});
+
+export const justCheckAuction = data => ({
+  type: JUST_CHECK_AUCTION_REQUEST,
+  data,
 });
 
 export const terminateAuction = data => ({
@@ -371,10 +386,9 @@ const auctionReducer = (state = initialState, action) =>
         draft.unlikeAuctionDone = false;
         break;
       case UNLIKE_AUCTION_SUCCESS:
-        console.log(action.data);
         draft.unlikeAuctionLoading = false;
         draft.likeAuctions = draft.likeAuctions.filter(
-          v => v.id !== action.data.id,
+          v => v.id !== action.data,
         );
         draft.unlikeAuctionDone = true;
         break;
@@ -426,6 +440,8 @@ const auctionReducer = (state = initialState, action) =>
       case PARTICIPATE_AUCTION_SUCCESS:
         draft.participateAuctionLoading = false;
         draft.participateAuctionDone = true;
+        draft.singleAuction.curStatus.auction_price = action.data.price;
+        draft.singleAuction.curStatus.email = action.data.email;
         break;
       case PARTICIPATE_AUCTION_FAILURE:
         draft.participateAuctionLoading = false;
@@ -468,6 +484,22 @@ const auctionReducer = (state = initialState, action) =>
         draft.checkAuctionLoading = false;
         draft.checkAuctionError = action.error;
         break;
+
+      case JUST_CHECK_AUCTION_REQUEST:
+        draft.justCheckAuctionLoading = true;
+        draft.justCheckAuctionDone = false;
+        draft.justChekcAuctionError = action.error;
+        break;
+      case JUST_CHECK_AUCTION_SUCCESS:
+        draft.justCheckAuctionLoading = false;
+        draft.justCheckAuctionDone = true;
+        draft.singleAuction.curStatus = action.data;
+        break;
+      case JUST_CHECK_AUCTION_FAILURE:
+        draft.justCheckAuctionLoading = false;
+        draft.justChekcAuctionError = action.error;
+        break;
+
       case TERMINATE_AUCTION_REQUEST:
         draft.terminateAuctionLoading = true;
         draft.terminateAuctionDone = false;

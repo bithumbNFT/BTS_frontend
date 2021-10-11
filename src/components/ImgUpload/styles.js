@@ -11,6 +11,10 @@ export const Wrapper = styled.form`
   max-width: 950px;
   margin: 65px auto;
   padding-bottom: 10rem;
+  @media (max-width: 414px) {
+    grid-template-columns: 1fr;
+    margin: 35px auto;
+  }
 `;
 
 export const ImgSection = styled.div`
@@ -24,10 +28,16 @@ export const ImgSection = styled.div`
   font-weight: 500;
   color: #8a8a8a;
   cursor: pointer;
-
+  @media (max-width: 414px) {
+    height: 50vh;
+  }
   img {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  @media (max-width: 414px) {
+    width: 100%;
   }
 `;
 
@@ -35,7 +45,10 @@ export const InputSection = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 60px;
-
+  @media (max-width: 414px) {
+    padding: 0 20px;
+    margin-top: 3rem;
+  }
   label {
     font-size: 1.3rem;
     font-weight: 600;
@@ -116,6 +129,8 @@ export const InputSection = styled.div`
 
     select {
       margin-bottom: 24px;
+      border: 1px solid #dee2e6;
+      text-align: center;
     }
   }
 `;

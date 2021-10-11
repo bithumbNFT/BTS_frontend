@@ -3,7 +3,17 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutRequestAction } from 'reducers/user';
-import { Gnb, Menu, User, Title, UserProfile } from './styles';
+import { HiMenu } from 'react-icons/hi';
+import { GrClose } from 'react-icons/gr';
+import {
+  Gnb,
+  Menu,
+  User,
+  Title,
+  UserProfile,
+  SmallGnb,
+  ListMenu,
+} from './styles';
 
 function Header() {
   // [TODO] logInLoading, logInError 일 때 상태 처리하기
@@ -15,7 +25,7 @@ function Header() {
   }));
   // 검색
   const [searchValue, setSearchValue] = useState('');
-
+  const [showMenu, setShowMenu] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const history = useHistory();
   const dispatch = useDispatch();
@@ -32,6 +42,10 @@ function Header() {
     history.push(name);
   };
 
+  const onClickShowMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
@@ -42,57 +56,127 @@ function Header() {
     [searchValue, history],
   );
   return (
-    <Gnb>
-      <div className="navWrap">
-        <Menu>
+    <>
+      <Gnb>
+        <div className="navWrap">
+          <Menu>
+            <Title type="button" onClick={() => GoToPage('/')}>
+              BTS
+            </Title>
+
+            <Link to="/board" className="board">
+              커뮤니티
+            </Link>
+          </Menu>
+
+          <User>
+            <li className="search">
+              <form onSubmit={onSubmit}>
+                <input
+                  type="search"
+                  value={searchValue}
+                  onChange={onChangeSearch}
+                  placeholder="NFT 경매품을 입력하세요."
+                />
+              </form>
+
+              <span>
+                <i>
+                  <AiOutlineSearch />
+                </i>
+              </span>
+            </li>
+
+            {userInfo ? (
+              <>
+                <UserProfile onClick={() => GoToPage('/mypage')}>
+                  <img src={userInfo.picture} alt="profileImage" />
+                </UserProfile>
+                <li className="user">
+                  <button type="button" onClick={handleLogoutClick}>
+                    로그아웃
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li className="user">
+                <button type="button" onClick={() => GoToPage('/login')}>
+                  로그인
+                </button>
+              </li>
+            )}
+          </User>
+        </div>
+      </Gnb>
+
+      {/*  모바일버전 메뉴바 */}
+
+      <SmallGnb>
+        <div className="navWrap">
           <Title type="button" onClick={() => GoToPage('/')}>
             BTS
           </Title>
 
-          <Link to="/board" className="board">
-            커뮤니티
-          </Link>
-        </Menu>
+          <div className="rightMenu">
+            <li className="search">
+              <form onSubmit={onSubmit}>
+                <input
+                  type="search"
+                  value={searchValue}
+                  onChange={onChangeSearch}
+                />
+              </form>
 
-        <User>
-          <li className="search">
-            <form onSubmit={onSubmit}>
-              <input
-                type="search"
-                value={searchValue}
-                onChange={onChangeSearch}
-                placeholder="NFT 경매품을 입력하세요."
-              />
-            </form>
+              <span>
+                <i>
+                  <AiOutlineSearch />
+                </i>
+              </span>
+            </li>
+            <button type="button" onClick={onClickShowMenu}>
+              <HiMenu />
+            </button>
+          </div>
+        </div>
 
-            <span>
-              <i>
-                <AiOutlineSearch />
-              </i>
-            </span>
-          </li>
-
-          {userInfo ? (
-            <>
-              <UserProfile onClick={() => GoToPage('/mypage')}>
-                <img src={userInfo.picture} alt="profileImage" />
-              </UserProfile>
+        {showMenu ? (
+          <ListMenu>
+            <button type="button" className="close" onClick={onClickShowMenu}>
+              <GrClose />
+            </button>
+            {userInfo ? (
+              <>
+                <UserProfile onClick={() => GoToPage('/mypage')}>
+                  <img src={userInfo.picture} alt="profileImage" />
+                  <p>MyPage</p>
+                </UserProfile>
+                <li className="user">
+                  <button type="button" onClick={handleLogoutClick}>
+                    로그아웃
+                  </button>
+                </li>
+              </>
+            ) : (
               <li className="user">
-                <button type="button" onClick={handleLogoutClick}>
-                  로그아웃
+                <button type="button" onClick={() => GoToPage('/login')}>
+                  로그인
                 </button>
               </li>
-            </>
-          ) : (
-            <li className="user">
-              <button type="button" onClick={() => GoToPage('/login')}>
-                로그인
-              </button>
+            )}
+            <li>
+              <Link to="/upload" className="board">
+                NFT 작품 등록하기
+              </Link>
             </li>
-          )}
-        </User>
-      </div>
-    </Gnb>
+            <li>
+              <Link to="/board" className="board">
+                커뮤니티
+              </Link>
+            </li>
+          </ListMenu>
+        ) : null}
+      </SmallGnb>
+    </>
   );
 }
 

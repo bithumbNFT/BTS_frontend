@@ -8,22 +8,15 @@ export const LoginWrapper = styled.div`
   overflow: hidden;
   box-sizing: border-box;
 `;
-// export const LoginBg = styled.div`
-//   position: fixed;
-//   left: 0;
-//   top: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   z-index: 100;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
+
 export const LoginBg = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
   place-items: center;
+  @media (max-width: 414px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const LoginLeft = styled.div`
@@ -36,6 +29,9 @@ export const LoginLeft = styled.div`
     font-size: 16px;
     line-height: 1.43;
     color: #4e4e4e;
+  }
+  @media (max-width: 414px) {
+    margin-bottom: 2rem;
   }
 `;
 
@@ -100,6 +96,9 @@ export const LoginPopUp = styled.div`
       top: 8px;
       right: 17px;
     }
+  }
+  @media (max-width: 414px) {
+    margin-bottom: 4rem;
   }
 `;
 

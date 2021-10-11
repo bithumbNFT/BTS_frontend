@@ -9,7 +9,6 @@ function LikeImage() {
   const dispatch = useDispatch();
   const { likeAuctions } = useSelector(state => state.auctionReducer);
   const user = JSON.parse(localStorage.getItem('userInfo'));
-  console.log('likeAuctions-----', likeAuctions);
 
   useEffect(() => {
     dispatch({
@@ -22,7 +21,10 @@ function LikeImage() {
       <MyUploadText># 좋아요한 작품</MyUploadText>
 
       {likeAuctions.length > 0 ? (
-        <CardList auctions={likeAuctions} />
+        <CardList
+          auctions={likeAuctions}
+          likeAuctions={likeAuctions.map(item => item.id)}
+        />
       ) : (
         <EmptyWrap>
           <Empty description={false} />
@@ -41,6 +43,9 @@ const MyUploadText = styled.div`
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
   width: fit-content;
   margin: 8px 0;
+  @media (max-width: 414px) {
+    font-size: 1rem;
+  }
 `;
 
 export const EmptyWrap = styled.section`

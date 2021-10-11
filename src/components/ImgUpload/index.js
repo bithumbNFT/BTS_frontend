@@ -51,7 +51,6 @@ function UploadForm() {
   const currentKLAYPrice = coinData?.now_price;
 
   const formData = new FormData();
-  // console.log('errors', errors);
 
   // [TODO] form 제출
   const onSubmit = data => {
@@ -85,7 +84,6 @@ function UploadForm() {
   const onChangeImg = evt => {
     if (evt.target.files.length) {
       const imgTarget = evt.target.files[0];
-      console.log('imgTarget', imgTarget);
       // 업로드 이미지 미리보기
       const fileReader = new FileReader();
       fileReader.readAsDataURL(imgTarget);
@@ -150,7 +148,7 @@ function UploadForm() {
               autoComplete="off"
             />
             <select {...register('unit', { required: true })}>
-              {['d', 'h', 'm', 's'].map(value => (
+              {['일', '시간', '분', '초'].map(value => (
                 <option key={value} value={value}>
                   {value}
                 </option>

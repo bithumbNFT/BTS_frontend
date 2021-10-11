@@ -2,13 +2,16 @@ import styled from '@emotion/styled';
 
 export const CommentForm = styled.div`
   background: #fff;
-  padding: 24px 36px;
+  padding: 24px 15px 24px 25px;
   border-radius: 8px;
   margin: 0 auto;
   max-width: 1000px;
   width: 100%;
   border: 1px solid #e9ecef;
   margin-bottom: 1em;
+  svg {
+    font-size: 1.5rem;
+  }
   .userTimeNum {
     display: flex;
     justify-content: space-between;
@@ -30,8 +33,14 @@ export const CommentForm = styled.div`
       }
     }
   }
+  @media (max-width: 414px) {
+    padding: 24px 15px 24px 20px;
+    svg {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 export const BoardBody = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
 `;

@@ -1,20 +1,29 @@
 import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_MY_AUCTION_REQUEST } from 'reducers/auction';
+import {
+  LOAD_MY_AUCTION_REQUEST,
+  LOAD_LIKE_AUCTION_REQUEST,
+} from 'reducers/auction';
 import { Empty } from 'antd';
 import CardList from '../Card/CardList';
 import Button from './Button';
 
 function MyUpload() {
   const dispatch = useDispatch();
-  const { myAuctions } = useSelector(state => state.auctionReducer);
+  const { myAuctions, likeAuctions } = useSelector(
+    state => state.auctionReducer,
+  );
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     dispatch({
       type: LOAD_MY_AUCTION_REQUEST,
       data: userInfo.id,
+    });
+    dispatch({
+      type: LOAD_LIKE_AUCTION_REQUEST,
+      data: JSON.parse(localStorage.getItem('userInfo')).id,
     });
   }, []);
   return (
@@ -25,7 +34,10 @@ function MyUpload() {
       </MyUploadHeader>
 
       {myAuctions.length > 0 ? (
-        <CardList auctions={myAuctions} />
+        <CardList
+          auctions={myAuctions}
+          likeAuctions={likeAuctions.map(item => item.id)}
+        />
       ) : (
         <EmptyWrap>
           <Empty description={false} />
@@ -52,6 +64,9 @@ const MyUploadText = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
+  @media (max-width: 414px) {
+    font-size: 1rem;
+  }
 `;
 
 const EmptyWrap = styled.section`

@@ -135,7 +135,6 @@ const reducer = (state = initialState, action) =>
         break;
 
       case REMOVE_AUCTION_OF_ME:
-        console.log('REMOVE_AUCTION_OF_ME', action);
         draft.me.auctionPost = draft.me?.auctionPost.filter(
           y => y.id !== action.data.id,
         );

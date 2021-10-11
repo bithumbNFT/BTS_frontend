@@ -4,12 +4,7 @@ import styled from '@emotion/styled';
 
 function Member({ koName, major, enName, src, github, name }) {
   return (
-    <MemberBox
-      className={name}
-      data-aos="flip-left"
-      data-aos-easing="ease-out-cubic"
-      data-aos-duration="2500"
-    >
+    <MemberBox className={name}>
       <MemberPhoto>
         <img src={src} alt={koName} />
       </MemberPhoto>
@@ -33,6 +28,10 @@ const MemberBox = styled.li`
   display: grid;
   grid-auto-columns: 1fr 1fr;
   place-items: center;
+  margin-bottom: 40px;
+  @media (max-width: 414px) {
+    width: 100%;
+  }
 `;
 
 const MemberPhoto = styled.div`
@@ -44,6 +43,10 @@ const MemberPhoto = styled.div`
   img {
     width: 100%;
     margin-left: 18px;
+  }
+  @media (max-width: 1024px) {
+    width: 160px;
+    height: 160px;
   }
 `;
 

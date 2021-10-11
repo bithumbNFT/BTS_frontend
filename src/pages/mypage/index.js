@@ -2,7 +2,6 @@ import React from 'react';
 import Profile from 'components/MyPage/Profile';
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import LikeImage from 'components/MyPage/LikeImage';
-import PurchaseImage from 'components/MyPage/PurchaseImgae';
 import MyUpload from 'components/MyPage/MyUpload';
 import Header from 'components/Common/Header';
 import {
@@ -15,9 +14,6 @@ import {
 } from './styles';
 
 function mypage({ location: { pathname } }) {
-  // const LikeImage = lazy(() => import('components/MyPage/LikeImage'));
-  // const location = useLocation();
-  // const location = { pathname: 'a' };
   const subTabs = [
     {
       id: 1,

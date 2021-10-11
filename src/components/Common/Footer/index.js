@@ -86,4 +86,23 @@ export const FooterBox = styled.footer`
       margin-left: 0;
     }
   }
+  @media (max-width: 1024px) {
+    .footerTitle {
+      font-size: 1.6rem;
+    }
+  }
+  @media (max-width: 768px) {
+    ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      margin-bottom: 30px;
+    }
+  }
+  @media (max-width: 414px) {
+    padding: 30px 20px 0;
+    ul {
+      grid-template-columns: 1fr;
+      margin-bottom: 0;
+    }
+  }
 `;
