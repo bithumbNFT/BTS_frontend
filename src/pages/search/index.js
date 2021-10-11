@@ -3,22 +3,33 @@ import Header from 'components/Common/Header';
 import { FiSearch } from 'react-icons/fi';
 import { Empty } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { SEARCH_NFT_REQUEST } from 'reducers/auction';
+import {
+  SEARCH_NFT_REQUEST,
+  LOAD_LIKE_AUCTION_REQUEST,
+} from 'reducers/auction';
 import styled from '@emotion/styled';
 import CardItem from 'components/MyPage/Card/CardItem';
 
 const Search = ({ match }) => {
-  console.log(match);
-  const { searchNft } = useSelector(state => state.auctionReducer);
+  const { searchNft, likeAuctions } = useSelector(
+    state => state.auctionReducer,
+  );
   const dispatch = useDispatch();
-  console.log('searchNft--------', searchNft);
 
   useEffect(() => {
     dispatch({
       type: SEARCH_NFT_REQUEST,
       data: match.params.id,
     });
+    if (localStorage.getItem('userInfo')) {
+      dispatch({
+        type: LOAD_LIKE_AUCTION_REQUEST,
+        data: JSON.parse(localStorage.getItem('userInfo')).id,
+      });
+    }
   }, [match.params.id]);
+
+  const likeAuctionsId = likeAuctions.map(like => like.id);
 
   return (
     <>
@@ -34,7 +45,11 @@ const Search = ({ match }) => {
         {searchNft.length > 0 ? (
           <CardListBox>
             {searchNft.map(post => (
-              <CardItem key={post.id} post={post} />
+              <CardItem
+                key={post.id}
+                post={post}
+                isLike={likeAuctionsId.includes(post.id)}
+              />
             ))}
           </CardListBox>
         ) : (

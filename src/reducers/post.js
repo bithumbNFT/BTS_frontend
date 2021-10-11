@@ -131,7 +131,6 @@ const postReducer = (state = initialState, action) =>
         draft.loadPostsError = null;
         break;
       case LOAD_POSTS_SUCCESS:
-        console.log('action on load posts', action);
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
         draft.mainPosts = action.data;

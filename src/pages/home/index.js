@@ -21,6 +21,7 @@ function home() {
   const { mainAuctions, likeAuctions } = useSelector(
     stateRedux => stateRedux.auctionReducer,
   );
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     AOS.init({
@@ -32,10 +33,16 @@ function home() {
     dispatch({
       type: LOAD_AUCTION_REQUEST,
     });
-    dispatch({
-      type: LOAD_LIKE_AUCTION_REQUEST,
-    });
-  }, []);
+    if (localStorage.getItem('token')) {
+      dispatch({
+        type: LOAD_LIKE_AUCTION_REQUEST,
+        data: userInfo.id,
+      });
+    }
+  }, [localStorage]);
+
+  // const likeAuctionsId = likeAuctions ?.map(like => like.id) || [];
+  const likeAuctionsId = likeAuctions ? likeAuctions.map(like => like.id) : [];
 
   // PagingNation
   // 현재 페이지
@@ -48,13 +55,10 @@ function home() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // 각 페이지에서 보여질 포스트 배열입니다.
   const currentAuctions = mainAuctions.slice(indexOfFirstPost, indexOfLastPost);
-  console.log('currentAuctions---------', currentAuctions);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
-    console.log('currentAuctions', currentAuctions);
   };
-  console.log('currentAuctions: ', currentAuctions);
 
   // 버튼 클릭시 경매 섹션으로 이동
   const scrollToAuction = useCallback(() => {
@@ -83,7 +87,11 @@ function home() {
           <CardWrap>
             <CardListBox>
               {currentAuctions.map(post => (
-                <CardItem key={post.id} post={post} />
+                <CardItem
+                  key={post.id}
+                  post={post}
+                  isLike={likeAuctionsId.includes(post.id)}
+                />
               ))}
             </CardListBox>
 

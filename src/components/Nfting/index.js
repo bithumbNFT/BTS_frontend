@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -6,17 +6,31 @@ import {
   startAuction,
   participateAuction,
   checkAuction,
+  justCheckAuction,
 } from 'reducers/auction';
 import useInterval from 'hooks/useInterval';
 import { Nfting, Images, Detail, Border } from './styles';
+import Timer from './timer';
 
-function auctionNft({ props }) {
+function auctionNft({ props, status, balance }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const dispatch = useDispatch();
-  console.log('=======props', props);
+
+  useInterval(
+    () => {
+      dispatch(checkAuction(props.id, props.email));
+    },
+    status === 'START' ? 3000 : null,
+  );
+
+  useEffect(() => {
+    if (status === 'FINISH') {
+      dispatch(justCheckAuction(props.id));
+    }
+  }, [status]);
 
   const auctionStat = () => {
-    if (props.auction === 'READY') {
+    if (status === 'READY') {
       if (userInfo.email === props.email) {
         // 판매자 => 경매시작
         return 0;
@@ -24,12 +38,12 @@ function auctionNft({ props }) {
       // 구매자 => "아직 경매 전 입니다"
       return 1;
     }
-    if (props.auction === 'START') {
+    if (status === 'START') {
       // 경매 중
       // 입찰
       return 2;
     }
-    if (props.auction === 'FINISH') {
+    if (status === 'FINISH') {
       // 경매 완료
       // "경매가 완료된 작품입니다."
       return 3;
@@ -39,7 +53,6 @@ function auctionNft({ props }) {
   };
 
   const handleButtonClick = state => {
-    console.log(state);
     switch (state) {
       case 0:
         if (window.confirm('경매를 시작하겠습니까?')) {
@@ -51,19 +64,34 @@ function auctionNft({ props }) {
         if (userInfo.email === props.email) {
           window.confirm('본인작품에 입찰 하실 수 없습니다');
         } else if (window.confirm('경매에 참여하시겠습니까?')) {
-          dispatch(participateAuction(props.price + 1, props.email, props.id));
+          if (props.curStatus?.auction_price) {
+            if (parseInt(props.curStatus?.auction_price, 10) + 1 > balance) {
+              alert('입찰금액이 현재 잔액보다 커 입찰하실 수 없습니다.');
+            } else {
+              dispatch(
+                participateAuction(
+                  parseInt(props.curStatus?.auction_price, 10) + 1,
+                  props.email,
+                  props.id,
+                ),
+              );
+            }
+          } else if (parseInt(props.price, 10) + 1 > balance) {
+            alert('입찰금액이 현재 잔액보다 커 입찰하실 수 없습니다.');
+          } else {
+            dispatch(
+              participateAuction(
+                parseInt(props.price, 10) + 1,
+                props.email,
+                props.id,
+              ),
+            );
+          }
         }
         break;
       default:
     }
   };
-
-  if (props.auction === 'START') {
-    useInterval(() => {
-      dispatch(checkAuction(props.id, props.email));
-      console.log('확인 중');
-    }, 3000);
-  }
 
   return (
     <>
@@ -100,14 +128,16 @@ function auctionNft({ props }) {
 
             <h3>💰 현입찰 가격</h3>
             <div className="price">
-              {props.curStatus ? (
+              {props.curStatus?.auction_price ? (
                 <p>{props.curStatus?.auction_price} KLAY</p>
-              ) : <p />}
+              ) : (
+                <p />
+              )}
             </div>
 
             <h3 className="current">👤 현재 매수왕</h3>
             <div className="email">
-              {props.curStatus ? <p>{props.curStatus?.email}</p> : <p />}
+              {props.curStatus?.email ? <p>{props.curStatus?.email}</p> : <p />}
             </div>
             {/* 상태 구별 */}
             {/* 판매자일 때  */}
@@ -138,7 +168,11 @@ function auctionNft({ props }) {
 
           <Border>
             <h3>⏱ 남은 경매시간</h3>
-            <p>19:05:19</p>
+            {status === 'START' ? (
+              <Timer endDate={props.curStatus?.time} status={status} />
+            ) : (
+              <p />
+            )}
           </Border>
 
           <Border>
@@ -171,16 +205,5 @@ function auctionNft({ props }) {
     </>
   );
 }
-
-auctionNft.propTypes = {
-  props: PropTypes.shape({
-    id: PropTypes.string,
-    no: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    image: PropTypes.string,
-    owner: PropTypes.string,
-  }).isRequired,
-};
 
 export default auctionNft;

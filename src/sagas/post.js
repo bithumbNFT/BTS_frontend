@@ -48,15 +48,12 @@ import {
 
 // 단일 게시물
 function loadPostAPI(lastId) {
-  // return axios.get('/board/board');
   return instance.get(`board/post/${lastId}`);
 }
 
 function* loadPost(action) {
-  console.log('action in loadPost', action);
   try {
     const result = yield call(loadPostAPI, action.data);
-    // yield delay(300);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -77,15 +74,12 @@ function loadPostsAPI() {
 
 function* loadPosts() {
   try {
-    console.log('여러 게시물 로드');
     const result = yield call(loadPostsAPI);
-    console.log(result);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
     });
   } catch (err) {
-    console.error(err);
     yield put({
       type: LOAD_POSTS_FAILURE,
       error: err.response.data,
@@ -108,18 +102,12 @@ function addPostAPI(data) {
 }
 
 function* addPost(action) {
-  console.log('action in addPost', action);
   try {
     const result = yield call(addPostAPI, action.data);
-    console.log(result.data);
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
     });
-    // yield put({
-    //   type: ADD_POST_TO_ME,
-    //   data: result.data.id,
-    // });
   } catch (err) {
     console.error(err);
     yield put({
@@ -143,10 +131,8 @@ function updatePostAPI(data) {
 }
 
 function* updatePost(action) {
-  console.log('action------->', action.data);
   try {
     const result = yield call(updatePostAPI, action.data);
-    console.log('result', result);
     yield put({
       type: UPDATE_POST_SUCCESS,
       data: result.data,
@@ -166,10 +152,8 @@ function removePostAPI(id) {
 }
 
 function* removePost(action) {
-  console.log(action);
   try {
     const result = yield call(removePostAPI, action.data);
-    console.log(result.data);
     yield put({
       type: REMOVE_POST_SUCCESS,
       data: result.data,
@@ -184,7 +168,6 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  console.log('post id조회', data);
   return instance({
     url: `/board/post/${data.postId}`,
     method: 'post',
@@ -211,10 +194,7 @@ function* addComment(action) {
   }
 }
 
-// [TODO] 댓글 삭제 api 수정 필요
-// ${파라미터값}에 p_id 값이 들어가야한다.
 function removeCommentAPI(data) {
-  console.log('removeCommentAPI', data);
   return instance({
     url: `/board/post/${data.postId}/delete_comment`,
     method: 'put',
@@ -229,10 +209,8 @@ function removeCommentAPI(data) {
 }
 
 function* removeComment(action) {
-  console.log('댓글삭제------->', action.data);
   try {
     yield call(removeCommentAPI, action.data);
-    // console.log('result.data------->', result.data, action.data);
     yield put({
       type: REMOVE_COMMENT_SUCCESS,
       data: action.data,
