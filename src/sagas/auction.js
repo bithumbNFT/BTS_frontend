@@ -67,18 +67,20 @@ import {
   PARTICIPATE_AUCTION_SUCCESS,
   PARTICIPATE_AUCTION_FAILURE,
 
-  // 구매확정
-  CONFIRM_PURCHASE_REQUEST,
-  CONFIRM_PURCHASE_SUCCESS,
-  CONFIRM_PURCHASE_FAILURE,
+  // 실시간 경매 상태 확인
   CHECK_AUCTION_REQUEST,
   CHECK_AUCTION_SUCCESS,
   CHECK_AUCTION_FAILURE,
+
+  // 경매 종료
   TERMINATE_AUCTION_FAILURE,
   TERMINATE_AUCTION_SUCCESS,
   TERMINATE_AUCTION_REQUEST,
+
+  // 경매 결과 조회
   JUST_CHECK_AUCTION_REQUEST,
   JUST_CHECK_AUCTION_SUCCESS,
+  JUST_CHECK_AUCTION_FAILURE,
 } from '../reducers/auction';
 
 // home 모든 경매템 로드
@@ -409,11 +411,18 @@ function* checkAuction(action) {
 }
 
 function* justCheckAuction(action) {
-  const result = yield call(checkAuctionAPI, action.data);
-  yield put({
-    type: JUST_CHECK_AUCTION_SUCCESS,
-    data: result.data,
-  });
+  try {
+    const result = yield call(checkAuctionAPI, action.data);
+    yield put({
+      type: JUST_CHECK_AUCTION_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: JUST_CHECK_AUCTION_FAILURE,
+      error: err.response.data,
+    });
+  }
 }
 
 function terminateAuctionAPI(data) {

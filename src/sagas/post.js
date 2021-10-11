@@ -48,14 +48,12 @@ import {
 
 // 단일 게시물
 function loadPostAPI(lastId) {
-  // return axios.get('/board/board');
   return instance.get(`board/post/${lastId}`);
 }
 
 function* loadPost(action) {
   try {
     const result = yield call(loadPostAPI, action.data);
-    // yield delay(300);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,

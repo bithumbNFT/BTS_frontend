@@ -16,7 +16,6 @@ function App() {
   const Post = lazy(() => import('./pages/board_post'));
   const Write = lazy(() => import('./pages/board_write'));
   const Update = lazy(() => import('./pages/board_update'));
-  const Notice = lazy(() => import('./pages/notice'));
   const NotFound = lazy(() => import('./pages/404page'));
   const Kakao = lazy(() => import('./components/LoginModal/login/kakao'));
   const Naver = lazy(() => import('./components/LoginModal/login/naver'));
@@ -57,8 +56,6 @@ function App() {
             path="/board_update/:id"
             render={props => <Update {...props} />}
           />
-          {/* 사용자 알람 view */}
-          <Route exact path="/notice" component={Notice} />
           {/* 로그인 페이지 */}
           <Route exact path="/login" component={Login} />
           {/* kakao login redirect view */}

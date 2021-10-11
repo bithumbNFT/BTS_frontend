@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { instance } from 'utils/axiosUtils';
-import { redirect, push } from 'utils/historyUtils';
+import { redirect } from 'utils/historyUtils';
 import { setCookie, getCookie, removeCookie } from 'utils/cookieUtils';
 import {
   all,

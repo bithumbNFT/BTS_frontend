@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaHeart } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ import useInterval from 'hooks/useInterval';
 import { Nfting, Images, Detail, Border } from './styles';
 import Timer from './timer';
 
-function auctionNft({ props, status }) {
+function auctionNft({ props, status, balance }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const dispatch = useDispatch();
 
@@ -65,17 +65,23 @@ function auctionNft({ props, status }) {
           window.confirm('본인작품에 입찰 하실 수 없습니다');
         } else if (window.confirm('경매에 참여하시겠습니까?')) {
           if (props.curStatus?.auction_price) {
-            dispatch(
-              participateAuction(
-                parseInt(props.curStatus?.auction_price + 1, 10),
-                props.email,
-                props.id,
-              ),
-            );
+            if (parseInt(props.curStatus?.auction_price, 10) + 1 > balance) {
+              alert('입찰금액이 현재 잔액보다 커 입찰하실 수 없습니다.');
+            } else {
+              dispatch(
+                participateAuction(
+                  parseInt(props.curStatus?.auction_price, 10) + 1,
+                  props.email,
+                  props.id,
+                ),
+              );
+            }
+          } else if (parseInt(props.price, 10) + 1 > balance) {
+            alert('입찰금액이 현재 잔액보다 커 입찰하실 수 없습니다.');
           } else {
             dispatch(
               participateAuction(
-                parseInt(props.price + 1, 10),
+                parseInt(props.price, 10) + 1,
                 props.email,
                 props.id,
               ),
