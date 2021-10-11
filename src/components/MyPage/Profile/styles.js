@@ -3,6 +3,9 @@ import styled from '@emotion/styled';
 export const Wrapper = styled.div`
   border-bottom: 1px solid #dbdbdb;
   width: 250px;
+  @media (max-width: 414px) {
+    width: 100%;
+  }
 `;
 export const UserInfo = styled.div`
   display: grid;

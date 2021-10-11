@@ -43,6 +43,9 @@ const MyUploadText = styled.div`
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
   width: fit-content;
   margin: 8px 0;
+  @media (max-width: 414px) {
+    font-size: 1rem;
+  }
 `;
 
 export const EmptyWrap = styled.section`

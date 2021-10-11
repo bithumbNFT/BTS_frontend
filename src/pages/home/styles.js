@@ -10,11 +10,28 @@ export const Title = styled.h2`
   strong {
     font-weight: 600;
   }
+  @media (max-width: 768px) {
+    padding: 10%;
+  }
+  @media (max-width: 414px) {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    padding: 3rem;
+  }
 `;
 
 export const CardWrap = styled.div`
   width: 1000px;
   margin: 0 auto;
+  @media (max-width: 1024px) {
+    width: 950px;
+  }
+  @media (max-width: 768px) {
+    width: 700px;
+  }
+  @media (max-width: 414px) {
+    width: 100%;
+  }
 `;
 
 export const CardListBox = styled.article`
@@ -22,12 +39,22 @@ export const CardListBox = styled.article`
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   margin: 0 auto;
+  place-items: center;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 414px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const BottomMailn = styled.section`
   height: 100%;
   position: relative;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
+  @media (max-width: 414px) {
+    padding-bottom: 80px;
+  }
 `;
 
 export const EmptyWrap = styled.section`

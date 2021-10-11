@@ -70,6 +70,11 @@ const CardListBox = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   place-items: center;
+  @media (max-width: 414px) {
+    margin-top: 50px;
+    grid-template-columns: 1fr;
+    margin-top: 3.5rem;
+  }
 `;
 
 const SearchWrap = styled.main`
@@ -96,6 +101,16 @@ const SearchWrap = styled.main`
     margin-top: 1rem;
     font-weight: 400;
     text-align: center;
+  }
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0 4rem;
+  }
+  @media (max-width: 414px) {
+    padding: 0 1rem;
+    h2 {
+      font-size: 1.5rem;
+    }
   }
 `;
 const NoContent = styled.section`
