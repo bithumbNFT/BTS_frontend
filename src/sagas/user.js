@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { instance } from 'utils/axiosUtils';
-import { redirect, push } from 'utils/historyUtils';
+import { redirect } from 'utils/historyUtils';
 import { setCookie, getCookie, removeCookie } from 'utils/cookieUtils';
 import {
   all,
@@ -63,7 +63,6 @@ function* kakaoLogIn(action) {
     });
     yield call(redirect, '/');
   } catch (err) {
-    console.log('사가 로그인 실패');
     yield put({
       type: LOG_IN_FAILURE,
       error: err.response,
@@ -88,7 +87,6 @@ function naverLogInAPI(code, state) {
 
 function* naverLogIn(action) {
   try {
-    console.log('사가 로그인');
     const result = yield call(
       naverLogInAPI,
       action.data.code,
@@ -110,9 +108,7 @@ function* naverLogIn(action) {
       data: result.data,
     });
     yield call(redirect, '/');
-    console.log('redirect');
   } catch (err) {
-    console.log('사가 로그인 실패');
     yield put({
       type: LOG_IN_FAILURE,
       error: err.response,
@@ -121,10 +117,11 @@ function* naverLogIn(action) {
 }
 //------------------------------------------------
 function logoutAPI(social) {
-  const response = instance({
+  const response = axios({
     method: 'post',
-    url: '/auth/logout',
+    url: 'auth/logout',
     headers: {
+      token: localStorage.getItem('token'),
       refresh: getCookie('refresh'),
     },
     data: {
@@ -136,14 +133,18 @@ function logoutAPI(social) {
 
 function* logOut(action) {
   try {
-    yield call(logoutAPI, action.data.social);
-    yield put({
-      type: LOG_OUT_SUCCESS,
-    });
     // 로그아웃 시, localstorage에 저장된 토큰 삭제
     localStorage.clear();
     removeCookie('refresh');
     yield call(redirect, '/');
+    yield call(logoutAPI, action.data.social);
+    yield put({
+      type: LOG_OUT_SUCCESS,
+    });
+    // // 로그아웃 시, localstorage에 저장된 토큰 삭제
+    // localStorage.clear();
+    // removeCookie('refresh');
+    // yield call(redirect, '/');
   } catch (err) {
     yield put({
       type: LOG_OUT_FAILURE,
@@ -169,7 +170,6 @@ function* createWallet(action) {
       data: result.data.address,
     });
   } catch (err) {
-    console.log('사가 지갑 실패');
     yield put({
       type: CREATE_WALLET_FAILURE,
       error: err.response,
@@ -195,7 +195,6 @@ function* checkBalance(action) {
       data: result.data.klay,
     });
   } catch (err) {
-    console.log('사가 잔고 조회 실패');
     yield put({
       type: CHECK_BALANCE_FAILURE,
       error: err.response,
@@ -214,7 +213,6 @@ function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 function* watchCreateWallet() {
-  console.log('watchCreateWallet in saga');
   yield throttle(500, CREATE_WALLET_REQUEST, createWallet);
 }
 

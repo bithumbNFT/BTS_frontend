@@ -26,8 +26,6 @@ instance.interceptors.request.use(
 // axios response 처리
 instance.interceptors.response.use(
   response => {
-    console.log('axiosUtils response.data', response);
-
     return response;
   },
   error => {

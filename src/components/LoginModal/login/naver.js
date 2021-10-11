@@ -9,7 +9,6 @@ const OAuth2RedirectHandler = () => {
     logInDone: state.userReducer.logInDone,
     logInError: state.userReducer.logInError,
   }));
-  console.log(logInLoading, logInDone);
   const dispatch = useDispatch();
   // 인가코드
   const params = new URL(document.location).searchParams;

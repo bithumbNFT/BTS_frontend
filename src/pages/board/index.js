@@ -32,11 +32,9 @@ function board() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // 각 페이지에서 보여질 포스트 배열입니다.
   const currentPosts = mainPosts.slice(indexOfFirstPost, indexOfLastPost);
-  console.log('currentPosts---------', currentPosts);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
-    console.log('currentPosts: ', currentPosts);
   };
 
   return (

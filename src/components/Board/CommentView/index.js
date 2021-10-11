@@ -11,7 +11,6 @@ function CommentView({ comment, postId }) {
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
 
   const handleRemoveComment = useCallback(() => {
-    console.log(`p_id ----> ${postId}`);
     dispatch(removeComment(postId, comment));
     alert('댓글을 삭제하셨습니다.');
   });
