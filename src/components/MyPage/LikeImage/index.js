@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_LIKE_AUCTION_REQUEST } from 'reducers/auction';
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import CardList from '../Card/CardList';
 
 function LikeImage() {
   const dispatch = useDispatch();
-  const { likeAuctions } = useSelector(state => state.auctionReducer);
+  const { likeAuctions, loadLikeAuctionLoading } = useSelector(
+    state => state.auctionReducer,
+  );
   const user = JSON.parse(localStorage.getItem('userInfo'));
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   useEffect(() => {
     dispatch({
@@ -18,18 +22,24 @@ function LikeImage() {
   }, [dispatch]);
   return (
     <>
-      <MyUploadText># 좋아요한 작품</MyUploadText>
-
-      {likeAuctions.length > 0 ? (
-        <CardList
-          auctions={likeAuctions}
-          likeAuctions={likeAuctions.map(item => item.id)}
-        />
+      {loadLikeAuctionLoading ? (
+        <Spin indicator={antIcon} />
       ) : (
-        <EmptyWrap>
-          <Empty description={false} />
-          <h3>좋아요한 작품이 없습니다.</h3>
-        </EmptyWrap>
+        <>
+          <MyUploadText># 좋아요한 작품</MyUploadText>
+
+          {likeAuctions.length > 0 ? (
+            <CardList
+              auctions={likeAuctions}
+              likeAuctions={likeAuctions.map(item => item.id)}
+            />
+          ) : (
+            <EmptyWrap>
+              <Empty description={false} />
+              <h3>좋아요한 작품이 없습니다.</h3>
+            </EmptyWrap>
+          )}
+        </>
       )}
     </>
   );

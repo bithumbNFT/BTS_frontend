@@ -8,7 +8,15 @@
 
 ## 📅 개발 기간
 
-### 2021. 9. 13 ~ 10. 08 (4주)
+### 2021. 9. 13 ~ 10. 10 (4~5주)
+
+### [작업 issues 바로보기](https://github.com/bithumbNFT/BTS_frontend/issues)
+
+- 1주 차 : 전 페이지 UI 컴포넌트 레이아웃 마크업 작업 완료
+- 2주 차 : 더미데이터 만들어서 Redux 및 Redux-saga 세팅 작업 완료
+- 3주 차 : 커뮤니티 및 경매 부분 기능 및 API 연동 작업 (커뮤니티 완료)
+- 4주 차 : NFT 작품 상세페이지 & 마이페이지 완료
+- 5주 차 : NFT 경매 작업 완료 & QA 테스트
 
 <br />
 
@@ -26,9 +34,11 @@
 ## 🗂 React 라이브러리
 
 - antd (템플릿)
+- axios (RESTfull API 데이터 통신)
 - immer (불변성 유지)
 - react-icons (아이콘)
 - AOS (모션 동작)
+- react-router-dom
 
 <br>
 
@@ -36,47 +46,43 @@
 
 | 팀명   | MIC (May I clone?) |
 | ------ | ------------------ |
-| 프론트 | 서유림             |
+| 프론트 | 서유림 (테크리더)  |
 | 프론트 | 이현주             |
-| 백엔드 | 조원희             |
-| 백엔드 | 백인준             |
+| 백엔드 | 조원희 (팀 리더)   |
+| 백엔드 | 백인준 (테크리더)  |
 | 백엔드 | 문승재             |
 
 <br>
 
 ---
 
+<br />
+
 ## 💻 프로젝트 주요 기능 (화면 미리보기)
 
 <br />
 
-### 페이지별 기능 소개
+## 🌟 페이지별 기능 요약
+
 ```
 📦 src
  ┣ 📂 pages
- ┃ ┣ 📜 404page.js
- ┃ ┣ 📜 auction.js
- ┃ ┣ 📜 board.js
- ┃ ┣ 📜 board_post.js
- ┃ ┣ 📜 board_write.js
- ┃ ┣ 📜 board_update.js
- ┃ ┣ 📜 login.js
- ┃ ┣ 📜 mypage.js
- ┃ ┣ 📜 notice.js
- ┃ ┣ 📜 search.js
- ┃ ┣ 📜 upload.js
- ┃ ┗ 📜 home.js
- ┣ 📂 reducers
- ┃ ┣ 📜 action.js
- ┃ ┣ 📜 chart.js
- ┃ ┣ 📜 post.js
- ┃ ┗ 📜 user.js
- ┣ 📂 sagas
- ┃ ┣ 📜 action.js
- ┃ ┣ 📜 chart.js
- ┃ ┣ 📜 post.js
- ┃ ┗ 📜 user.js
+ ┃ ┣ 📜 404page.js 📍(404 에러 경로 이탈 시 메인으로 이동)
+ ┃ ┣ 📜 auction.js 📍(NFT 경매 작품 View)
+ ┃ ┣ 📜 board.js 📍(커뮤니티 업로드 된 게시글 리스트)
+ ┃ ┣ 📜 board_post.js 📍(커뮤니티 게시글 내용물 View)
+ ┃ ┣ 📜 board_write.js 📍(커뮤니티 게시글 작성)
+ ┃ ┣ 📜 board_update.js 📍(커뮤니티 게시글 수정)
+ ┃ ┣ 📜 login.js 📍(로그인 페이지 : 네이버 & 카카오 Oauth)
+ ┃ ┣ 📜 mypage.js 📍(마이페이지 : 내가 올린 NFT 작품, 좋아요한 작품, 지갑 정보)
+ ┃ ┣ 📜 search.js 📍(NFT 작품 검색 기능)
+ ┃ ┣ 📜 upload.js 📍(NFT 작품 경매 게시글 업로드)
+ ┃ ┗ 📜 home.js 📍(NFT 메인페이지 : 클레이튼 현재 유동적인 시세가 표, NFT 경매 게시글 카드 (경매전, 경매중, 경매완료로 상태 나눔), Footer 팀 멤버 소개 )
 ```
+
+<br />
+
+## 🌟 페이지별 기능 **디테일** 소개
 
 ## 👉 `로딩화면`
 
@@ -97,7 +103,7 @@
 2. 하락 상승시 색깔로 표시 (상승시 빨간색 / 하락시 파란색)
 3. 아래 화살표 클릭 시 NFT 경매 섹션으로 이동
 
-![](https://images.velog.io/images/leemember/post/68a0cbd5-173c-43da-826d-9c49dc4b117c/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB.gif)
+![](https://images.velog.io/images/leemember/post/a421edc1-0a74-4744-af32-531409a02e63/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB.gif)
 
 ### **NFT 경매 섹션**
 
@@ -109,8 +115,7 @@
 1. 4주동안 함께 열심히 프로젝트 달렸던 팀 멤버들 소개
 2. 깃허브 주소 클릭시 해당 멤버 깃허브 페이지로 새창 열리기
 
-![](https://images.velog.io/images/leemember/post/5f8e4e67-9a4e-49cb-9334-8b31c807dade/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB2.gif)
-
+![](https://images.velog.io/images/leemember/post/a522f045-cb12-4776-968d-dd8a0cb009d7/main.gif)
 <br />
 
 ## 👉 `로그인`
@@ -129,7 +134,10 @@
 ### **좋아요 기능**
 
 1. 좋아요 시 마이페이지 `좋아요한 작품` 에 저장
+   ![](https://images.velog.io/images/leemember/post/c45fdb16-6f60-40ed-82d7-742062458f5e/nft.gif)
+
 2. 좋아요 해제 시 마이페이지 `좋아요한 작품` 에 삭제
+   ![](https://images.velog.io/images/leemember/post/5f976f77-1d2c-486e-8c7e-1a637160ee3c/unlike.gif)
 
 ### **삭제 기능**
 
@@ -139,9 +147,11 @@
 
 ## 👉 `NFT 경매 업로드`
 
-### **제목, 작품설명**
+1. NFT 제목 및 작품설명
 
-### **코인 및 시간 설정해서 경매 시작**
+2. 코인 및 경매기간 설정해서 NFT 경매 게시글 업로드
+
+![](https://images.velog.io/images/leemember/post/c0373617-d8a6-4597-a73a-f84a35a1f092/NFTwrite.gif)
 
 <br />
 
@@ -159,27 +169,34 @@
 
 1. 페이징네이션 (게시글 최대 5개 까지 볼 수 있도록 구현, 초과시 다음 페이지 번수가 생긴다.)
 
+![](https://images.velog.io/images/leemember/post/ba6a074a-fdf7-4f7b-ab5f-6e1cf46b6bfe/board.gif)
+
 ### **게시글 View 페이지**
 
 1. 댓글 작성
 2. 댓글 삭제
 
+![](https://images.velog.io/images/leemember/post/5510c539-6b04-4127-b1d8-4ad4d8cdbd28/comment.gif)
+
 ### **본인이 작성한 게시글**
 
-1. 게시글 삭제 (삭제 시 게시글 목록 페이지로 자동 리다이렉팅)
-2. 게시글 수정 (수정 시 이전글 그대로 불러오기)
+1. 게시글 수정 (수정 시 이전글 그대로 불러오기)
+
+![](https://images.velog.io/images/leemember/post/e046c9d9-5ee1-4786-9983-b74a867694f7/update.gif)
+
+2. 게시글 삭제 (삭제 시 게시글 목록 페이지로 자동 리다이렉팅)
+
+![](https://images.velog.io/images/leemember/post/1e75d8ef-4acf-4e7a-9b40-b323f0f18148/delete.gif)
 
 <br />
 
 ## 👉 `마이페이지`
 
-### **지갑생성**
+### **1. 지갑생성 & 현재 잔액 조회**
 
-1. 현재 잔액 조회
+### **2. 나의 NFT 작품 & 좋아요한 작품**
 
-### **나의 NFT 작품**
-
-### **좋아요한 작품**
+![](https://images.velog.io/images/leemember/post/7eaad3fa-c858-43af-afd1-537f1341a598/mypage.gif)
 
 <br />
 

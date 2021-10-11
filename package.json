@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@redux-saga/core": "^1.1.3",

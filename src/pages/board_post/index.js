@@ -1,6 +1,8 @@
 /* eslint-disable operator-linebreak */
 import Header from 'components/Common/Header';
 import Intro from 'components/Board/Intro';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { REMOVE_POST_REQUEST, loadPost, clearPost } from 'reducers/post';
 
@@ -14,12 +16,13 @@ function boardPost({ match }) {
   const dispatch = useDispatch();
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
   const history = useHistory();
-  const { removePostLoading, singlePost, commentList } = useSelector(state => ({
-    loadPostLoading: state.postReducer.loadPostLoading,
-    removePostLoading: state.postReducer.removePostLoading,
-    singlePost: state.postReducer.singlePost,
-    commentList: state.postReducer.singlePost?.comment_list,
-  }));
+  const { removePostLoading, singlePost, loadPostLoading, commentList } =
+    useSelector(state => ({
+      loadPostLoading: state.postReducer.loadPostLoading,
+      removePostLoading: state.postReducer.removePostLoading,
+      singlePost: state.postReducer.singlePost,
+      commentList: state.postReducer.singlePost?.comment_list,
+    }));
 
   const getPostData = () => dispatch(loadPost(match.params.id));
 
@@ -46,53 +49,63 @@ function boardPost({ match }) {
   // [TODO] post 로드 시 끊기는 느낌 존재
   // if (loadPostLoading) return <div>로딩중...</div>;
 
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   return (
     <>
       <Header />
       {/* 인트로 view */}
-      <Intro />
+      {loadPostLoading ? (
+        <Spin indicator={antIcon} />
+      ) : (
+        <>
+          <Intro />
 
-      {/* 게시글 view */}
-      <PostWrap>
-        <div className="boardHeader">
-          <Title>{singlePost.title}</Title>
-          <div className="align">
-            <div className="userTimeNum">
-              <span className="name">{singlePost.author}</span>
-              <span className="date">
-                {(singlePost.create_post_date || '').split('T').splice(0, 1)}
-              </span>
-              <span className="comment">
-                댓글수 {(singlePost.comment_list || '').length}
-              </span>
+          {/* 게시글 view */}
+          <PostWrap>
+            <div className="boardHeader">
+              <Title>{singlePost.title}</Title>
+              <div className="align">
+                <div className="userTimeNum">
+                  <span className="name">{singlePost.author}</span>
+                  <span className="date">
+                    {(singlePost.create_post_date || '')
+                      .split('T')
+                      .splice(0, 1)}
+                  </span>
+                  <span className="comment">
+                    댓글수 {(singlePost.comment_list || '').length}
+                  </span>
+                </div>
+
+                <div className="right">
+                  {id && singlePost.author === id ? (
+                    <>
+                      <Link
+                        to={`/board_update/${singlePost.p_id}`}
+                        className="update"
+                      >
+                        수정
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => onRemovePost(singlePost.p_id)}
+                        loading={removePostLoading}
+                      >
+                        삭제
+                      </button>
+                    </>
+                  ) : null}
+                </div>
+              </div>
             </div>
 
-            <div className="right">
-              {id && singlePost.author === id ? (
-                <>
-                  <Link
-                    to={`/board_update/${singlePost.p_id}`}
-                    className="update"
-                  >
-                    수정
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => onRemovePost(singlePost.p_id)}
-                    loading={removePostLoading}
-                  >
-                    삭제
-                  </button>
-                </>
-              ) : null}
-            </div>
-          </div>
-        </div>
-
-        <section className="boardBody">
-          <p>{singlePost.content}</p>
-        </section>
-      </PostWrap>
+            <section className="boardBody">
+              <p>{singlePost.content}</p>
+            </section>
+          </PostWrap>
+        </>
+      )}
 
       {/* 댓글 view */}
       <CommentWrap>

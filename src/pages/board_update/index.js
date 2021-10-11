@@ -1,8 +1,10 @@
 /* eslint-disable no-constant-condition */
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import Header from 'components/Common/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePost, loadPost } from 'reducers/post';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import Intro from 'components/Board/Intro';
 import useInputs from 'hooks/useInput';
 
@@ -10,7 +12,9 @@ import { Form } from './styles';
 
 function boardWrite({ history, match }) {
   const dispatch = useDispatch();
-  const { singlePost } = useSelector(state => state.postReducer);
+  const { singlePost, loadPostLoading } = useSelector(
+    state => state.postReducer,
+  );
   const [state, onChangeInput] = useInputs({
     title: singlePost.title,
     content: singlePost.content,
@@ -47,37 +51,45 @@ function boardWrite({ history, match }) {
     history.push(`/board_post/${match.params.id}`);
   });
 
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   return (
     <>
       <Header />
       {/* 인트로 view */}
-      <Intro />
+      {loadPostLoading ? (
+        <Spin indicator={antIcon} />
+      ) : (
+        <>
+          <Intro />
 
-      <Form onSubmit={onSubmit}>
-        <h1>게시물 수정하기</h1>
-        <input
-          type="text"
-          value={title}
-          name="title"
-          ref={inputTitle}
-          placeholder="제목을 입력해주세요. (80자 이내)"
-          maxLength={80}
-          onChange={onChangeInput}
-        />
-        <textarea
-          placeholder="글 내용을 입력해주세요."
-          onChange={onChangeInput}
-          value={content}
-          ref={inputContent}
-          name="content"
-        />
+          <Form onSubmit={onSubmit}>
+            <h1>게시물 수정하기</h1>
+            <input
+              type="text"
+              value={title}
+              name="title"
+              ref={inputTitle}
+              placeholder="제목을 입력해주세요. (80자 이내)"
+              maxLength={80}
+              onChange={onChangeInput}
+            />
+            <textarea
+              placeholder="글 내용을 입력해주세요."
+              onChange={onChangeInput}
+              value={content}
+              ref={inputContent}
+              name="content"
+            />
 
-        <div className="buttons">
-          <button type="submit" onClick={() => handleUpdateComment()}>
-            확인
-          </button>
-        </div>
-      </Form>
+            <div className="buttons">
+              <button type="submit" onClick={() => handleUpdateComment()}>
+                확인
+              </button>
+            </div>
+          </Form>
+        </>
+      )}
     </>
   );
 }

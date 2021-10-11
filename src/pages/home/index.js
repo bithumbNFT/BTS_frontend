@@ -3,10 +3,11 @@ import Header from 'components/Common/Header';
 import CardItem from 'components/MyPage/Card/CardItem';
 import Footer from 'components/Common/Footer';
 import SmallFooter from 'components/Common/SmallFooter';
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
 import HomeIntro from 'components/Home/Intro';
 import Pagination from 'components/Common/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadingOutlined } from '@ant-design/icons';
 import 'aos/dist/aos.css';
 import AOS from 'aos';
 import {
@@ -18,7 +19,7 @@ import { Title, CardWrap, CardListBox, BottomMailn, EmptyWrap } from './styles';
 function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
-  const { mainAuctions, likeAuctions } = useSelector(
+  const { mainAuctions, likeAuctions, loadAuctionLoading } = useSelector(
     stateRedux => stateRedux.auctionReducer,
   );
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -71,43 +72,50 @@ function home() {
       behavior: 'smooth',
     });
   }, []);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   return (
     <>
       <Header />
       <HomeIntro onClick={scrollToAuction} />
 
-      <BottomMailn ref={focusScreen} id="position">
-        <Title>
-          🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을{' '}
-          <strong>경매</strong>해보세요 🥰
-        </Title>
+      {loadAuctionLoading ? (
+        <Spin indicator={antIcon} />
+      ) : (
+        <>
+          <BottomMailn ref={focusScreen} id="position">
+            <Title>
+              🎨 <strong>멋진 작가</strong>들의 <strong>다양한 작품</strong>들을{' '}
+              <strong>경매</strong>해보세요 🥰
+            </Title>
 
-        {mainAuctions.length > 0 ? (
-          <CardWrap>
-            <CardListBox>
-              {currentAuctions.map(post => (
-                <CardItem
-                  key={post.id}
-                  post={post}
-                  isLike={likeAuctionsId.includes(post.id)}
+            {mainAuctions.length > 0 ? (
+              <CardWrap>
+                <CardListBox>
+                  {currentAuctions.map(post => (
+                    <CardItem
+                      key={post.id}
+                      post={post}
+                      isLike={likeAuctionsId.includes(post.id)}
+                    />
+                  ))}
+                </CardListBox>
+
+                <Pagination
+                  postsPerPage={postsPerPage}
+                  totalPosts={mainAuctions.length}
+                  paginate={paginate}
                 />
-              ))}
-            </CardListBox>
-
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={mainAuctions.length}
-              paginate={paginate}
-            />
-          </CardWrap>
-        ) : (
-          <EmptyWrap>
-            <Empty description={false} />
-            <h3>아직 등록된 경매 게시물이 없습니다.</h3>
-          </EmptyWrap>
-        )}
-      </BottomMailn>
+              </CardWrap>
+            ) : (
+              <EmptyWrap>
+                <Empty description={false} />
+                <h3>아직 등록된 경매 게시물이 없습니다.</h3>
+              </EmptyWrap>
+            )}
+          </BottomMailn>
+        </>
+      )}
 
       <Footer />
       <SmallFooter />

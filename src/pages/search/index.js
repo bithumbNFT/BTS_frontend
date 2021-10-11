@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import Header from 'components/Common/Header';
 import { FiSearch } from 'react-icons/fi';
-import { Empty } from 'antd';
+import { Empty, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadingOutlined } from '@ant-design/icons';
 import {
   SEARCH_NFT_REQUEST,
   LOAD_LIKE_AUCTION_REQUEST,
@@ -11,10 +12,11 @@ import styled from '@emotion/styled';
 import CardItem from 'components/MyPage/Card/CardItem';
 
 const Search = ({ match }) => {
-  const { searchNft, likeAuctions } = useSelector(
+  const { searchNft, likeAuctions, searchNftLoading } = useSelector(
     state => state.auctionReducer,
   );
   const dispatch = useDispatch();
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   useEffect(() => {
     dispatch({
@@ -35,30 +37,34 @@ const Search = ({ match }) => {
     <>
       <Header />
 
-      <SearchWrap>
-        <h2>
-          <FiSearch />
-          이것을 찾으셨나요 ? &nbsp;
-          <strong>&quot;{match.params.id}&quot;</strong>
-        </h2>
+      {searchNftLoading ? (
+        <></>
+      ) : (
+        <SearchWrap>
+          <h2>
+            <FiSearch />
+            이것을 찾으셨나요 ? &nbsp;
+            <strong>&quot;{match.params.id}&quot;</strong>
+          </h2>
 
-        {searchNft.length > 0 ? (
-          <CardListBox>
-            {searchNft.map(post => (
-              <CardItem
-                key={post.id}
-                post={post}
-                isLike={likeAuctionsId.includes(post.id)}
-              />
-            ))}
-          </CardListBox>
-        ) : (
-          <NoContent>
-            <Empty description={false} />
-            <h3>해당 검색 결과가 없습니다.</h3>
-          </NoContent>
-        )}
-      </SearchWrap>
+          {searchNft.length > 0 ? (
+            <CardListBox>
+              {searchNft.map(post => (
+                <CardItem
+                  key={post.id}
+                  post={post}
+                  isLike={likeAuctionsId.includes(post.id)}
+                />
+              ))}
+            </CardListBox>
+          ) : (
+            <NoContent>
+              <Empty description={false} />
+              <h3>해당 검색 결과가 없습니다.</h3>
+            </NoContent>
+          )}
+        </SearchWrap>
+      )}
     </>
   );
 };
