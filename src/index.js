@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 
 import axios from 'axios';
 import { CookiesProvider } from 'react-cookie';
@@ -28,7 +28,7 @@ const sagaMiddleware = createSagaMiddleware({
 const enhancedReducer = rootReducer;
 const store = createStore(
   enhancedReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware, logger)),
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
 );
 
 sagaMiddleware.run(rootSaga);
