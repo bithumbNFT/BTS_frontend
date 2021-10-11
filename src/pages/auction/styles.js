@@ -54,6 +54,9 @@ export const Detail = styled.article`
       margin: 2em 0 1em;
     }
   }
+  @media (max-width: 414px) {
+    margin-top: 1rem;
+  }
 `;
 
 export const Border = styled.div`

@@ -8,6 +8,10 @@ export const Nfting = styled.main`
   max-width: 950px;
   margin: 65px auto;
   padding-bottom: 10rem;
+  @media (max-width: 414px) {
+    grid-template-columns: 1fr;
+    margin: 10px auto 90px;
+  }
 `;
 
 export const Images = styled.div`
@@ -49,13 +53,15 @@ export const Detail = styled.article`
         }
       }
     }
-
     &__button {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 2em 0 1em;
     }
+  }
+  @media (max-width: 414px) {
+    margin-top: 40px;
   }
 `;
 
@@ -86,7 +92,7 @@ export const Border = styled.div`
       font-weight: 500;
     }
   }
-  
+
   h3 {
     color: #8a939b;
     font-size: 1.2rem;

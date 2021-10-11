@@ -127,7 +127,6 @@ export const UserProfile = styled.div`
   border-radius: 50%;
   margin-left: 1em;
   cursor: pointer;
-
   img {
     width: 100%;
     height: 100%;
@@ -142,6 +141,7 @@ export const UserProfile = styled.div`
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    margin-left: 0;
     p {
       margin-top: 0.5rem;
       color: #fe5000;

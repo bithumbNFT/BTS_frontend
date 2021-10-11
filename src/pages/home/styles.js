@@ -51,7 +51,7 @@ export const CardListBox = styled.article`
 export const BottomMailn = styled.section`
   height: 100%;
   position: relative;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
   @media (max-width: 414px) {
     padding-bottom: 80px;
   }

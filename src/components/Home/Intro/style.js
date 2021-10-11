@@ -23,7 +23,7 @@ export const ChartWrap = styled.section`
   }
   @media (max-width: 414px) {
     h1 {
-      font-size: 1rem;
+      font-size: 1.3rem;
       margin: 30px 0 0;
     }
   }

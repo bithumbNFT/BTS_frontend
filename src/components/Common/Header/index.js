@@ -164,6 +164,11 @@ function Header() {
               </li>
             )}
             <li>
+              <Link to="/upload" className="board">
+                NFT 작품 등록하기
+              </Link>
+            </li>
+            <li>
               <Link to="/board" className="board">
                 커뮤니티
               </Link>

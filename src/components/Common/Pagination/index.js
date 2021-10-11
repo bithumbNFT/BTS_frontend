@@ -36,7 +36,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
 export default Pagination;
 
 const Paging = styled.ul`
-  margin: 100px 0 20px;
+  margin: 60px 0 20px;
   padding: 0;
   list-style: none;
   text-align: center;
@@ -63,6 +63,6 @@ const Paging = styled.ul`
     }
   }
   @media (max-width: 414px) {
-    margin: 20px 0;
+    margin: 50px 0;
   }
 `;

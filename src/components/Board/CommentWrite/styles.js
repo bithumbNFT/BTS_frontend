@@ -17,6 +17,11 @@ export const CommentWriteBox = styled.div`
     display: flex;
     border-radius: 4px;
   }
+  @media (max-width: 414px) {
+    input {
+      width: 80%;
+    }
+  }
 `;
 
 export const Button = styled.button`
@@ -27,4 +32,8 @@ export const Button = styled.button`
   border-radius: 5px;
   font-size: 16px;
   width: 8%;
+
+  @media (max-width: 414px) {
+    width: 16%;
+  }
 `;
