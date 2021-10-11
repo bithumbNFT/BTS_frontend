@@ -44,4 +44,12 @@ export const Text = styled.div`
     font-family: 'SEBANG_Gothic_Bold' !important;
     letter-spacing: 1.2px;
   }
+  @media (max-width: 414px) {
+    h2 {
+      font-size: 1.6rem;
+    }
+    p {
+      font-size: 1.4rem;
+    }
+  }
 `;

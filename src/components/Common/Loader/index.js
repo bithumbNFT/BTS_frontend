@@ -38,4 +38,13 @@ export const LoadingWrap = styled.main`
       }
     }
   }
+  @media (max-width: 414px) {
+    h2 {
+      font-size: 1rem !important;
+      line-height: 1.5;
+    }
+    img {
+      width: 100%;
+    }
+  }
 `;

@@ -19,7 +19,7 @@ function Login() {
       <LoginWrapper>
         <LoginBg>
           <LoginLeft>
-            <h1>BTS 시작하기 👉🏻</h1>
+            <h1>BTS 시작하기</h1>
             <span>지금 로그인하고 다양한 NFT 작품들을 만나보세요</span>
             <br />
             <span>매일 다양한 작품들이 새 탭에서 펼쳐집니다.</span>

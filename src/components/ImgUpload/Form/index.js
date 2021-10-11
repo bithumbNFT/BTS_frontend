@@ -150,7 +150,7 @@ function UploadForm() {
               autoComplete="off"
             />
             <select {...register('unit', { required: true })}>
-              {['d', 'h', 'm', 's'].map(value => (
+              {['일', '시간', '분', '초'].map(value => (
                 <option key={value} value={value}>
                   {value}
                 </option>

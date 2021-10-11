@@ -55,6 +55,15 @@ export const PostWrap = styled.article`
       letter-spacing: -0.3px;
     }
   }
+
+  @media (max-width: 414px) {
+    .userTimeNum {
+      margin-top: 0;
+    }
+    .align {
+      margin-top: 15px;
+    }
+  }
 `;
 
 export const Title = styled.h2`
@@ -67,12 +76,20 @@ export const Title = styled.h2`
   line-height: 1.42;
   letter-spacing: -0.3px;
   color: #212529;
+
+  @media (max-width: 414px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const CommentWrap = styled.div`
   width: 100%;
   background-color: #f8f9fa;
   padding: 2em 4em 6em;
+
+  @media (max-width: 414px) {
+    padding: 0.4em 2em 4em;
+  }
 `;
 
 export const CommentForm = styled.div`
