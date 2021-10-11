@@ -67,6 +67,9 @@ export const CardContainer = styled.div`
       object-fit: cover;
     }
   }
+  &.completion {
+    opacity: 0.7;
+  }
 `;
 
 export const CardTitle = styled.h5`
@@ -82,12 +85,21 @@ export const CardImage = styled.img`
 export const Status = styled.div`
   width: fit-content;
   height: auto;
-  padding: 5px;
+  padding: 7px;
   border-radius: 10%;
-  background-color: #f5e6ca;
   font-size: 14px;
-  color: #343f56;
+  color: #fff;
   margin-top: 3em;
+  &.completion {
+    background-color: #808080;
+  }
+  &.pre {
+    background-color: rgb(245, 230, 202);
+    color: rgb(52, 63, 86);
+  }
+  &.ing {
+    background-color: #fe5000;
+  }
 `;
 
 export const CardDetail = styled.section`
