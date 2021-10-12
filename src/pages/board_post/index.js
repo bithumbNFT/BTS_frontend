@@ -30,9 +30,9 @@ function boardPost({ match }) {
   // match.param.id 가 변할 때 getPostData() 실행
   useEffect(() => {
     getPostData();
-    return () => {
-      dispatch(clearPost());
-    };
+    // return () => {
+    //   dispatch(clearPost());
+    // };
   }, [match.params.id, dispatch]);
 
   const onRemovePost = useCallback(postId => {

@@ -24,7 +24,6 @@ function board() {
       type: LOAD_POSTS_REQUEST,
     });
   }, []);
-  console.log('loadPostsLoading', loadPostsLoading);
 
   // PagingNation
   // 현재 페이지
