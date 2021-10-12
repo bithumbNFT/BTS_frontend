@@ -84,7 +84,7 @@
 
 - PC, iPad Pro, iPad Air, iPhone Plus, iPhone 6,7,8 등 어디서든 유연하게 동작 가능하도록 반응형 웹으로 구현
 
-![](https://images.velog.io/images/leemember/post/7be5ce4f-f9d4-43eb-96b9-769141aa17f6/responsive.gif)
+![](https://images.velog.io/images/leemember/post/79113f1b-13a5-49cf-ab93-a24727852170/%E1%84%87%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B3%E1%84%92%E1%85%A7%E1%86%BC.gif)
 
 ## 👉 `로딩화면`
 
