@@ -58,11 +58,7 @@
 
 <br />
 
-## 💻 프로젝트 주요 기능 (화면 미리보기)
-
-<br />
-
-## 🌟 페이지별 기능 요약
+## 🌟 페이지별 주요 기능 요약
 
 ```
 📦 src
@@ -82,7 +78,13 @@
 
 <br />
 
-## 🌟 페이지별 기능 **디테일** 소개
+## 🌟 페이지별 주요 기능 **디테일** 소개
+
+## 👉 `UI/UX 반응형 웹`
+
+- PC, iPad Pro, iPad Air, iPhone Plus, iPhone 6,7,8 등 어디서든 유연하게 동작 가능하도록 반응형 웹으로 구현
+
+![](https://images.velog.io/images/leemember/post/7be5ce4f-f9d4-43eb-96b9-769141aa17f6/responsive.gif)
 
 ## 👉 `로딩화면`
 
@@ -103,7 +105,7 @@
 2. 하락 상승시 색깔로 표시 (상승시 빨간색 / 하락시 파란색)
 3. 아래 화살표 클릭 시 NFT 경매 섹션으로 이동
 
-![](https://images.velog.io/images/leemember/post/a421edc1-0a74-4744-af32-531409a02e63/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB.gif)
+![](https://images.velog.io/images/leemember/post/a966d4bb-873b-4dfe-b7af-8afc626b066e/mainintro.gif)
 
 ### **NFT 경매 섹션**
 
@@ -193,6 +195,8 @@
 ## 👉 `마이페이지`
 
 ### **1. 지갑생성 & 현재 잔액 조회**
+
+![](https://images.velog.io/images/leemember/post/3b980149-9150-436f-92a4-f319ae39d817/wallet.gif)
 
 ### **2. 나의 NFT 작품 & 좋아요한 작품**
 
