@@ -57,7 +57,7 @@ function boardWrite({ history, match }) {
     <>
       <Header />
       {/* 인트로 view */}
-      {!loadPostDone ? (
+      {!loadPostDone || Object.keys(singlePost).length === 0 ? (
         <Spin indicator={antIcon} />
       ) : (
         <>
