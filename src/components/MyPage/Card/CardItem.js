@@ -23,20 +23,25 @@ function Card({ post, isLike }) {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
   const [deleteShow, setDeleteShow] = useState(true);
+  const userInfo = localStorage.getItem('userInfo');
 
   // 라이크 버튼 클릭 시 찜하기 목록으로 추가
   const onClickLike = useCallback(
     id => {
-      if (window.confirm('해당 경매 작품을 찜목록에 추가하시겠습니까 ?')) {
-        alert('찜 목록에 추가되었습니다.');
-        setLiked(true);
-        dispatch({
-          type: LIKE_AUCTION_REQUEST,
-          data: {
-            nftid: post.id,
-            user: String(JSON.parse(localStorage.getItem('userInfo')).id),
-          },
-        });
+      if (userInfo) {
+        if (window.confirm('해당 경매 작품을 찜목록에 추가하시겠습니까 ?')) {
+          alert('찜 목록에 추가되었습니다.');
+          setLiked(true);
+          dispatch({
+            type: LIKE_AUCTION_REQUEST,
+            data: {
+              nftid: post.id,
+              user: String(JSON.parse(localStorage.getItem('userInfo')).id),
+            },
+          });
+        }
+      } else {
+        alert('로그인 후 이용하실 수 있습니다.');
       }
     },
     [setLiked],

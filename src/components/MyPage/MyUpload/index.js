@@ -12,7 +12,7 @@ import Button from './Button';
 
 function MyUpload() {
   const dispatch = useDispatch();
-  const { myAuctions, likeAuctions, loadMyAuctionLoading } = useSelector(
+  const { myAuctions, likeAuctions, loadMyAuctionLoading, loadMyAuctionDone } = useSelector(
     state => state.auctionReducer,
   );
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -31,7 +31,7 @@ function MyUpload() {
 
   return (
     <>
-      {loadMyAuctionLoading ? (
+      {!loadMyAuctionDone ? (
         <Spin indicator={antIcon} />
       ) : (
         <>

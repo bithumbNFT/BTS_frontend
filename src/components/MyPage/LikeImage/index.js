@@ -8,7 +8,7 @@ import CardList from '../Card/CardList';
 
 function LikeImage() {
   const dispatch = useDispatch();
-  const { likeAuctions, loadLikeAuctionLoading } = useSelector(
+  const { likeAuctions, loadLikeAuctionLoading, loadLikeAuctionDone } = useSelector(
     state => state.auctionReducer,
   );
   const user = JSON.parse(localStorage.getItem('userInfo'));
@@ -22,7 +22,7 @@ function LikeImage() {
   }, [dispatch]);
   return (
     <>
-      {loadLikeAuctionLoading ? (
+      {!loadLikeAuctionDone ? (
         <Spin indicator={antIcon} />
       ) : (
         <>

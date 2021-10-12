@@ -14,7 +14,7 @@ import { ListView, ListWrap, EmptyWrap } from './styles';
 
 function board() {
   const dispatch = useDispatch();
-  const { loadPostsLoading, mainPosts } = useSelector(
+  const { loadPostsLoading, loadPostsDone, mainPosts } = useSelector(
     state => state.postReducer,
   );
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -47,7 +47,7 @@ function board() {
     <>
       {/* 헤더 */}
       <Header />
-      {loadPostsLoading ? (
+      {!loadPostsDone ? (
         <Spin indicator={antIcon} />
       ) : (
         <main>
