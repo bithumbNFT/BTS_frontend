@@ -19,7 +19,7 @@ import { Title, CardWrap, CardListBox, BottomMailn, EmptyWrap } from './styles';
 function home() {
   const dispatch = useDispatch();
   const focusScreen = useRef([]);
-  const { mainAuctions, likeAuctions, loadAuctionLoading } = useSelector(
+  const { mainAuctions, likeAuctions, loadAuctionLoading, loadAuctionDone } = useSelector(
     stateRedux => stateRedux.auctionReducer,
   );
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -79,7 +79,7 @@ function home() {
       <Header />
       <HomeIntro onClick={scrollToAuction} />
 
-      {loadAuctionLoading ? (
+      {!loadAuctionDone ? (
         <Spin indicator={antIcon} />
       ) : (
         <>

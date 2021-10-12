@@ -4,6 +4,8 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Nfting from 'components/Nfting';
 import { LOAD_ONE_AUCTION_REQUEST, clearAuction } from 'reducers/auction';
 import { checkBalanceAction } from 'reducers/user';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Empty, Spin } from 'antd';
 
 function auctionPost({ match }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -11,7 +13,7 @@ function auctionPost({ match }) {
   // eslint-disable-next-line max-len
   const { singleAuction, loadOneAuctionLoading, loadOneAuctionDone } = useSelector(state => state.auctionReducer);
   const { balanceData } = useSelector(state => state.userReducer);
-
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   useEffect(() => {
     dispatch({
       type: LOAD_ONE_AUCTION_REQUEST,
@@ -30,8 +32,8 @@ function auctionPost({ match }) {
   return (
     <>
       <Header />
-      {loadOneAuctionLoading && !loadOneAuctionDone ? (
-        <div>로딩중</div>
+      {!loadOneAuctionDone ? (
+        <Spin indicator={antIcon} />
       ) : (
         <Nfting
           props={singleAuction}

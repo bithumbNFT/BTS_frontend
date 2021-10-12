@@ -16,12 +16,13 @@ function boardPost({ match }) {
   const dispatch = useDispatch();
   const id = JSON.parse(localStorage.getItem('userInfo')).name;
   const history = useHistory();
-  const { removePostLoading, singlePost, loadPostLoading, commentList } =
+  const { removePostLoading, singlePost, loadPostLoading, commentList, loadPostDone } =
     useSelector(state => ({
       loadPostLoading: state.postReducer.loadPostLoading,
       removePostLoading: state.postReducer.removePostLoading,
       singlePost: state.postReducer.singlePost,
       commentList: state.postReducer.singlePost?.comment_list,
+      loadPostDone: state.postReducer.loadPostDone,
     }));
 
   const getPostData = () => dispatch(loadPost(match.params.id));
@@ -55,7 +56,7 @@ function boardPost({ match }) {
     <>
       <Header />
       {/* 인트로 view */}
-      {loadPostLoading ? (
+      {!loadPostDone ? (
         <Spin indicator={antIcon} />
       ) : (
         <>
